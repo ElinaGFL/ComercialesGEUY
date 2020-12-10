@@ -5,16 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
-public class
+public class MainActivity extends AppCompatActivity {
+    Button btnCalendario;
+    Button partners;
 
-MainActivity extends AppCompatActivity {
-
-    Button gdp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //holamundo
+
+        btnCalendario = findViewById(R.id.button1);
+
+        partners= findViewById(R.id.button2);
+
     }
 }
