@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ComercialesGEUY</string>
+    <string name="calendario">calendario de citas</string>
+    <string name="gestion">gestion de partners</string>
+    <string name="gestionPedido">gestion del pedido</string>
+    <string name="enviosDelegacion">envios a delegacion</string>
 </resources>
