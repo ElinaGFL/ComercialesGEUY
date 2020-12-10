@@ -8,6 +8,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
     Button btnCalendario;
     Button partners;
+    Button btnPedidos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
         btnCalendario = findViewById(R.id.button1);
 
         partners= findViewById(R.id.button2);
+
+        btnPedidos = findViewById(R.id.button3);
 
     }
 }
