@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnCalendario;
     Button partners;
     Button btnPedidos;
+    Button btnEnvio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +24,20 @@ public class MainActivity extends AppCompatActivity {
 
         btnPedidos = findViewById(R.id.button3);
 
+        btnEnvio=findViewById(R.id.button4);
+
         btnCalendario.setOnClickListener(v -> abrirCalendarioActivity(v));
+
+        btnEnvio.setOnClickListener(v -> abrirEnvio(v));
     }
 
     public void abrirCalendarioActivity (View view) {
         Intent intent = new Intent(this, CalendarioActivity.class);
+        startActivity(intent);
+    }
+
+    public void abrirEnvio (View view){
+        Intent intent = new Intent(this, EnvioDelegacion.class);
         startActivity(intent);
     }
 }

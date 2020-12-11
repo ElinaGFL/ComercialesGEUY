@@ -1,2 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <socio>
+        <nombre>Yeray</nombre>
+        <apellido>de Diego</apellido>
+        <telefono>688888888</telefono>
+        <correo>gkg@gjh.com</correo>
+    </socio>
+    <socio>
+        <nombre>Unai</nombre>
+        <apellido>Gallego</apellido>
+        <telefono>677777777</telefono>
+        <correo>fghjgh@ghjg.com</correo>
+    </socio>
+    <socio>
+        <nombre>Garikoitz</nombre>
+        <apellido>Mrówczyński</apellido>
+        <telefono>655555555</telefono>
+        <correo>hkjfds@gds.com</correo>
+    </socio>
+    <socio>
+        <nombre>Elina</nombre>
+        <apellido>Гафиуллина</apellido>
+        <telefono>644444444</telefono>
+        <correo>fds@gsdas.com</correo>
+    </socio>
+</resources>
