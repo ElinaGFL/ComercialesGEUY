@@ -16,64 +16,57 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.comercialesgeuy.adapter.RecyclerAdapter;
+import com.example.comercialesgeuy.model.DatosPartners;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class layoutpartners extends AppCompatActivity {
-    RecyclerView partners;
-    ArrayList<String> listPartners;
+   private RecyclerView rvlista;
+   private RecyclerAdapter adapter;
+   private List<DatosPartners> items;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partners);
-        partners=(RecyclerView)findViewById(R.id.rcvPartiners);
-        partners.setLayoutManager(new LinearLayoutManager(this));
 
-        listPartners=new ArrayList<String>();
-        for(int i=0;i<=50;i++){
-            listPartners.add("Datos #"+i +"");
-        }
-
-        DatosPartners adaptador=new DatosPartners(listPartners);
-        partners.setAdapter(adaptador);
 
     }
-    public class DatosPartners extends RecyclerView.Adapter<DatosPartners.ViewHolderDatos>{
-        ArrayList<String> listPartners;
+    private void initViews(){
+        rvlista=findViewById();
 
-        public DatosPartners(ArrayList<String> listPartners) {
-            this.listPartners = listPartners;
+    }
+    private void initValues(){
+        LinearLayoutManager manager=new LinearLayoutManager(this);
+        rvlista.setLayoutManager(manager);
+
+
+    }
+
+    private void leerXML(){
+        try {
+            DocumentBuilderFactory dbf= DocumentBuilderFactory.newInstance();
+            DocumentBuilder db= dbf.newDocumentBuilder();
+
+            Document doc = db.parse(getResources().openRawResource(R.raw.Partner));
+        }catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        @NonNull
-        @Override
-        public ViewHolderDatos onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-            View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.partners,null,false);
-            return new ViewHolderDatos(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolderDatos holder, int position) {
-            holder.asignarDatos(listPartners.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return listPartners.size();
-        }
-
-        public class ViewHolderDatos extends RecyclerView.ViewHolder {
-
-            TextView datos;
-            public ViewHolderDatos(@NonNull View itemView) {
-                super(itemView);
-                datos=itemView.findViewById(R.id.idPartners);
-            }
-
-            public void asignarDatos(String s) {
-                datos.setText(s);
-            }
-        }
     }
 }
 

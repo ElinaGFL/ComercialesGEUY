@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         btnPedido = findViewById(R.id.btnPed);
 
         btnEnvio = findViewById(R.id.btnEnvio);
+
         btnCalendario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
        else if(boton==btnpartners) {
           i = new Intent(this, layoutpartners.class);
         }
-        else if(boton==btnPedido) {
-            i = new Intent(this, GestionPedido.class);
+        else if(boton==btnEnvio) {
+            i = new Intent(this, EnvioDelegacion.class);
         }
        else {
-           i = new Intent(this, EnvioDelegacion.class);
+           i = new Intent(this, GestionPedido.class);
         }
         startActivity(i);
     }
