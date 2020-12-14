@@ -13,6 +13,6 @@ public class GestionPedido extends AppCompatActivity {
 
 
 
-        opefuideriucedudcuibcjbldf
+
     }
 }
