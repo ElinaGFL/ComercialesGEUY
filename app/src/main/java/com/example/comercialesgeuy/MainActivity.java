@@ -19,67 +19,58 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnCalendario = findViewById(R.id.button1);
+        btnCalendario = findViewById(R.id.btnCalend);
 
-        btnpartners= findViewById(R.id.button2);
+        btnpartners = findViewById(R.id.btnParner);
 
-        btnPedidos = findViewById(R.id.button3);
+        btnPedidos = findViewById(R.id.btnPedido);
 
-        btnEnvio=findViewById(R.id.button4);
-
+        btnEnvio = findViewById(R.id.btnEnvio);
         btnCalendario.setOnClickListener(new View.OnClickListener() {
-            int i;
             @Override
             public void onClick(View v) {
-                i=1;
-                siguienteLayout(v,i);
+                siguienteLayout(btnCalendario);
             }
         });
-
         btnpartners.setOnClickListener(new View.OnClickListener() {
-            int i;
             @Override
             public void onClick(View v) {
-                i=2;
-                siguienteLayout(v,i);
+                siguienteLayout(btnpartners);
             }
         });
-
-
         btnPedidos.setOnClickListener(new View.OnClickListener() {
-            int i;
             @Override
             public void onClick(View v) {
-                i=3;
-                siguienteLayout(v,i);
+                siguienteLayout(btnPedidos);
             }
         });
         btnEnvio.setOnClickListener(new View.OnClickListener() {
-            int i;
             @Override
             public void onClick(View v) {
-                i=4;
-                siguienteLayout(v,i);
+                siguienteLayout(btnEnvio);
             }
         });
     }
 
+    public void siguienteLayout(View v){
+        Intent i;
+        Button boton=(Button)v;
+        if(boton==btnCalendario) {
+            i = new Intent(this, CalendarioActivity.class);
 
-    public void siguienteLayout (View v,int i) {
-        Intent intent;
-        if (i==1){
-            intent = new Intent(this, CalendarioActivity.class);
-            startActivity(intent);
-        }else if(i==2){
-            intent = new Intent(this, layoutpartners.class);
-            startActivity(intent);
-        }else if(i==3){
-            intent = new Intent(this, GestionPedido.class);
-            startActivity(intent);
-        }else if(i==4){
-            intent = new Intent(this, GestionPedido.class);
-            startActivity(intent);
         }
+       else if(boton==btnpartners) {
+          i = new Intent(this, layoutpartners.class);
 
+        }
+        else if(boton==btnPedidos) {
+            i = new Intent(this, GestionPedido.class);
+
+        }
+       else {
+           i = new Intent(this, EnvioDelegacion.class);
+
+        }
+        startActivity(i);
     }
 }

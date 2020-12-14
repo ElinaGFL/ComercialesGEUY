@@ -7,47 +7,48 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btnCalend"
         android:layout_width="125dp"
         android:layout_height="86dp"
         android:layout_marginTop="180dp"
+        android:onClick="siguienteLayout"
         android:text="@string/calendarioCitas"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/btnParner"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnParner"
         android:layout_width="125dp"
         android:layout_height="86dp"
         android:layout_marginTop="180dp"
         android:text="@string/gestionPartners"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button1"
+        app:layout_constraintStart_toEndOf="@+id/btnCalend"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btnEnvio"
         android:layout_width="125dp"
         android:layout_height="86dp"
         android:layout_marginTop="32dp"
         android:text="@string/enviosDelegacion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button3"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintStart_toEndOf="@+id/btnPedido"
+        app:layout_constraintTop_toBottomOf="@+id/btnParner" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnPedido"
         android:layout_width="125dp"
         android:layout_height="86dp"
         android:layout_marginTop="32dp"
         android:text="@string/gestionPedidos"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintEnd_toStartOf="@+id/btnEnvio"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button1" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCalend" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
