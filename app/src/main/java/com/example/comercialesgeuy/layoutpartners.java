@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.example.comercialesgeuy.adapter.RecyclerAdapter;
 import com.example.comercialesgeuy.model.DatosPartners;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
@@ -42,10 +44,14 @@ public class layoutpartners extends AppCompatActivity {
 
 
     }
+
     private void initViews(){
-        rvlista=findViewById();
+        rvlista=findViewById(R.id.cvpartners);
 
     }
+
+
+
     private void initValues(){
         LinearLayoutManager manager=new LinearLayoutManager(this);
         rvlista.setLayoutManager(manager);
@@ -59,11 +65,12 @@ public class layoutpartners extends AppCompatActivity {
             DocumentBuilder db= dbf.newDocumentBuilder();
 
             Document doc = db.parse(getResources().openRawResource(R.raw.Partner));
-        }catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+
+            Element raiz = doc.getDocumentElement();
+
+
+
+        }catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
 
