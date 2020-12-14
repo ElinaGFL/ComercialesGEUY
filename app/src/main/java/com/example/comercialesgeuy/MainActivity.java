@@ -10,7 +10,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
     Button btnCalendario;
     Button btnpartners;
-    Button btnPedidos;
+    Button btnPedido;
     Button btnEnvio;
 
     @Override
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnpartners = findViewById(R.id.btnParner);
 
-        btnPedidos = findViewById(R.id.btnPedido);
+        btnPedido = findViewById(R.id.btnPed);
 
         btnEnvio = findViewById(R.id.btnEnvio);
         btnCalendario.setOnClickListener(new View.OnClickListener() {
@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
                 siguienteLayout(btnpartners);
             }
         });
-        btnPedidos.setOnClickListener(new View.OnClickListener() {
+        btnPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                siguienteLayout(btnPedidos);
+                siguienteLayout(btnPedido);
             }
         });
         btnEnvio.setOnClickListener(new View.OnClickListener() {
@@ -57,19 +57,15 @@ public class MainActivity extends AppCompatActivity {
         Button boton=(Button)v;
         if(boton==btnCalendario) {
             i = new Intent(this, CalendarioActivity.class);
-
         }
        else if(boton==btnpartners) {
           i = new Intent(this, layoutpartners.class);
-
         }
-        else if(boton==btnPedidos) {
+        else if(boton==btnPedido) {
             i = new Intent(this, GestionPedido.class);
-
         }
        else {
            i = new Intent(this, EnvioDelegacion.class);
-
         }
         startActivity(i);
     }

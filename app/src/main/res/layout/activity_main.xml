@@ -37,11 +37,11 @@
         android:text="@string/enviosDelegacion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnPedido"
+        app:layout_constraintStart_toEndOf="@+id/btnPed"
         app:layout_constraintTop_toBottomOf="@+id/btnParner" />
 
     <Button
-        android:id="@+id/btnPedido"
+        android:id="@+id/btnPed"
         android:layout_width="125dp"
         android:layout_height="86dp"
         android:layout_marginTop="32dp"
