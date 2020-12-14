@@ -32,49 +32,54 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 i=1;
-                siguienteLayout(i);
+                siguienteLayout(v,i);
             }
         });
 
-        btnEnvio.setOnClickListener(new View.OnClickListener() {
-            int i;
-            @Override
-            public void onClick(View v) {
-                i=2;
-                siguienteLayout(i);
-            }
-        });
         btnpartners.setOnClickListener(new View.OnClickListener() {
             int i;
             @Override
             public void onClick(View v) {
-                i=3;
-                siguienteLayout(i);
+                i=2;
+                siguienteLayout(v,i);
             }
         });
+
+
         btnPedidos.setOnClickListener(new View.OnClickListener() {
             int i;
             @Override
             public void onClick(View v) {
+                i=3;
+                siguienteLayout(v,i);
+            }
+        });
+        btnEnvio.setOnClickListener(new View.OnClickListener() {
+            int i;
+            @Override
+            public void onClick(View v) {
                 i=4;
-                siguienteLayout(i);
+                siguienteLayout(v,i);
             }
         });
     }
 
-    public void siguienteLayout (int i) {
+
+    public void siguienteLayout (View v,int i) {
         Intent intent;
         if (i==1){
             intent = new Intent(this, CalendarioActivity.class);
-
+            startActivity(intent);
         }else if(i==2){
-            intent = new Intent(this, EnvioDelegacion.class);
-        }else if(i==3){
             intent = new Intent(this, layoutpartners.class);
-        }else{
+            startActivity(intent);
+        }else if(i==3){
             intent = new Intent(this, GestionPedido.class);
+            startActivity(intent);
+        }else if(i==4){
+            intent = new Intent(this, GestionPedido.class);
+            startActivity(intent);
         }
 
-        startActivity(intent);
-       }
+    }
 }
