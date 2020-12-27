@@ -12,11 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.comercialesgeuy.R;
 import com.example.comercialesgeuy.model.DatosPartners;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder> {
 
     private List<DatosPartners> items;
+
+    public RecyclerAdapter(List<DatosPartners> items) {
+
+        this.items = items;
+    }
+
 
 
     @NonNull
@@ -38,7 +45,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return items == null ? 0 : items.size();
     }
 
     public static class RecyclerHolder extends RecyclerView.ViewHolder{

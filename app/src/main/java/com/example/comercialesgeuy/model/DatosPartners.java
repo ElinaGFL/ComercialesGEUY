@@ -5,11 +5,14 @@ public class DatosPartners {
         String apellidos;
         String correo;
         String telefono;
-        DatosPartners(String nom, String aped, String email, String telf){
+        public DatosPartners(String nom, String aped, String email, String telf){
                 nombre=nom;
                 apellidos=aped;
                 correo =email;
                 telefono=telf;
+        }
+        public DatosPartners(){
+
         }
 
         public void setApellidos(String apellidos) {

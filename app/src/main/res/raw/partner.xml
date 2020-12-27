@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <partners>
+        <nombre>Unai</nombre>
+        <apellido>Gallego</apellido>
+        <telefono>635478951</telefono>
+        <correo>dfa@gfs.com</correo>
+    </partners>
+    <partners>
+        <nombre>Elina</nombre>
+        <apellido></apellido>
+        <telefono>66666666</telefono>
+        <correo>dfreijoa@gfs.com</correo>
+    </partners>
+    <partners>
+        <nombre>Garikoitz</nombre>
+        <apellido>Mrówczynski</apellido>
+        <telefono>624873248</telefono>
+        <correo>ghjb@gfs.com</correo>
+    </partners>
+    <partners>
+        <nombre>yeray</nombre>
+        <apellido>de Diego</apellido>
+        <telefono>648135486</telefono>
+        <correo>vhj@gfs.com</correo>
+    </partners>
+</resources>
+
+
