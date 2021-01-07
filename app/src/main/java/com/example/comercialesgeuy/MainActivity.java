@@ -39,16 +39,18 @@ public class MainActivity extends AppCompatActivity {
                 siguienteLayout(btnpartners);
             }
         });
-        btnPedido.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                siguienteLayout(btnPedido);
-            }
-        });
+
         btnEnvio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 siguienteLayout(btnEnvio);
+            }
+        });
+
+        btnPedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                siguienteLayout(btnPedido);
             }
         });
     }
@@ -65,8 +67,10 @@ public class MainActivity extends AppCompatActivity {
         else if(boton==btnEnvio) {
             i = new Intent(this, EnvioDelegacion.class);
         }
-       else {
+       else if (boton==btnPedido){
            i = new Intent(this, GestionPedido.class);
+        }else {
+           i= null;
         }
         startActivity(i);
     }
