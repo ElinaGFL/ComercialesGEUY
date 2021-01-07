@@ -2,49 +2,84 @@ package com.example.comercialesgeuy;
 
 import android.content.Intent;
 import android.net.Uri;
+
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 public class EnvioDelegacion extends AppCompatActivity {
 
+    String correo;
+    String asunto;
+    String mensaje;
     Button enviar;
-    String url;
+    Button archivo;
 
+    Uri URI = null;
+    private static final int PICK_FROM_GALLERY = 101;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_envio_delegacion);
 
-        enviar=findViewById(R.id.button);
+        archivo = findViewById(R.id.button2);
+
+        enviar = findViewById(R.id.button);
+        enviar.setEnabled(false);
+        correo ="geuyazul@gmail.com";
+        asunto ="Envio semanal de XML";
+        mensaje ="Envio el XML de Partners semanal adjunto";
         enviar.setOnClickListener(new View.OnClickListener() {
-
+            @Override
             public void onClick(View v) {
-                String[] TO = {"garikpitz.m@gmail.com"}; //Direcciones email  a enviar.
-                String[] CC = {"garikpitz.m@gmail.com"}; //Direcciones email con copia.
-
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
-
-                emailIntent.setData(Uri.parse("mailto:"));
-                emailIntent.setType("text/plain");
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-                emailIntent.putExtra(Intent.EXTRA_CC, CC);
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Tu Asunto...");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "tuemail@email.com"); // * configurar email aquí!
-
-                try {
-                    startActivity(Intent.createChooser(emailIntent, "Enviar email."));
-                    Log.i("EMAIL", "Enviando email...");
-                }
-                catch (android.content.ActivityNotFoundException e) {
-                    Toast.makeText(getApplicationContext(), "No encontrado nada", Toast.LENGTH_SHORT);
-                }
+                sendEmail();
             }
+        });
+        //attachment button listener
+        archivo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFolder();
 
+            }
         });
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {
+            URI = data.getData();
+
+        }
+    }
+
+    public void sendEmail() {
+        try {
+            final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+            emailIntent.setType("plain/text");
+            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{correo});
+            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, asunto);
+            if (URI != null) {
+                emailIntent.putExtra(Intent.EXTRA_STREAM, URI);
+            }
+            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, mensaje);
+            this.startActivity(Intent.createChooser(emailIntent, "Sending email..."));
+        } catch (Throwable t) {
+            Toast.makeText(this, "Request failed try again: " + t.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+    public void openFolder() {
+        Intent intent = new Intent();
+        intent.setType("text/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.putExtra("return-data", true);
+        enviar.setEnabled(true);
+        startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_FROM_GALLERY);
+    }
 }
+
