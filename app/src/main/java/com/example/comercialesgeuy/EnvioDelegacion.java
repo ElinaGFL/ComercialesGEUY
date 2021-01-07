@@ -14,14 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class EnvioDelegacion extends AppCompatActivity {
 
-    String etEmail;
-    String etSubject;
-    String etMessage;
-    Button Send;
-    Button attachment;
-    String email;
-    String subject;
-    String message;
+    String correo;
+    String asunto;
+    String mensaje;
+    Button enviar;
+    Button archivo;
+
     Uri URI = null;
     private static final int PICK_FROM_GALLERY = 101;
     @Override
@@ -29,21 +27,21 @@ public class EnvioDelegacion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_envio_delegacion);
 
-        attachment = findViewById(R.id.button2);
+        archivo = findViewById(R.id.button2);
 
-        Send = findViewById(R.id.button);
-        Send.setEnabled(false);
-        etEmail="garikpitz.m@gmail.com";
-        etSubject="Envio semanal de XML";
-        etMessage="Envio el XML de Partners semanal adjunto";
-        Send.setOnClickListener(new View.OnClickListener() {
+        enviar = findViewById(R.id.button);
+        enviar.setEnabled(false);
+        correo ="geuyazul@gmail.com";
+        asunto ="Envio semanal de XML";
+        mensaje ="Envio el XML de Partners semanal adjunto";
+        enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendEmail();
             }
         });
         //attachment button listener
-        attachment.setOnClickListener(new View.OnClickListener() {
+        archivo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFolder();
@@ -62,18 +60,14 @@ public class EnvioDelegacion extends AppCompatActivity {
 
     public void sendEmail() {
         try {
-            email = etEmail;
-            subject = etSubject;
-            message = etMessage;
-
             final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
             emailIntent.setType("plain/text");
-            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{email});
-            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{correo});
+            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, asunto);
             if (URI != null) {
                 emailIntent.putExtra(Intent.EXTRA_STREAM, URI);
             }
-            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, message);
+            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, mensaje);
             this.startActivity(Intent.createChooser(emailIntent, "Sending email..."));
         } catch (Throwable t) {
             Toast.makeText(this, "Request failed try again: " + t.toString(), Toast.LENGTH_LONG).show();
@@ -84,7 +78,7 @@ public class EnvioDelegacion extends AppCompatActivity {
         intent.setType("text/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.putExtra("return-data", true);
-        Send.setEnabled(true);
+        enviar.setEnabled(true);
         startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_FROM_GALLERY);
     }
 }
