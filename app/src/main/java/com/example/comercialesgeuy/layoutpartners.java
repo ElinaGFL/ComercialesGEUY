@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.comercialesgeuy.adapter.RecyclerAdapter;
 import com.example.comercialesgeuy.model.DatosPartners;
@@ -24,7 +26,7 @@ public class layoutpartners extends AppCompatActivity {
     private RecyclerView rvlista;
     private RecyclerAdapter adapter;
     private List<DatosPartners> items;
-
+    private LinearLayout popup;
 
 
     @Override
@@ -35,8 +37,6 @@ public class layoutpartners extends AppCompatActivity {
 
         initViews();
         initValues();
-
-
 
 
 
@@ -56,6 +56,14 @@ public class layoutpartners extends AppCompatActivity {
         items = leerPartners();
         adapter = new RecyclerAdapter(items);
         rvlista.setAdapter(adapter);
+
+        rvlista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popup = (LinearLayout)findViewById(R.id.layoutLlama);
+                popup.setVisibility(popup.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+            }
+        });
     }
 
 
