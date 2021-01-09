@@ -54,7 +54,7 @@ public class EnvioDelegacion extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_FROM_GALLERY && resultCode == RESULT_OK) {
             URI = data.getData();
-
+            enviar.setEnabled(true);
         }
     }
 
@@ -78,7 +78,6 @@ public class EnvioDelegacion extends AppCompatActivity {
         intent.setType("text/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.putExtra("return-data", true);
-        enviar.setEnabled(true);
         startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_FROM_GALLERY);
     }
 }
