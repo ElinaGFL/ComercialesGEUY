@@ -1,8 +1,10 @@
 package com.example.comercialesgeuy.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,10 +20,13 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder> {
 
     private List<DatosPartners> items;
+    private RecyclerItemClick itemClick;
 
-    public RecyclerAdapter(List<DatosPartners> items) {
+    public RecyclerAdapter(List<DatosPartners> items,RecyclerItemClick itemClick) {
 
         this.items = items;
+        this.itemClick = itemClick;
+
     }
 
 
@@ -41,6 +46,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         holder.apellidos.setText(d.getApellidos());
         holder.telefono.setText(d.getTelefono());
         holder.correo.setText(d.getCorreo());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClick.itemClick(d);
+            }
+        });
     }
 
     @Override
@@ -62,4 +74,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             correo= itemView.findViewById(R.id.emailPartner);
         }
     }
+
+
+    public interface RecyclerItemClick {
+        void itemClick(DatosPartners item);
+    }
+
 }

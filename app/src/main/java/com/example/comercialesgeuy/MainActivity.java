@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             i = new Intent(this, CalendarioActivity.class);
         }
        else if(boton==btnpartners) {
-          i = new Intent(this, layoutpartners.class);
+          i = new Intent(this, Layoutpartners.class);
         }
         else if(boton==btnEnvio) {
             i = new Intent(this, EnvioDelegacion.class);
