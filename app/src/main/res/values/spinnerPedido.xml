@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sPartner">
+        <item>partner1</item>
+        <item>partner2</item>
+    </string-array>
+
+    <string-array name="sComercial">
+        <item>Unai</item>
+        <item>Garikoitz</item>
+        <item>Yeray</item>
+        <item>Elina</item>
+
+    </string-array>
+
+</resources>
