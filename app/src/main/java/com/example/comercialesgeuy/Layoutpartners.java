@@ -1,9 +1,11 @@
 package com.example.comercialesgeuy;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.comercialesgeuy.adapter.RecyclerAdapter;
@@ -20,7 +22,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class layoutpartners extends AppCompatActivity {
+public class Layoutpartners extends AppCompatActivity implements RecyclerAdapter.RecyclerItemClick, SearchView.OnQueryTextListener {
     private RecyclerView rvlista;
     private RecyclerAdapter adapter;
     private List<DatosPartners> items;
@@ -38,8 +40,6 @@ public class layoutpartners extends AppCompatActivity {
 
 
 
-
-
     }
 
     private void initViews(){
@@ -54,7 +54,7 @@ public class layoutpartners extends AppCompatActivity {
         rvlista.setLayoutManager(manager);
 
         items = leerPartners();
-        adapter = new RecyclerAdapter(items);
+        adapter = new RecyclerAdapter(items, this);
         rvlista.setAdapter(adapter);
     }
 
@@ -104,8 +104,24 @@ public class layoutpartners extends AppCompatActivity {
     }
 
 
+    public void itemClick(DatosPartners item) {
+        Intent intent = new Intent(this, Contacto.class);
+        intent.putExtra("nombre",item.getNombre());
+        intent.putExtra("apellido",item.getApellidos());
+        intent.putExtra("correo",item.getCorreo());
+        intent.putExtra("telefono",item.getTelefono());
+        startActivity(intent);
+    }
 
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
 
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
 }
 

@@ -10,11 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ComercialesGEUY">
-        <activity android:name=".ResumenGestionPedido"></activity>
+        <activity android:name=".Contacto"></activity>
         <activity android:name=".EnvioDelegacion" />
-        <activity android:name=".layoutpartners" />
+        <activity android:name=".Layoutpartners" />
         <activity android:name=".CalendarioActivity" />
-        <activity android:name=".GestionPedido" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
