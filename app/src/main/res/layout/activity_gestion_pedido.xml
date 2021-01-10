@@ -1,68 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GestionPedido">
 
     <TextView
+        android:id="@+id/tvPrecio2"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="79dp"
+        android:layout_marginEnd="48dp"
+        android:text="Precio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrecio" />
+
+    <TextView
+        android:id="@+id/tvPrecio3"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="77dp"
+        android:layout_marginEnd="40dp"
+        android:text="Precio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrecio2" />
+
+    <TextView
+        android:id="@+id/tvPrecio4"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="428dp"
+        android:layout_marginEnd="48dp"
+        android:text="Precio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+
+    <EditText
+        android:id="@+id/etBat60"
+        android:layout_width="85dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="78dp"
+        android:ems="10"
+        android:hint="Cantidad"
+        android:inputType="number"
+        android:text="0"
+        app:layout_constraintStart_toEndOf="@+id/ivBat60"
+        app:layout_constraintTop_toBottomOf="@+id/etBat20" />
+
+    <EditText
+        android:id="@+id/etBatSun"
+        android:layout_width="85dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="72dp"
+        android:ems="10"
+        android:hint="Cantidad"
+        android:inputType="number"
+        android:text="0"
+        app:layout_constraintStart_toEndOf="@+id/ivBatSun"
+        app:layout_constraintTop_toBottomOf="@+id/etBat60" />
+
+    <EditText
+        android:id="@+id/etBat20"
+        android:layout_width="85dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="77dp"
+        android:ems="10"
+        android:hint="Cantidad"
+        android:inputType="number"
+        android:text="0"
+        app:layout_constraintStart_toEndOf="@+id/ivBat20"
+        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+
+    <TextView
+        android:id="@+id/tvBatSun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="11dp"
+        android:text="IBattery+PackSun "
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivBat60" />
+
+    <TextView
+        android:id="@+id/tvBat60"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="17dp"
+        android:text="IBattery-60 "
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivBat20" />
+
+    <TextView
+        android:id="@+id/tvBatHaiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="10dp"
+        android:text="IBattery-PackHaizea "
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etBatSun" />
+
+    <TextView
         android:id="@+id/textView"
         android:layout_width="292dp"
         android:layout_height="50dp"
-        android:layout_marginStart="59dp"
-        android:layout_marginTop="39dp"
-        android:text="Gestión del Pedido"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="16dp"
+        android:text="Gestión del Pedido:"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="372dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="31dp"
+        android:layout_width="200dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="19dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <ListView
-        android:layout_width="298dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="59dp"
-        android:layout_marginTop="42dp"
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="200dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
+    <Button
+        android:id="@+id/bCancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="44dp"
+        android:text="CANCELAR"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivBatHaiz" />
+
+    <Button
+        android:id="@+id/bConfirmar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="60dp"
+        android:text="CONFIRMAR"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etBatHaiz" />
+
+    <ImageView
+        android:id="@+id/ivBat20"
+        android:layout_width="130dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBat20"
+        app:srcCompat="@mipmap/bateria" />
+
+    <ImageView
+        android:id="@+id/ivBat60"
+        android:layout_width="130dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBat60"
+        app:srcCompat="@mipmap/bateria" />
+
+    <ImageView
+        android:id="@+id/ivBatHaiz"
+        android:layout_width="130dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBatHaiz"
+        app:srcCompat="@mipmap/molino" />
+
+    <ImageView
+        android:id="@+id/ivBatSun"
+        android:layout_width="130dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBatSun"
+        app:srcCompat="@mipmap/solar" />
+
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="145dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="132dp"
-        android:text="fecha actual"
+        android:id="@+id/tvBat20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="22dp"
+        android:text="IBattery-20 "
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="24dp"
+        android:text="Partners:"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="286dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <Button
-        android:id="@+id/button"
+    <TextView
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="59dp"
-        android:layout_marginBottom="32dp"
-        android:text="CANCELAR"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="17dp"
+        android:text="Comercial:"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="32dp"
-        android:text="CONFIRMAR"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <EditText
+        android:id="@+id/etBatHaiz"
+        android:layout_width="85dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="37dp"
+        android:ems="10"
+        android:hint="Cantidad"
+        android:inputType="number"
+        android:text="0"
+        app:layout_constraintStart_toEndOf="@+id/ivBatHaiz"
+        app:layout_constraintTop_toBottomOf="@+id/tvBatHaiz" />
+
+    <TextView
+        android:id="@+id/tvPrecio"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="81dp"
+        android:layout_marginEnd="40dp"
+        android:text="Precio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
