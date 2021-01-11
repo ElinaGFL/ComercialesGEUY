@@ -14,8 +14,8 @@ import java.util.List;
 public class XMLPullParserHandlerCita {
 
     private List<Cita> ListaCitas = new ArrayList<>();
-    private Cita cita = null;
-    private String tag = null;
+    private Cita cita;
+    private String tag;
 
     public List<Cita> parseXML() {
         try {

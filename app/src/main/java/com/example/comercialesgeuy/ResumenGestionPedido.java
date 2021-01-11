@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,8 +15,12 @@ import android.widget.Toast;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.Text;
+import org.xmlpull.v1.XmlSerializer;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,10 +44,12 @@ public class ResumenGestionPedido extends AppCompatActivity {
     private String cant2;
     private String cant3;
     private String cant4;
+    private String actual;
     private TextView part, com, cantidad1, cantidad2, cantidad3, cantidad4, fech, pr1, pr2, pr3, pr4, tot;
-    private int precio1, precio2, precio3, precio4, total = 0;
+    private int precio1, precio2, precio3, precio4, total, p1, p2, p3, p4;
     private Button editar;
     private Button confirmar;
+    private File XMLfile;
 
     private int fecha;
     @Override
@@ -61,10 +70,10 @@ public class ResumenGestionPedido extends AppCompatActivity {
         pr3 = (TextView) findViewById(R.id.tvPr3);
         pr4 = (TextView) findViewById(R.id.tvPr4);
         tot = (TextView) findViewById(R.id.textView9);
-
-
         editar = (Button) findViewById(R.id.btnEditar);
         confirmar = (Button) findViewById(R.id.btnConfirmar);
+
+        XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/pedidos.xml");
 
         partner = bundle.getString("partner");
         comercial = bundle.getString("comercial");
@@ -80,80 +89,211 @@ public class ResumenGestionPedido extends AppCompatActivity {
         cantidad3.setText(cant3);
         cantidad4.setText(cant4);
 
-        int p1 = Integer.parseInt(cant1);
+        p1 = Integer.parseInt(cant1);
         precio1 = 7500 * p1;
         pr1.setText(precio1 + " $");
 
-        int p2 = Integer.parseInt(cant2);
+        p2 = Integer.parseInt(cant2);
         precio2 = 7500 * p2;
         pr2.setText(precio2 + " $");
 
-        int p3 = Integer.parseInt(cant3);
+        p3 = Integer.parseInt(cant3);
         precio3 = 7500 * p3;
         pr3.setText(precio3 + " $");
 
-        int p4 = Integer.parseInt(cant4);
+        p4 = Integer.parseInt(cant4);
         precio4 = 7500 * p4;
         pr4.setText(precio4 + " $");
 
         total = precio1 + precio2 + precio3 + precio4;
         tot.setText(total + " $");
 
-        String actual = DateFormat.getDateTimeInstance().format(new Date());
+        actual = DateFormat.getDateTimeInstance().format(new Date());
 
         fech.setText(actual);
-
 
         editar.setOnClickListener((View v) ->{
             onBackPressed();
         });
 
+        confirmar.setOnClickListener(v -> guardarNuevoPedido());
 
-        confirmar.setOnClickListener((View v) ->{
-            String nombre_archivo = "pedido";
-            ArrayList partner = new ArrayList();
-            ArrayList comercial = new ArrayList();
-            ArrayList fecha = new ArrayList();
-            ArrayList producto = new ArrayList();
-            ArrayList cantidad = new ArrayList();
-            ArrayList precio = new ArrayList();
+    }
 
-            partner.add(partner);
-            comercial.add(comercial);
-            fecha.add(actual);
-            producto.add("IBaterry-20");
-            cantidad.add(cant1);
-            precio.add(precio1);
-
-            partner.add(partner);
-            comercial.add(comercial);
-            fecha.add(actual);
-            producto.add("IBaterry-60");
-            cantidad.add(cant1);
-            precio.add(precio1);
-
-            partner.add(partner);
-            comercial.add(comercial);
-            fecha.add(actual);
-            producto.add("IBattery+PackSun");
-            cantidad.add(cant1);
-            precio.add(precio1);
-
-            partner.add(partner);
-            comercial.add(comercial);
-            fecha.add(actual);
-            producto.add("IBattery-PackHaizea");
-            cantidad.add(cant1);
-            precio.add(precio1);
-
+    private void guardarNuevoPedido() {
+        if(XMLfile.exists()){
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder;
             try {
-                generate(nombre_archivo, partner, comercial, fecha, producto, cantidad, precio);
-            } catch (Exception e) {}
+                dBuilder = dbFactory.newDocumentBuilder();
+                Document doc = dBuilder.parse(XMLfile);
+                doc.getDocumentElement().normalize();
+                //
+                addElement(doc, partner, comercial, actual, String.valueOf(total), p1, p2, p3 ,p4);
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                Transformer transformer = transformerFactory.newTransformer();
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+                DOMSource source = new DOMSource(doc);
+                StreamResult result = new StreamResult(XMLfile);
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                transformer.transform(source, result);
+                Toast.makeText(this, "Se ha añadido la cita al XML", Toast.LENGTH_SHORT).show();
+                finish();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            XMLfile.getParentFile().mkdirs();
+            try{
+                if(XMLfile.createNewFile()){
+                    FileOutputStream fos = new FileOutputStream(XMLfile);
+                    XmlSerializer serializer = Xml.newSerializer();
+                    serializer.setOutput(fos, "UTF-8");
+                    serializer.startDocument("UTF-8", true);
+                    serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+                    serializer.startTag("", "pedidos");
 
+                    serializer.startTag("", "pedido");
 
-        });
+                    serializer.startTag("", "partner");
+                    serializer.text(partner);
+                    serializer.endTag("", "partner");
 
+                    serializer.startTag("", "comercial");
+                    serializer.text(comercial);
+                    serializer.endTag("", "comercial");
 
+                    serializer.startTag("", "fecha_pedido");
+                    serializer.text(actual);
+                    serializer.endTag("", "fecha_pedido");
+
+                    serializer.startTag("", "precio_total");
+                    serializer.text(String.valueOf(total));
+                    serializer.endTag("", "precio_total");
+
+                    serializer.startTag("", "lineas");
+
+                    rellenarLineas(serializer);
+
+                    serializer.endTag("", "lineas");
+
+                    serializer.endTag("", "pedido");
+
+                    serializer.endTag("", "pedidos");
+                    serializer.endDocument();
+                    serializer.endDocument();
+                    serializer.flush();
+                    fos.close();
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(), "No se ha podido crear el archivo", Toast.LENGTH_SHORT).show();
+                }
+            }catch(Exception e){
+                Log.e("Exception", "Error de creación nuevo fichero");
+            }
+        }
+    }
+
+    private void rellenarLineas(XmlSerializer serializer) {
+        if(p1 > 0){
+            rellenarLineasPorUno(serializer, "IBattery-20", p1);
+        }
+        if(p2 > 0){
+            rellenarLineasPorUno(serializer, "IBattery-60", p2);
+        }
+        if(p3 > 0){
+            rellenarLineasPorUno(serializer, "IBattery+PackSun", p3);
+        }
+        if(p4 > 0){
+            rellenarLineasPorUno(serializer, "IBattery-PackHaizea", p4);
+        }
+    }
+
+    private void rellenarLineasPorUno(XmlSerializer serializer, String texto, int cant) {
+        try{
+            serializer.startTag("", "linea");
+
+            serializer.startTag("", "articulo");
+            serializer.text(texto);
+            serializer.endTag("", "articulo");
+
+            serializer.startTag("", "cantidad");
+            serializer.text(String.valueOf(cant));
+            serializer.endTag("", "cantidad");
+
+            serializer.endTag("", "linea");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private void addElement(Document doc, String partner, String comercial, String fecha, String total, int p1, int p2, int p3, int p4) {
+        Node root = doc.getDocumentElement();
+
+        root.appendChild(createElement(doc, partner, comercial, fecha, total, p1, p2, p3, p4));
+    }
+
+    private static Node createElement(Document doc, String partner, String comercial, String fecha, String total, int p1, int p2, int p3, int p4) {
+        Element tipo = doc.createElement("pedido");
+
+        tipo.appendChild(createAllElements(doc, "partner", partner));
+        tipo.appendChild(createAllElements(doc, "comercial", comercial));
+        tipo.appendChild(createAllElements(doc, "fecha", fecha));
+        tipo.appendChild(createAllElements(doc, "total", total));
+
+        Element nodeLineas = doc.createElement("lineas");
+        tipo.appendChild(nodeLineas);
+
+        Element nodeLinea = doc.createElement("linea");
+        nodeLineas.appendChild(nodeLinea);
+
+        if(p1 > 0){
+            Element nodeArticulo = doc.createElement("articulo");
+            nodeArticulo.appendChild(doc.createTextNode("IBattery-20"));
+            nodeLineas.appendChild(nodeArticulo);
+
+            Element nodeCantidad = doc.createElement("cantidad");
+            nodeCantidad.appendChild(doc.createTextNode(String.valueOf(p1)));
+            nodeLineas.appendChild(nodeCantidad);
+        }
+        if(p2 > 0){
+            Element nodeArticulo = doc.createElement("articulo");
+            nodeArticulo.appendChild(doc.createTextNode("IBattery-60"));
+            nodeLineas.appendChild(nodeArticulo);
+
+            Element nodeCantidad = doc.createElement("cantidad");
+            nodeCantidad.appendChild(doc.createTextNode(String.valueOf(p2)));
+            nodeLineas.appendChild(nodeCantidad);
+        }
+        if(p3 > 0){
+            Element nodeArticulo = doc.createElement("articulo");
+            nodeArticulo.appendChild(doc.createTextNode("IBattery+PackSun"));
+            nodeLineas.appendChild(nodeArticulo);
+
+            Element nodeCantidad = doc.createElement("cantidad");
+            nodeCantidad.appendChild(doc.createTextNode(String.valueOf(p3)));
+            nodeLineas.appendChild(nodeCantidad);
+        }
+        if(p4 > 0){
+            Element nodeArticulo = doc.createElement("articulo");
+            nodeArticulo.appendChild(doc.createTextNode("IBattery-PackHaizea"));
+            nodeLineas.appendChild(nodeArticulo);
+
+            Element nodeCantidad = doc.createElement("cantidad");
+            nodeCantidad.appendChild(doc.createTextNode(String.valueOf(p3)));
+            nodeLineas.appendChild(nodeCantidad);
+        }
+
+        return tipo;
+    }
+
+    // utility method to create text node
+    private static Node createAllElements(Document doc, String name, String value) {
+        Element node = doc.createElement(name);
+        node.appendChild(doc.createTextNode(value));
+        return node;
     }
 
     @Override
@@ -162,74 +302,4 @@ public class ResumenGestionPedido extends AppCompatActivity {
         this.finish();
     }
 
-    public void generate(String name, ArrayList<String> partner,ArrayList<String> comercial, ArrayList<String> fecha, ArrayList<String> producto, ArrayList<String> cantidad, ArrayList<String> precio) throws Exception {
-
-        if (partner.isEmpty() || comercial.isEmpty() || partner.size() != comercial.size()) {
-            System.out.println("ERROR empty ArrayList");
-            return;
-        } else {
-
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            DOMImplementation implementation = builder.getDOMImplementation();
-            Document document = implementation.createDocument(null, name, null);
-            document.setXmlVersion("1.0");
-
-            //Main Node
-            Element raiz = document.getDocumentElement();
-            //Por cada key creamos un item que contendrá la key y el value
-            for (int i = 0; i < partner.size(); i++) {
-                //pedido Node
-                Element pedidoNode = document.createElement("pedido");
-                //partner Node
-                Element partnerNode = document.createElement("partner");
-                Text nodeKeyValue = document.createTextNode(partner.get(i));
-                partnerNode.appendChild(nodeKeyValue);
-                //comercial Node
-                Element comercialNode = document.createElement("comercial");
-                Text nodeValueValue = document.createTextNode(comercial.get(i));
-                comercialNode.appendChild(nodeValueValue);
-                //fecha Node
-                Element fechaNode = document.createElement("fecha");
-                Text nodefecha = document.createTextNode(fecha.get(i));
-                fechaNode.appendChild(nodefecha);
-                //producto Node
-                Element productoNode = document.createElement("producto");
-                Text nodeproducto = document.createTextNode(producto.get(i));
-                productoNode.appendChild(nodeproducto);
-                //cantidad Node
-                Element cantidadNode = document.createElement("cantidad");
-                Text nodecantidad = document.createTextNode(cantidad.get(i));
-                cantidadNode.appendChild(nodecantidad);
-                //precio Node
-                Element precioNode = document.createElement("precio");
-                Text nodeprecio = document.createTextNode(precio.get(i));
-                precioNode.appendChild(nodeprecio);
-
-
-                //append keyNode and valueNode to itemNode
-                pedidoNode.appendChild(pedidoNode);
-                pedidoNode.appendChild(partnerNode);
-                pedidoNode.appendChild(comercialNode);
-                pedidoNode.appendChild(fechaNode);
-                pedidoNode.appendChild(productoNode);
-                pedidoNode.appendChild(cantidadNode);
-                pedidoNode.appendChild(precioNode);
-
-
-                //append itemNode to raiz
-                raiz.appendChild(pedidoNode); //pegamos el elemento a la raiz "Documento"
-            }
-            //Generate XML
-            Source source = new DOMSource(document);
-            //Indicamos donde lo queremos almacenar
-            Result result = new StreamResult(new java.io.File("//" + name + ".xml")); //nombre del archivo
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-            transformer.transform(source, result);
-            Toast.makeText(this, "Pedido realizado", Toast.LENGTH_LONG).show();
-
-        }
-    }
 }
