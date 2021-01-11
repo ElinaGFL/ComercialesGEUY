@@ -29,7 +29,7 @@ public class CalendarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calendario);
 
         calendarView = findViewById(R.id.calendarView);
-        fltNuevaVisita = findViewById(R.id.fltNuevaCita);
+        fltNuevaVisita = findViewById(R.id.fltNuevoPartner);
         lstVisitas = findViewById(R.id.lstCitas);
 
         fltNuevaVisita.setEnabled(false);

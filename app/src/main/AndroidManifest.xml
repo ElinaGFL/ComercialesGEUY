@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ComercialesGEUY">
+        <activity android:name=".NuevoPartner"></activity>
         <activity
             android:name=".CalendarioNewActivity"
             android:theme="@style/Theme.PopUp" />
