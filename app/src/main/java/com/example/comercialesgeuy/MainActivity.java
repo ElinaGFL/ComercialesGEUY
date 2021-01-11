@@ -1,8 +1,14 @@
 package com.example.comercialesgeuy;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnpartners;
     Button btnPed;
     Button btnEnvio;
+    static final int REQUEST_CODE = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         btnPed = findViewById(R.id.btnPed);
 
         btnEnvio = findViewById(R.id.btnEnvio);
+
+        pidePermisos();
 
         btnCalendario.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,5 +82,46 @@ public class MainActivity extends AppCompatActivity {
            i= new Intent(this, MainActivity.class);
         }
         startActivity(i);
+    }
+
+    public void pidePermisos() {
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) + ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            //Permiso sin conceder
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) || ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                //Crear Dialogo de Alerta
+                AlertDialog.Builder builder = new AlertDialog.Builder(
+                        MainActivity.this);
+                builder.setTitle("Conceder permisos:");
+                builder.setMessage("Leer y Escribir Archivos");
+                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ActivityCompat.requestPermissions(
+                                MainActivity.this,
+                                new String[]{
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                        Manifest.permission.READ_EXTERNAL_STORAGE
+                                }, REQUEST_CODE
+                        );
+                    }
+                });
+                builder.setNegativeButton("Cancelar", null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            } else {
+                ActivityCompat.requestPermissions(
+                        MainActivity.this,
+                        new String[]{
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE
+                        }, REQUEST_CODE
+                );
+            }
+        } else {
+            //Cuando los permisos ya están concedidos
+            //Toast.makeText(getApplicationContext(), "Ya tienes permisos", Toast.LENGTH_SHORT).show();
+        }
     }
 }

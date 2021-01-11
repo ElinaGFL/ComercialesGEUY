@@ -106,7 +106,6 @@ public class ResumenGestionPedido extends AppCompatActivity {
 
         editar.setOnClickListener((View v) ->{
             onBackPressed();
-
         });
 
 

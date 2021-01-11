@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">ComercialesGEUY</string>
-    <string name="calendarioCitas">calendario de citas</string>
+    <string name="calendarioCitas">Calendario de Citas</string>
     <string name="gestionPartners">gestion de partners</string>
     <string name="gestionPedidos">gestion de pedidos</string>
     <string name="enviosDelegacion">envios a delegaciones</string>
     <string name="tituloPartners">Gestion de PARTNERS</string>
+    <string name="contentButNew">Input Button on Visitas</string>
+    <string name="calendarioNuevaCita">Añadir cita</string>
+    <string name="calendarioTitulo">Titulo:</string>
+    <string name="calendarioInfo">Info:</string>
+    <string name="calendarioGuardar">guardar</string>
+    <string name="calendarioHintTexto">Información sobre su cita</string>
+    <string name="calendarioHintCabecera">Título de cita</string>
 </resources>

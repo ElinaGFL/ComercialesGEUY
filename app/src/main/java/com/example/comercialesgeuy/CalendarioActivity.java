@@ -1,34 +1,70 @@
 package com.example.comercialesgeuy;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Environment;
+import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
+import android.widget.ListView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.widget.CalendarView;
-import android.widget.CalendarView.OnDateChangeListener;
-import android.widget.Toast;
+import com.example.comercialesgeuy.cita.Cita;
+import com.example.comercialesgeuy.cita.XMLPullParserHandler;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 public class CalendarioActivity extends AppCompatActivity {
 
-    CalendarView calendarView;
+    private CalendarView calendarView;
+    private FloatingActionButton fltNuevaVisita;
+    private ListView lstVisitas;
+    private int dia, mes, anio;
+    private String fecha;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendario);
 
-        calendarView = (CalendarView)findViewById(R.id.calendarView);
+        calendarView = findViewById(R.id.calendarView);
+        fltNuevaVisita = findViewById(R.id.fltNuevaCita);
+        lstVisitas = findViewById(R.id.lstCitas);
 
-        calendarView.setOnDateChangeListener(new OnDateChangeListener(){
+        fltNuevaVisita.setEnabled(false);
 
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year,int month, int dayOfMonth) {
-                month++; //porque se conta los meses desde 0
+        listaCitasOn();
 
-                Toast.makeText(getApplicationContext(),
-                        "Año: " + year + "\n" +
-                                "Mes: " + month + "\n" +
-                                "Dia: " + dayOfMonth,
-                        Toast.LENGTH_SHORT).show();
-            }});
+        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            month++; //porque se conta los meses desde 0
+
+            dia = dayOfMonth;
+            mes = month;
+            anio = year;
+
+            fecha = dia + "/" + mes + "/" + anio;
+
+            fltNuevaVisita.setEnabled(true);
+        });
+
+        fltNuevaVisita.setOnClickListener(v -> nuevaVisita());
+    }
+
+    private void listaCitasOn() {
+        List<Cita> citas = null;
+
+        XMLPullParserHandler parser = new XMLPullParserHandler();
+        citas = parser.parseXML();
+
+        ArrayAdapter<Cita> adapter = new ArrayAdapter<Cita> (this,android.R.layout.simple_list_item_1, citas);
+        lstVisitas.setAdapter(adapter);
+    }
+
+    private void nuevaVisita() {
+        Intent intent = new Intent(this, CalendarioNewActivity.class);
+        intent.putExtra("fecha", fecha);
+        startActivity(intent);
     }
 }
