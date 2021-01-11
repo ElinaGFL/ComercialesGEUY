@@ -138,8 +138,8 @@ public class ResumenGestionPedido extends AppCompatActivity {
                 StreamResult result = new StreamResult(XMLfile);
                 transformer.setOutputProperty(OutputKeys.INDENT, "yes");
                 transformer.transform(source, result);
-                Toast.makeText(this, "Se ha añadido la cita al XML", Toast.LENGTH_SHORT).show();
-                finish();
+                Toast.makeText(this, "Se ha añadido el pedido al XML", Toast.LENGTH_SHORT).show();
+                finalizar();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -184,8 +184,8 @@ public class ResumenGestionPedido extends AppCompatActivity {
                     serializer.endDocument();
                     serializer.endDocument();
                     serializer.flush();
-                    fos.close();
-                    finish();
+                    fos.close();Toast.makeText(this, "Se ha añadido el pedido al XML", Toast.LENGTH_SHORT).show();
+                    finalizar();
                 }else{
                     Toast.makeText(getApplicationContext(), "No se ha podido crear el archivo", Toast.LENGTH_SHORT).show();
                 }
@@ -193,6 +193,13 @@ public class ResumenGestionPedido extends AppCompatActivity {
                 Log.e("Exception", "Error de creación nuevo fichero");
             }
         }
+    }
+
+    private void finalizar() {
+        Intent intent = new Intent();
+        intent.putExtra("resultado",1);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private void rellenarLineas(XmlSerializer serializer) {

@@ -69,10 +69,13 @@ public class GestionPedido extends AppCompatActivity {
                 intent.putExtra("BatSun", cantid3.getText().toString());
                 intent.putExtra("BatHaiz", cantid4.getText().toString());
 
-                startActivity(intent);
+                startActivityForResult(intent, 1);
 
             }
         });
+
+
+
         cantid1.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {}
@@ -151,6 +154,15 @@ public class GestionPedido extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            finish();
+        }
     }
 
     @Override
