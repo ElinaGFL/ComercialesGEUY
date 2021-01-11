@@ -91,7 +91,7 @@ public class CalendarioNewActivity extends AppCompatActivity {
 
         File newxmlfile = new File(Environment.getExternalStorageDirectory() + "/GEUY/citas.xml");
         XmlSerializer serializer = Xml.newSerializer();
-        FileOutputStream fos = null;
+        FileOutputStream fos;
 
         String filePath = Environment.getExternalStorageDirectory() + "/GEUY/citas.xml";
         System.out.println(filePath);
@@ -100,7 +100,6 @@ public class CalendarioNewActivity extends AppCompatActivity {
 
         if (!newxmlfile.exists()) {
             newxmlfile.getParentFile().mkdir();
-
             try {
                 fos = new FileOutputStream(newxmlfile);
                 newxmlfile.createNewFile();
@@ -137,9 +136,7 @@ public class CalendarioNewActivity extends AppCompatActivity {
                 finish();
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (SAXException | TransformerException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -157,7 +154,7 @@ public class CalendarioNewActivity extends AppCompatActivity {
         transformer.transform(source, result);
     }
 
-    private void addElement(Document doc, String fecha, String titulo, String descrip) {
+    private void addElement(Document doc, String fecha, String titulo, String texto) {
         Node root = doc.getDocumentElement();
 
         Element nuevaCita = doc.createElement("cita");
@@ -172,9 +169,9 @@ public class CalendarioNewActivity extends AppCompatActivity {
         nuevaCita.appendChild(fechaCita);
         System.out.println("fecha");
 
-        Element descripCita = doc.createElement("texto");
-        descripCita.appendChild(doc.createTextNode(descrip));
-        nuevaCita.appendChild(descripCita);
+        Element textoCita = doc.createElement("texto");
+        textoCita.appendChild(doc.createTextNode(texto));
+        nuevaCita.appendChild(textoCita);
         root.appendChild(nuevaCita);
     }
 }
