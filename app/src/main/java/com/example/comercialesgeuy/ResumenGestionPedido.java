@@ -116,8 +116,31 @@ public class ResumenGestionPedido extends AppCompatActivity {
             onBackPressed();
         });
 
-        confirmar.setOnClickListener(v -> guardarNuevoPedido());
+        confirmar.setOnClickListener(v -> verificarPedido());
 
+    }
+
+    private void verificarPedido() {
+        boolean confirm = false;
+
+        if(p1 > 0){
+            confirm = true;
+        }
+        if(p2 > 0){
+            confirm = true;
+        }
+        if(p3 > 0){
+            confirm = true;
+        }
+        if(p4 > 0){
+            confirm = true;
+        }
+
+        if(confirm){
+            guardarNuevoPedido();
+        }else{
+            Toast.makeText(this, "El pedido esta vacio", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void guardarNuevoPedido() {
