@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class XMLPullParserHandler {
+public class XMLPullParserHandlerCita {
 
     private List<Cita> ListaCitas = new ArrayList<>();
     private Cita cita = null;

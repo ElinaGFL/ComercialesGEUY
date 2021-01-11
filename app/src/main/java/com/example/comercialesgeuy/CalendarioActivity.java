@@ -2,7 +2,6 @@ package com.example.comercialesgeuy;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
@@ -10,7 +9,7 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.comercialesgeuy.cita.Cita;
-import com.example.comercialesgeuy.cita.XMLPullParserHandler;
+import com.example.comercialesgeuy.cita.XMLPullParserHandlerCita;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -55,7 +54,7 @@ public class CalendarioActivity extends AppCompatActivity {
     private void listaCitasOn() {
         List<Cita> citas = null;
 
-        XMLPullParserHandler parser = new XMLPullParserHandler();
+        XMLPullParserHandlerCita parser = new XMLPullParserHandlerCita();
         citas = parser.parseXML();
 
         ArrayAdapter<Cita> adapter = new ArrayAdapter<Cita> (this,android.R.layout.simple_list_item_1, citas);
