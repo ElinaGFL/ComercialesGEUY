@@ -6,7 +6,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Xml;
 import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,17 +20,12 @@ import org.xmlpull.v1.XmlSerializer;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -54,9 +48,9 @@ public class CalendarioNewActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         fecha = extras.getString("fecha");
 
-        crearVentana();
-
         XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/citas.xml");
+
+        crearVentana();
 
         btnGuardar.setOnClickListener(v -> guardarNuevaCita());
     }

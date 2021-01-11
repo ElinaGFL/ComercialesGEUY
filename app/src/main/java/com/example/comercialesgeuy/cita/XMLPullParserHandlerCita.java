@@ -1,15 +1,12 @@
 package com.example.comercialesgeuy.cita;
 
-import android.content.Context;
 import android.os.Environment;
 
 import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +16,6 @@ public class XMLPullParserHandlerCita {
     private List<Cita> ListaCitas = new ArrayList<>();
     private Cita cita = null;
     private String tag = null;
-
-    private static final String FECHA = "fecha";
-    private static final String TITULO = "titulo";
-    private static final String TEXTO = "texto";
 
     public List<Cita> parseXML() {
         try {
@@ -46,7 +39,7 @@ public class XMLPullParserHandlerCita {
                 eventType = xpp.next();
             }
 
-        } catch (XmlPullParserException | IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return ListaCitas;
@@ -64,11 +57,11 @@ public class XMLPullParserHandlerCita {
     private void handleText(String text) {
         String xmlText = text;
         if (cita != null && tag != null) {
-            if (tag.equals(FECHA)) {
+            if (tag.equals("fecha")) {
                 cita.setFecha(xmlText);
-            } else if (tag.equals(TITULO)) {
+            } else if (tag.equals("titulo")) {
                 cita.setCabecera(xmlText);
-            } else if (tag.equals(TEXTO)) {
+            } else if (tag.equals("texto")) {
                 cita.setTexto(xmlText);
             }
         }
