@@ -4,26 +4,26 @@
     <partners>
         <nombre>Unai</nombre>
         <apellido>Gallego</apellido>
-        <telefono>642131174</telefono>
-        <correo>ejemplo@geuy.eus</correo>
+        <telefono>611111111</telefono>
+        <correo>unai@geuy.eus</correo>
     </partners>
     <partners>
         <nombre>Elina</nombre>
         <apellido>Gafiullina</apellido>
-        <telefono>642131174</telefono>
-        <correo>ejemplo@geuy.eus</correo>
+        <telefono>666666666</telefono>
+        <correo>elina@geuy.eus</correo>
     </partners>
     <partners>
         <nombre>Garikoitz</nombre>
         <apellido>Mrówczynski</apellido>
-        <telefono>642131174</telefono>
-        <correo>ejemplo@geuy.eus</correo>
+        <telefono>699999999</telefono>
+        <correo>polaco@geuy.eus</correo>
     </partners>
     <partners>
-        <nombre>yeray</nombre>
+        <nombre>Yeray</nombre>
         <apellido>de Diego</apellido>
         <telefono>642131174</telefono>
-        <correo>ejemplo@geuy.eus</correo>
+        <correo>yeray@geuy.eus</correo>
     </partners>
 </resources>
 
