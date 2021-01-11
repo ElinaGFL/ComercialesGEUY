@@ -8,8 +8,8 @@
 
     <Button
         android:id="@+id/btnCalend"
-        android:layout_width="125dp"
-        android:layout_height="86dp"
+        android:layout_width="157dp"
+        android:layout_height="84dp"
         android:layout_marginTop="180dp"
         android:onClick="siguienteLayout"
         android:text="@string/calendarioCitas"
@@ -31,8 +31,8 @@
 
     <Button
         android:id="@+id/btnEnvio"
-        android:layout_width="125dp"
-        android:layout_height="86dp"
+        android:layout_width="160dp"
+        android:layout_height="83dp"
         android:layout_marginTop="32dp"
         android:text="@string/enviosDelegacion"
         app:layout_constraintEnd_toEndOf="parent"
