@@ -82,7 +82,7 @@ public class NuevoPartner extends AppCompatActivity {
                     }
                 }
 
-                volverAtras();
+                finish();
 
 
             }
