@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<partnets>
+<partners>
     <partner>
         <nombre>Unai</nombre>
         <apellido>Gallego</apellido>
@@ -24,6 +24,6 @@
         <telefono>642131174</telefono>
         <correo>ejemplo@geuy.eus</correo>
     </partner>
-    </partnets>
+</partners>
 
 

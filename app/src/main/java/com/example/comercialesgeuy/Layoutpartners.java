@@ -77,9 +77,9 @@ public class Layoutpartners extends AppCompatActivity implements RecyclerAdapter
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(getAssets().open("partners.xml"));
+            Document doc = builder.parse(getAssets().open("partner.xml"));
             Element raiz = doc.getDocumentElement();
-            NodeList items = raiz.getElementsByTagName("partners");
+            NodeList items = raiz.getElementsByTagName("partner");
 
             for( int i = 0; i < items.getLength(); i++ ) {
                 Node nodoCliente = items.item(i);
