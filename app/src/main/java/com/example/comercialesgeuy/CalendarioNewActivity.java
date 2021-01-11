@@ -75,7 +75,7 @@ public class CalendarioNewActivity extends AppCompatActivity {
 
     private void guardarNuevaCita() {
         String titulo;
-        String descrip;
+        String texto;
 
         if (txtCabecera.getText().length() > 0) {
             titulo = txtCabecera.getText().toString();
@@ -84,9 +84,9 @@ public class CalendarioNewActivity extends AppCompatActivity {
         }
 
         if (txtTexto.getText().length() > 0) {
-            descrip = txtTexto.getText().toString();
+            texto = txtTexto.getText().toString();
         } else {
-            descrip = "El texto esta vacio.";
+            texto = "El texto esta vacio.";
         }
 
         File newxmlfile = new File(Environment.getExternalStorageDirectory() + "/GEUY/citas.xml");
@@ -116,7 +116,7 @@ public class CalendarioNewActivity extends AppCompatActivity {
                 serializer.text(titulo);
                 serializer.endTag(null, "titulo");
                 serializer.startTag(null, "texto");
-                serializer.text(descrip);
+                serializer.text(texto);
                 serializer.endTag(null, "texto");
                 serializer.endTag(null, "cita");
                 serializer.endTag(null, "citas");
@@ -132,7 +132,7 @@ public class CalendarioNewActivity extends AppCompatActivity {
                 dBuilder = dbFactory.newDocumentBuilder();
                 Document doc = dBuilder.parse(newxmlfile);
                 doc.getDocumentElement().normalize();
-                addElement(doc, fecha, titulo, descrip);
+                addElement(doc, fecha, titulo, texto);
                 writeXMLFile(doc);
                 finish();
             } catch (ParserConfigurationException e) {

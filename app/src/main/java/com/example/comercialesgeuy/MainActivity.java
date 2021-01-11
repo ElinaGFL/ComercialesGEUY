@@ -86,15 +86,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void pidePermisos() {
         if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) + ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                PackageManager.PERMISSION_GRANTED) {
-            //Permiso sin conceder
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) || ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                //Crear Dialogo de Alerta
-                AlertDialog.Builder builder = new AlertDialog.Builder(
-                        MainActivity.this);
-                builder.setTitle("Conceder permisos:");
-                builder.setMessage("Leer y Escribir Archivos");
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) + ContextCompat.checkSelfPermission
+                (MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale
+                    (MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    || ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Permitir:");
+                builder.setMessage("Usar la memoria para leer y escribir los archivos:");
                 builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -119,9 +120,6 @@ public class MainActivity extends AppCompatActivity {
                         }, REQUEST_CODE
                 );
             }
-        } else {
-            //Cuando los permisos ya están concedidos
-            //Toast.makeText(getApplicationContext(), "Ya tienes permisos", Toast.LENGTH_SHORT).show();
         }
     }
 }
