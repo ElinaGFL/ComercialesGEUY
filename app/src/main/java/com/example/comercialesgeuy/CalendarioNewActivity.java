@@ -1,19 +1,16 @@
 package com.example.comercialesgeuy;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Xml;
 import android.view.Gravity;
-import android.view.View;
+
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.w3c.dom.Document;

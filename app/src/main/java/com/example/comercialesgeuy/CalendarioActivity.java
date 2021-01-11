@@ -2,7 +2,6 @@ package com.example.comercialesgeuy;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
@@ -30,7 +29,7 @@ public class CalendarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calendario);
 
         calendarView = findViewById(R.id.calendarView);
-        fltNuevaVisita = findViewById(R.id.fltNuevaCita);
+        fltNuevaVisita = findViewById(R.id.fltNuevoPartner);
         lstVisitas = findViewById(R.id.lstCitas);
 
         fltNuevaVisita.setEnabled(false);

@@ -10,30 +10,41 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="41dp"
+        android:layout_marginTop="16dp"
         android:text="@string/tituloPartners"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/rcvPartiners"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RelativeLayout
-        android:id="@+id/rcvPartiners"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnaddPartner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="36dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cvpartners"
+        app:srcCompat="@android:drawable/ic_input_add"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cvpartners"
         android:layout_width="0dp"
         android:layout_height="0dp"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="128dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:context="co.quindio.sena.recyclerviewpersonalizado.m">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
+    </androidx.recyclerview.widget.RecyclerView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/cvpartners"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            />
-    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

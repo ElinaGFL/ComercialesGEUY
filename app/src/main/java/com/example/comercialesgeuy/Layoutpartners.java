@@ -7,34 +7,56 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.comercialesgeuy.adapter.RecyclerAdapter;
 import com.example.comercialesgeuy.model.DatosPartners;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
+import org.xml.sax.SAXException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class Layoutpartners extends AppCompatActivity implements RecyclerAdapter.RecyclerItemClick, SearchView.OnQueryTextListener {
     private RecyclerView rvlista;
     private RecyclerAdapter adapter;
     private List<DatosPartners> items;
+    private FloatingActionButton btnaddPartner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partners);
+        btnaddPartner=findViewById(R.id.btnaddPartner);
 
         initViews();
         initValues();
+        btnaddPartner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              nuevoPartner();
+
+            }
+        });
+
     }
+
+    private void nuevoPartner() {
+        Intent i=new Intent(this, NuevoPartner.class);
+        startActivity(i);
+    }
+
 
     private void initViews(){
         rvlista=findViewById(R.id.cvpartners);
@@ -55,7 +77,7 @@ public class Layoutpartners extends AppCompatActivity implements RecyclerAdapter
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(getResources().openRawResource(R.raw.partner));
+            Document doc = builder.parse(getAssets().open("partners.xml"));
             Element raiz = doc.getDocumentElement();
             NodeList items = raiz.getElementsByTagName("partners");
 

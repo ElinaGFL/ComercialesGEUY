@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<partnets>
+    <partner>
+        <nombre>Unai</nombre>
+        <apellido>Gallego</apellido>
+        <telefono>642131174</telefono>
+        <correo>ejemplo@geuy.eus</correo>
+    </partner>
+    <partner>
+        <nombre>Elina</nombre>
+        <apellido>Gafiullina</apellido>
+        <telefono>642131174</telefono>
+        <correo>ejemplo@geuy.eus</correo>
+    </partner>
+    <partner>
+        <nombre>Garikoitz</nombre>
+        <apellido>Mrówczynski</apellido>
+        <telefono>642131174</telefono>
+        <correo>ejemplo@geuy.eus</correo>
+    </partner>
+    <partner>
+        <nombre>yeray</nombre>
+        <apellido>de Diego</apellido>
+        <telefono>642131174</telefono>
+        <correo>ejemplo@geuy.eus</correo>
+    </partner>
+    </partnets>
+
+
