@@ -320,7 +320,6 @@ public class ResumenGestionPedido extends AppCompatActivity {
         return tipo;
     }
 
-    // utility method to create text node
     private static Node createAllElements(Document doc, String name, String value) {
         Element node = doc.createElement(name);
         node.appendChild(doc.createTextNode(value));

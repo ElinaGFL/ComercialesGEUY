@@ -5,16 +5,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.io.File;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 public class NuevoPartner extends AppCompatActivity {
     EditText nvNombre;
@@ -22,7 +32,7 @@ public class NuevoPartner extends AppCompatActivity {
     EditText nvTelefono;
     EditText nvCorreo;
     Button btnNuevoPartner;
-
+    private File XMLfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,58 +48,33 @@ public class NuevoPartner extends AppCompatActivity {
         btnNuevoPartner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nvNombre.getText().length()<=0){
+                if (nvNombre.getText().length() <= 0) {
                     nvNombre.setError("No puedes dejar el Nombre del nuevo parten en vacio!");
-                }else if(nvApellido.getText().length()<=0) {
+                } else if (nvApellido.getText().length() <= 0) {
                     nvApellido.setError("No puedes dejar el Nombre del nuevo parten en vacio!");
-                } else if(nvTelefono.getText().length()<=0) {
+                } else if (nvTelefono.getText().length() <= 0) {
                     nvTelefono.setError("No puedes dejar el Nombre del nuevo parten en vacio!");
-                } else if(nvNombre.getText().length()<=0) {
+                } else if (nvNombre.getText().length() <= 0) {
                     nvCorreo.setError("No puedes dejar el Nombre del nuevo parten en vacio!");
-                }else {
+                } else {
                     try {
-                        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                        DocumentBuilder builder = factory.newDocumentBuilder();
+                        Toast toast1 =
+                                Toast.makeText(getApplicationContext(),
+                                        "Todavia no esta la funciona disponible.", Toast.LENGTH_SHORT);
 
-                        Document doc = builder.parse(getAssets().open("partners.xml"));
-                        Element raiz = doc.getDocumentElement();
-                        NodeList items = raiz.getElementsByTagName("partners");
-
-                        Element partner = doc.createElement("partner");
-
-                        partner.appendChild(raiz);
-
-                        Element nombre = doc.createElement("nombre");
-                        nombre.appendChild(doc.createTextNode((nvNombre.toString())));
-
-                        Element apellido = doc.createElement("apellido");
-                        apellido.appendChild(doc.createTextNode((nvNombre.toString())));
-
-                        Element telefono = doc.createElement("telefono");
-                        telefono.appendChild(doc.createTextNode((nvNombre.toString())));
-
-                        Element correo = doc.createElement("correo");
-                        correo.appendChild(doc.createTextNode((nvNombre.toString())));
-
-                        items.item(0).appendChild(nombre);
-                        items.item(1).appendChild(apellido);
-                        items.item(2).appendChild(telefono);
-                        items.item(3).appendChild(correo);
-
+                        toast1.show();
 
                     } catch (Exception ex) {
-
+                        Log.e("msg", "No se pudo introducir el nuevo partner");
                     }
                 }
 
-                finish();
-
-
+                volverAtras();
             }
-
 
         });
     }
+
 
     public void volverAtras(){
         Intent i=new Intent(this, Layoutpartners.class);
