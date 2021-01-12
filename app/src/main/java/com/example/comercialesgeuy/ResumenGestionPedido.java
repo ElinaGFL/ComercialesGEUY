@@ -112,11 +112,9 @@ public class ResumenGestionPedido extends AppCompatActivity {
 
         fech.setText(actual);
 
-        editar.setOnClickListener((View v) ->{
-            onBackPressed();
-        });
+        editar.setOnClickListener((View v) -> onBackPressed());
 
-        confirmar.setOnClickListener(v -> verificarPedido());
+        confirmar.setOnClickListener((View v) -> verificarPedido());
 
     }
 
@@ -162,7 +160,8 @@ public class ResumenGestionPedido extends AppCompatActivity {
                 transformer.setOutputProperty(OutputKeys.INDENT, "yes");
                 transformer.transform(source, result);
                 Toast.makeText(this, "Se ha añadido el pedido al XML", Toast.LENGTH_SHORT).show();
-                finalizar();
+                //finalizar(1);
+                finish();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -208,7 +207,8 @@ public class ResumenGestionPedido extends AppCompatActivity {
                     serializer.endDocument();
                     serializer.flush();
                     fos.close();Toast.makeText(this, "Se ha añadido el pedido al XML", Toast.LENGTH_SHORT).show();
-                    finalizar();
+                    //finalizar(1);
+                    finish();
                 }else{
                     Toast.makeText(getApplicationContext(), "No se ha podido crear el archivo", Toast.LENGTH_SHORT).show();
                 }
@@ -217,13 +217,14 @@ public class ResumenGestionPedido extends AppCompatActivity {
             }
         }
     }
-
-    private void finalizar() {
+    /*
+    private void finalizar(int i) {
         Intent intent = new Intent();
-        intent.putExtra("resultado",1);
+        intent.putExtra("result",i);
         setResult(RESULT_OK, intent);
         finish();
     }
+    */
 
     private void rellenarLineas(XmlSerializer serializer) {
         if(p1 > 0){
@@ -324,12 +325,6 @@ public class ResumenGestionPedido extends AppCompatActivity {
         Element node = doc.createElement(name);
         node.appendChild(doc.createTextNode(value));
         return node;
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
     }
 
 }

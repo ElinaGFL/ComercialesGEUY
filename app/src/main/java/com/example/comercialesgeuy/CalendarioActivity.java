@@ -29,7 +29,7 @@ public class CalendarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calendario);
 
         calendarView = findViewById(R.id.calendarView);
-        fltNuevaVisita = findViewById(R.id.fltNuevoPartner);
+        fltNuevaVisita = findViewById(R.id.fltNuevaCita);
         lstVisitas = findViewById(R.id.lstCitas);
 
         fltNuevaVisita.setEnabled(false);
@@ -52,12 +52,12 @@ public class CalendarioActivity extends AppCompatActivity {
     }
 
     private void listaCitasOn() {
-        List<Cita> citas = null;
+        List<Cita> citas;
 
         XMLPullParserHandlerCita parser = new XMLPullParserHandlerCita();
         citas = parser.parseXML();
 
-        ArrayAdapter<Cita> adapter = new ArrayAdapter<Cita> (this,android.R.layout.simple_list_item_1, citas);
+        ArrayAdapter<Cita> adapter = new ArrayAdapter<> (this,android.R.layout.simple_list_item_1, citas);
         lstVisitas.setAdapter(adapter);
     }
 

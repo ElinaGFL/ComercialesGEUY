@@ -2,6 +2,7 @@ package com.example.comercialesgeuy;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -69,8 +70,7 @@ public class GestionPedido extends AppCompatActivity {
                 intent.putExtra("BatSun", cantid3.getText().toString());
                 intent.putExtra("BatHaiz", cantid4.getText().toString());
 
-                startActivityForResult(intent, 1);
-
+                startActivity(intent);
             }
         });
 
@@ -155,7 +155,7 @@ public class GestionPedido extends AppCompatActivity {
 
 
     }
-
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -164,12 +164,15 @@ public class GestionPedido extends AppCompatActivity {
             finish();
         }
     }
+    */
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
     }
+
+
     public int calcularTotal(EditText t){
         String i = t.getText().toString();
         int total = 0;
