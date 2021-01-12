@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnpartners;
     Button btnPed;
     Button btnEnvio;
+    Button btnllamar;
+    Button btnCorreo;
     static final int REQUEST_CODE = 123;
 
     @Override
