@@ -13,13 +13,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     Button btnCalendario;
     Button btnpartners;
     Button btnPed;
     Button btnEnvio;
     Button btnllamar;
     Button btnCorreo;
+    private GoogleMap mMap;
     static final int REQUEST_CODE = 123;
 
     @Override
@@ -64,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
                 siguienteLayout(btnPed);
             }
         });
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     public void siguienteLayout(View v){
@@ -84,6 +95,16 @@ public class MainActivity extends AppCompatActivity {
            i= new Intent(this, MainActivity.class);
         }
         startActivity(i);
+    }
+
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(43.30472446500069, -2.0168812128018994), 15.0f));
+        // Add a marker in Sydney and move the camera
+        LatLng comercialGEYU = new LatLng(43.30472446500069, -2.0168812128018994);
+        mMap.addMarker(new MarkerOptions().position(comercialGEYU).title("Comercial GEYU"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(comercialGEYU));
     }
 
     public void pidePermisos() {
