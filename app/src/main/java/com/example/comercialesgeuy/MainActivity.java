@@ -9,6 +9,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -75,6 +76,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
+    public void llamar(View v){
+        Intent llamar = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: 943 52 95 65"));
+
+        startActivity(llamar);
+    }
+    public void correo(View v){
+        Intent email = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto","jseara@cebanc.com", null));
+        startActivity(email);
     }
 
     public void siguienteLayout(View v){
