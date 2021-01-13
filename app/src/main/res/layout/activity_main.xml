@@ -58,21 +58,29 @@
         android:layout_height="54dp"
         android:layout_marginStart="100dp"
         android:layout_marginTop="24dp"
+        android:contentDescription="@string/app_name"
+        android:onClick="llamar"
         app:layout_constraintEnd_toStartOf="@+id/btnCorreoComercial"
         app:layout_constraintHorizontal_bias="0.196"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnPed"
-        app:srcCompat="@android:drawable/stat_sys_phone_call" />
+        app:srcCompat="@android:drawable/stat_sys_phone_call"
+        tools:srcCompat="@android:drawable/stat_sys_phone_call" />
 
     <ImageButton
         android:id="@+id/btnCorreoComercial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="136dp"
+        android:contentDescription="@string/app_name"
+        android:onClick="correo"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnLlamarComercial"
         app:layout_constraintTop_toBottomOf="@+id/btnEnvio"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@android:drawable/ic_dialog_email"
+        tools:srcCompat="@android:drawable/ic_dialog_email" />
 
     <fragment
         android:id="@+id/map"
