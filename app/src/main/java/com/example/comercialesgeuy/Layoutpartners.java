@@ -10,28 +10,24 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.comercialesgeuy.adapter.RecyclerAdapter;
-import com.example.comercialesgeuy.model.DatosPartners;
+import com.example.comercialesgeuy.model.Partner;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-import org.xml.sax.SAXException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 public class Layoutpartners extends AppCompatActivity implements RecyclerAdapter.RecyclerItemClick, SearchView.OnQueryTextListener {
     private RecyclerView rvlista;
     private RecyclerAdapter adapter;
-    private List<DatosPartners> items;
+    private List<Partner> items;
     private FloatingActionButton btnaddPartner;
 
     @Override
@@ -62,6 +58,7 @@ public class Layoutpartners extends AppCompatActivity implements RecyclerAdapter
         rvlista=findViewById(R.id.cvpartners);
     }
 
+    //rellenar y mostrar partner
     private void initValues(){
         LinearLayoutManager manager=new LinearLayoutManager(this);
         rvlista.setLayoutManager(manager);
@@ -71,8 +68,8 @@ public class Layoutpartners extends AppCompatActivity implements RecyclerAdapter
         rvlista.setAdapter(adapter);
     }
 
-    public ArrayList<DatosPartners> leerPartners(){
-        ArrayList<DatosPartners> listado = new ArrayList<DatosPartners>();
+    public ArrayList<Partner> leerPartners(){
+        ArrayList<Partner> listado = new ArrayList<Partner>();
 
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -83,7 +80,7 @@ public class Layoutpartners extends AppCompatActivity implements RecyclerAdapter
 
             for( int i = 0; i < items.getLength(); i++ ) {
                 Node nodoCliente = items.item(i);
-                DatosPartners partn = new DatosPartners();
+                Partner partn = new Partner();
 
                 if (nodoCliente.getNodeType() == Node.ELEMENT_NODE) {
                     Element partner1 = (Element) nodoCliente;
@@ -107,7 +104,7 @@ public class Layoutpartners extends AppCompatActivity implements RecyclerAdapter
         return listado;
     }
 
-    public void itemClick(DatosPartners item) {
+    public void itemClick(Partner item) {
         Intent intent = new Intent(this, Contacto.class);
         intent.putExtra("nombre",item.getNombre());
         intent.putExtra("apellido",item.getApellidos());

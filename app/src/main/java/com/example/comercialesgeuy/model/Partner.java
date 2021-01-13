@@ -1,17 +1,17 @@
 package com.example.comercialesgeuy.model;
 
-public class DatosPartners {
+public class Partner {
         String nombre;
         String apellidos;
         String correo;
         String telefono;
-        public DatosPartners(String nom, String aped, String email, String telf){
+        public Partner(String nom, String aped, String email, String telf){
                 nombre=nom;
                 apellidos=aped;
                 correo =email;
                 telefono=telf;
         }
-        public DatosPartners(){
+        public Partner(){
 
         }
 

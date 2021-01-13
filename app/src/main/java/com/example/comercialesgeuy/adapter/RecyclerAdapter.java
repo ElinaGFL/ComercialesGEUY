@@ -1,28 +1,24 @@
 package com.example.comercialesgeuy.adapter;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comercialesgeuy.R;
-import com.example.comercialesgeuy.model.DatosPartners;
+import com.example.comercialesgeuy.model.Partner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder> {
 
-    private List<DatosPartners> items;
+    private List<Partner> items;
     private RecyclerItemClick itemClick;
 
-    public RecyclerAdapter(List<DatosPartners> items,RecyclerItemClick itemClick) {
+    public RecyclerAdapter(List<Partner> items, RecyclerItemClick itemClick) {
 
         this.items = items;
         this.itemClick = itemClick;
@@ -39,7 +35,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerHolder holder, int position) {
-        DatosPartners d= items.get(position);
+        Partner d= items.get(position);
         holder.nombre.setText(d.getNombre());
         holder.apellidos.setText(d.getApellidos());
         holder.telefono.setText(d.getTelefono());
@@ -75,7 +71,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
 
     public interface RecyclerItemClick {
-        void itemClick(DatosPartners item);
+        void itemClick(Partner item);
     }
 
 }
