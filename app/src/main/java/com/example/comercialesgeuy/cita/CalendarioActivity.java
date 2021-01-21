@@ -1,4 +1,4 @@
-package com.example.comercialesgeuy;
+package com.example.comercialesgeuy.cita;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,7 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.comercialesgeuy.cita.Cita;
-import com.example.comercialesgeuy.cita.XMLPullParserHandlerCita;
+import com.example.comercialesgeuy.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -21,7 +20,6 @@ public class CalendarioActivity extends AppCompatActivity {
     private ListView lstVisitas;
     private int dia, mes, anio;
     private String fecha;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

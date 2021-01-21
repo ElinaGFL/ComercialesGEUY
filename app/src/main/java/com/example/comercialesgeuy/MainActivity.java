@@ -14,6 +14,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.comercialesgeuy.cita.CalendarioActivity;
+import com.example.comercialesgeuy.partners.PartnerActivity;
+import com.example.comercialesgeuy.pedidos.PedidoActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -94,13 +97,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             i = new Intent(this, CalendarioActivity.class);
         }
        else if(boton==btnpartners) {
-          i = new Intent(this, Layoutpartners.class);
+          i = new Intent(this, PartnerActivity.class);
         }
         else if(boton==btnEnvio) {
             i = new Intent(this, EnvioDelegacion.class);
         }
        else if (boton==btnPed){
-           i = new Intent(this, GestionPedido.class);
+           i = new Intent(this, PedidoActivity.class);
         }else {
            i= new Intent(this, MainActivity.class);
         }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NuevoPartner">
+    tools:context=".partners.PartnerNewActivity">
 
     <TextView
         android:id="@+id/textView2"
@@ -57,7 +57,7 @@
         tools:text="Apellido" />
 
     <EditText
-        android:id="@+id/txtNuevoApellido"
+        android:id="@+id/txtNuevoApellidos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -78,10 +78,10 @@
         android:hint="Escribe aquí el Correo"
         android:inputType="textPostalAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNuevoNumero" />
+        app:layout_constraintTop_toBottomOf="@+id/txtNuevoTelefono" />
 
     <EditText
-        android:id="@+id/txtNuevoNumero"
+        android:id="@+id/txtNuevoTelefono"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -90,7 +90,7 @@
         android:hint="EScribe aquí el Número"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNuevoApellido" />
+        app:layout_constraintTop_toBottomOf="@+id/txtNuevoApellidos" />
 
     <TextView
         android:id="@+id/textView11"
@@ -99,7 +99,7 @@
         android:layout_marginTop="32dp"
         android:text="Telefono"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/txtNuevoNumero"
+        app:layout_constraintEnd_toStartOf="@+id/txtNuevoTelefono"
         app:layout_constraintHorizontal_bias="0.605"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />

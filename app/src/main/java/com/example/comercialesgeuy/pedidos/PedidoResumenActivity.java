@@ -1,4 +1,4 @@
-package com.example.comercialesgeuy;
+package com.example.comercialesgeuy.pedidos;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.comercialesgeuy.R;
 
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -35,7 +37,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-public class ResumenGestionPedido extends AppCompatActivity {
+public class PedidoResumenActivity extends AppCompatActivity {
 
     private Bundle bundle;
     private String partner;

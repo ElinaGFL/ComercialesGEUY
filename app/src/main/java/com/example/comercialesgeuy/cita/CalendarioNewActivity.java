@@ -1,4 +1,4 @@
-package com.example.comercialesgeuy;
+package com.example.comercialesgeuy.cita;
 
 import android.os.Bundle;
 import android.os.Environment;
@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.comercialesgeuy.R;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

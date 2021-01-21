@@ -1,4 +1,4 @@
-package com.example.comercialesgeuy.adapter;
+package com.example.comercialesgeuy.partners;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comercialesgeuy.R;
-import com.example.comercialesgeuy.model.Partner;
 
 import java.util.List;
 
@@ -19,32 +18,30 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     private RecyclerItemClick itemClick;
 
     public RecyclerAdapter(List<Partner> items, RecyclerItemClick itemClick) {
-
         this.items = items;
         this.itemClick = itemClick;
-
     }
 
     @NonNull
     @Override
     public RecyclerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.partners_list_view,parent,false);
-
         return new RecyclerHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerHolder holder, int position) {
-        Partner d= items.get(position);
-        holder.nombre.setText(d.getNombre());
-        holder.apellidos.setText(d.getApellidos());
-        holder.telefono.setText(d.getTelefono());
-        holder.correo.setText(d.getCorreo());
+        Partner partner = items.get(position);
+
+        holder.nombre.setText(partner.getNombre());
+        holder.apellidos.setText(partner.getApellidos());
+        holder.telefono.setText(partner.getTelefono());
+        holder.correo.setText(partner.getCorreo());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemClick.itemClick(d);
+                itemClick.itemClick(partner);
             }
         });
     }
@@ -62,13 +59,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         public RecyclerHolder(@NonNull View itemView){
             super(itemView);
-            nombre= itemView.findViewById(R.id.nombrePartner);
-            apellidos=itemView.findViewById(R.id.apellidoPartner);
-            telefono= itemView.findViewById(R.id.telefonoPartner);
-            correo= itemView.findViewById(R.id.emailPartner);
+            nombre = itemView.findViewById(R.id.nombrePartner);
+            apellidos = itemView.findViewById(R.id.apellidoPartner);
+            telefono = itemView.findViewById(R.id.telefonoPartner);
+            correo = itemView.findViewById(R.id.emailPartner);
         }
     }
-
 
     public interface RecyclerItemClick {
         void itemClick(Partner item);

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Layoutpartners">
+    tools:context=".partners.PartnerActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnaddPartner"
+        android:id="@+id/btnAddPartner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -26,12 +26,12 @@
         android:layout_marginEnd="36dp"
         android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cvpartners"
+        app:layout_constraintTop_toBottomOf="@+id/rvPartners"
         app:srcCompat="@android:drawable/ic_input_add"
         tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cvpartners"
+        android:id="@+id/rvPartners"
         android:layout_width="0dp"
         android:layout_height="0dp"
 
