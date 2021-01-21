@@ -47,6 +47,12 @@ public class Partner {
 
         @Override
         public String toString() {
+                return nombre + ' ' + apellidos;
+        }
+
+        /*
+        @Override
+        public String toString() {
                 return "Partner {" +
                         "nombre='" + nombre + '\'' +
                         ", apellidos='" + apellidos + '\'' +
@@ -54,4 +60,5 @@ public class Partner {
                         ", telefono='" + telefono + '\'' +
                         '}';
         }
+        */
 }

@@ -4,223 +4,117 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
+import android.os.Environment;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.comercialesgeuy.R;
+import com.example.comercialesgeuy.cita.CalendarioNewActivity;
+import com.example.comercialesgeuy.partners.Partner;
+import com.example.comercialesgeuy.partners.XMLPullParserHandlerPartner;
+import com.example.comercialesgeuy.productos.Producto;
+import com.example.comercialesgeuy.productos.XMLPullParserHandlerProducto;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.List;
 
 public class PedidoActivity extends AppCompatActivity {
-    TextWatcher tt = null;
 
-    Spinner partner;
-    Spinner comercial;
+    Spinner spinnerPartner;
     Button cancelar;
     Button confirmar;
-    EditText cantid1;
-    EditText cantid2;
-    EditText cantid3;
-    EditText cantid4;
-    TextView pr1;
-    TextView pr2;
-    TextView pr3;
-    TextView pr4;
+    ListView lstProductos;
+    File XMLfile;
+    String partnerData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_pedido);
 
-        partner = findViewById(R.id.spinner);
-        comercial = findViewById(R.id.spinner2);
+        spinnerPartner = findViewById(R.id.spinnerPartner);
         cancelar = findViewById(R.id.bCancelar);
         confirmar = findViewById(R.id.bConfirmar);
-        cantid1 = findViewById(R.id.etBat20);
-        cantid2 = findViewById(R.id.etBat60);
-        cantid3 = findViewById(R.id.etBatSun);
-        cantid4 = findViewById(R.id.etBatHaiz);
-        pr1 = findViewById(R.id.tvPrecio);
-        pr2 = findViewById(R.id.tvPrecio2);
-        pr3 = findViewById(R.id.tvPrecio3);
-        pr4 = findViewById(R.id.tvPrecio4);
+        lstProductos = findViewById(R.id.lstProductos);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sPartner, android.R.layout.simple_spinner_item);
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.sComercial, android.R.layout.simple_spinner_item);
+        XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/productos.xml");
 
-        partner.setAdapter(adapter);
-        comercial.setAdapter(adapter2);
+        listaProductosOn();
 
-        cancelar.setOnClickListener((View v) ->{
-            onBackPressed();
-
-        });
-
-        confirmar.setOnClickListener((View v) -> {
-            if(validarDatos()) {
-                Intent intent = new Intent(this, PedidoResumenActivity.class);
-                intent.putExtra("partner", partner.getSelectedItem().toString());
-                intent.putExtra("comercial", comercial.getSelectedItem().toString());
-                intent.putExtra("Bat20", cantid1.getText().toString());
-                intent.putExtra("Bat60", cantid2.getText().toString());
-                intent.putExtra("BatSun", cantid3.getText().toString());
-                intent.putExtra("BatHaiz", cantid4.getText().toString());
-
-                startActivity(intent);
-            }
-        });
-
-
-
-        cantid1.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {}
-
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                int total1=0;
-
-                total1 = calcularTotal(cantid1);
-
-
-                pr1.setText(total1 + " $");
-
-            }
-        });
-
-        cantid2.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {}
-
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                int total2=0;
-
-                total2 = calcularTotal(cantid2);
-
-                pr2.setText(total2 + " $");
-
-            }
-        });
-
-        cantid3.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {}
-
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                int total3=0;
-
-                total3 = calcularTotal(cantid3);
-
-                pr3.setText(total3 + " $");
-
-            }
-        });
-
-        cantid4.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {}
-
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                int total4=0;
-
-                total4 = calcularTotal(cantid4);
-
-                pr4.setText(total4 + " $");
-
-            }
-        });
+        spinnerPartnersOn();
 
 
     }
-    /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1) {
-            finish();
+    private void spinnerPartnersOn() {
+        List<Partner> partners;
+
+        XMLPullParserHandlerPartner parser = new XMLPullParserHandlerPartner();
+        partners = parser.parseXML();
+
+        ArrayAdapter<Partner> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, partners);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPartner.setAdapter(adapter);
+        spinnerPartner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Partner partner = (Partner) parent.getSelectedItem();
+                displayUserData(partner);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+
+    private void displayUserData(Partner partner) {
+        String nombre = partner.getNombre();
+        String apellidos = partner.getApellidos();
+        partnerData = nombre + " " + apellidos;
+        //Toast.makeText(this, userData, Toast.LENGTH_LONG).show();
+    }
+
+    private void listaProductosOn() {
+        if(XMLfile.exists()){
+            List<Producto> productos;
+            XMLPullParserHandlerProducto parser = new XMLPullParserHandlerProducto();
+            productos = parser.parseXML();
+            ArrayAdapter<Producto> adapter = new ArrayAdapter<> (this,android.R.layout.simple_list_item_1, productos);
+            lstProductos.setAdapter(adapter);
+        } else{
+            XMLfile.getParentFile().mkdirs();
+            try{
+                if(XMLfile.createNewFile()){
+                    InputStream in = getAssets().open("productos.xml");
+                    File file = new File(Environment.getExternalStorageDirectory() + "/GEUY/productos.xml");
+                    FileOutputStream fileOutput = new FileOutputStream(file);
+                    byte[] buffer = new byte[1024];
+                    int bufferLength = 0;
+                    while((bufferLength = in.read(buffer)) > 0) {
+                        fileOutput.write(buffer, 0, bufferLength);
+                    }
+                    fileOutput.close();
+                }
+            } catch (Exception e) {
+
+            }
+            listaProductosOn();
         }
     }
-    */
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
+    private void confirmarPedido() {
+        Intent intent = new Intent(this, PedidoResumenActivity.class);
+        intent.putExtra("partnerData", partnerData);
+        startActivity(intent);
     }
 
-
-    public int calcularTotal(EditText t){
-        String i = t.getText().toString();
-        int total = 0;
-        if(i.length() > 0) {
-            int precio = 7500;
-
-            String num = t.getText().toString();
-
-            int cant = Integer.parseInt(num);
-            total = precio * cant;
-
-        }
-        return total;
-
-    }
-    public boolean validarDatos() {
-        boolean validado = false;
-        boolean cant1 = false;
-        boolean cant2 = false;
-        boolean cant3 = false;
-        boolean cant4 = false;
-
-
-
-        cant1 = validarEt(cantid1);
-        cant2 = validarEt(cantid2);
-        cant3 = validarEt(cantid3);
-        cant4 = validarEt(cantid4);
-
-
-            if(cant1 && cant2 && cant3 && cant4) {
-                validado = true;
-            }
-
-        return validado;
-    }
-
-
-
-    public boolean validarEt(EditText e){
-        boolean validado = false;
-        String val = e.getText().toString();
-        if(val.length() <= 0) {
-            e.setError("Este campo no puede estar vacio");
-        }
-        else {
-            validado = true;
-        }
-        return validado;
-    }
 }

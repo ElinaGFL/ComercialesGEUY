@@ -1,4 +1,4 @@
-package com.example.comercialesgeuy.pedidos;
+package com.example.comercialesgeuy.productos;
 
 public class Producto {
     private String codigo, descripcion, imagen;
@@ -7,10 +7,14 @@ public class Producto {
 
     public Producto(){}
 
+    public Producto(String codigo, double precioUn) {
+        this.codigo = codigo;
+        this.precioUn = precioUn;
+    }
+
     public Producto(String codigo, String descripcion, String imagen, int existencias, double precioUn) {
         this.codigo = codigo;
         this.descripcion = descripcion;
-        this.imagen = imagen;
         this.existencias = existencias;
         this.precioUn = precioUn;
     }

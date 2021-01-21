@@ -1,5 +1,7 @@
 package com.example.comercialesgeuy.pedidos;
 
+import com.example.comercialesgeuy.productos.Producto;
+
 public class Linea {
 
     private Producto producto;

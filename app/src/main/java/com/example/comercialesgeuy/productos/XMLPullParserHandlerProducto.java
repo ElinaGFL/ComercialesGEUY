@@ -1,4 +1,4 @@
-package com.example.comercialesgeuy.pedidos;
+package com.example.comercialesgeuy.productos;
 
 import android.os.Environment;
 
@@ -11,19 +11,19 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class XMLPullParserHandlerPedido {
+public class XMLPullParserHandlerProducto {
 
-    private List<Albaran> ListaAlbaranes = new ArrayList<>();
-    private Albaran albaran;
+    private List<Producto> listaProductos = new ArrayList<>();
+    private Producto producto;
     private String tag;
 
-    public List<Albaran> parseXML() {
+    public List<Producto> parseXML() {
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(true);
             XmlPullParser xpp = factory.newPullParser();
 
-            InputStream stream = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/GEUY/pedidos.xml"));
+            InputStream stream = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/GEUY/productos.xml"));
             xpp.setInput(stream, null);
 
             int eventType = xpp.getEventType();
@@ -42,13 +42,13 @@ public class XMLPullParserHandlerPedido {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ListaAlbaranes;
+        return listaProductos;
     }
 
     private void handleStartTag(String name) {
-        if (name.equals("pedido")) {
-            albaran = new Albaran();
-            ListaAlbaranes.add(albaran);
+        if (name.equals("producto")) {
+            producto = new Producto();
+            listaProductos.add(producto);
         } else {
             tag = name;
         }
@@ -56,11 +56,15 @@ public class XMLPullParserHandlerPedido {
 
     private void handleText(String text) {
         String xmlText = text;
-        if (albaran != null && tag != null) {
-            if (tag.equals("partner")) {
-                albaran.setPartner(xmlText);
-            } else if (tag.equals("comercial")) {
-                albaran.setComercial(xmlText);
+        if (producto != null && tag != null) {
+            if (tag.equals("codigo")) {
+                producto.setCodigo(xmlText);
+            } else if (tag.equals("descripcion")) {
+                producto.setDescripcion(xmlText);
+            } else if (tag.equals("precioUn")) {
+                producto.setPrecioUn(Double.parseDouble(xmlText));
+            } else if (tag.equals("existencias")) {
+                producto.setExistencias(Integer.parseInt(xmlText));
             }
         }
     }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<productos>
+    <producto>
+        <codigo>Bat20</codigo>
+        <descripcion>IBattery-20</descripcion>
+        <precioUn>5000</precioUn>
+        <existencias>100</existencias>
+    </producto>
+    <producto>
+        <codigo>Bat60</codigo>
+        <descripcion>IBattery-60</descripcion>
+        <precioUn>7500</precioUn>
+        <existencias>90</existencias>
+    </producto>
+    <producto>
+        <codigo>BatSun</codigo>
+        <descripcion>IBattery + PackSun</descripcion>
+        <precioUn>7999.99</precioUn>
+        <existencias>80</existencias>
+    </producto>
+    <producto>
+        <codigo>BatHaiz</codigo>
+        <descripcion>IBattery + PackHaizea</descripcion>
+        <precioUn>9999.99</precioUn>
+        <existencias>70</existencias>
+    </producto>
+</productos>
+
+

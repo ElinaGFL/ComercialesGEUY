@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -20,28 +20,26 @@
             android:id="@+id/nombrePartner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/apellidoPartner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/telefonoPartner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="10sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/emailPartner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
-            />
-
+            android:textSize="18sp" />
 
 
     </LinearLayout>

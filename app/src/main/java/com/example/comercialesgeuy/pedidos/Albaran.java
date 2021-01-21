@@ -1,30 +1,27 @@
 package com.example.comercialesgeuy.pedidos;
 
-import com.example.comercialesgeuy.comerciales.Comercial;
-import com.example.comercialesgeuy.partners.Partner;
-
 import java.util.ArrayList;
 
 public class Albaran {
 
-    private String fecha, partner, comercial;
+    private String partner, comercial, fechaPedido;
     private ArrayList<Linea> lineas;
 
     public Albaran() {}
 
-    public Albaran(String fecha, String partner, String comercial) {
-        this.fecha = fecha;
+    public Albaran(String partner, String comercial, String fechaPedido, ArrayList<Linea> lineas) {
         this.partner = partner;
         this.comercial = comercial;
-        this.lineas = new ArrayList<>();
+        this.fechaPedido = fechaPedido;
+        this.lineas = lineas;
     }
 
-    public String getFecha() {
-        return fecha;
+    public String getFechaPedido() {
+        return fechaPedido;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setFechaPedido(String fechaPedido) {
+        this.fechaPedido = fechaPedido;
     }
 
     public String getPartner() {
