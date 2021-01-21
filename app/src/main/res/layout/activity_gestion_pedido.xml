@@ -24,12 +24,21 @@
 
     <Spinner
         android:id="@+id/spinnerPartner"
-        android:layout_width="245dp"
+        android:layout_width="200dp"
         android:layout_height="41dp"
         android:layout_marginStart="140dp"
         android:layout_marginTop="19dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Spinner
+        android:id="@+id/spinnerComercial"
+        android:layout_width="200dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="14dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerPartner" />
 
     <Button
         android:id="@+id/bCancelar"
@@ -67,11 +76,10 @@
         android:layout_width="match_parent"
         android:layout_height="128dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        tools:layout_editor_absoluteY="192dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
