@@ -1,8 +1,10 @@
 package com.example.comercialesgeuy.productos;
 
-public class Producto {
-    private String codigo, descripcion, imagen;
-    private int existencias;
+import java.io.Serializable;
+
+public class Producto implements Serializable {
+    private String codigo, descripcion;
+    public int existencias, pedidos = 0;
     private double precioUn;
 
     public Producto(){}
@@ -12,11 +14,27 @@ public class Producto {
         this.precioUn = precioUn;
     }
 
-    public Producto(String codigo, String descripcion, String imagen, int existencias, double precioUn) {
+    public Producto(String codigo, String descripcion, int existencias, double precioUn) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.existencias = existencias;
         this.precioUn = precioUn;
+    }
+
+    public Producto(String codigo, String descripcion, int existencias, double precioUn, int pedidos) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.existencias = existencias;
+        this.precioUn = precioUn;
+        this.pedidos = pedidos;
+    }
+
+    public int getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(int pedidos) {
+        this.pedidos = pedidos;
     }
 
     public String getCodigo() {
@@ -33,14 +51,6 @@ public class Producto {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public String getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
     }
 
     public int getExistencias() {
@@ -64,7 +74,6 @@ public class Producto {
         return "Producto{" +
                 "codigo='" + codigo + '\'' +
                 ", descripcion='" + descripcion + '\'' +
-                ", imagen='" + imagen + '\'' +
                 ", existencias=" + existencias +
                 ", precioUn=" + precioUn +
                 '}';

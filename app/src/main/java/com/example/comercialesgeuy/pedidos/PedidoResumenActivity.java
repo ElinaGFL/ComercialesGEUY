@@ -1,8 +1,6 @@
 package com.example.comercialesgeuy.pedidos;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -12,13 +10,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.comercialesgeuy.R;
+import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.DOMImplementation;
+import com.example.comercialesgeuy.R;
+import com.example.comercialesgeuy.productos.Producto;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.Text;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.File;
@@ -30,8 +29,6 @@ import java.util.Date;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -42,82 +39,58 @@ public class PedidoResumenActivity extends AppCompatActivity {
     private Bundle bundle;
     private String partner;
     private String comercial;
-    private String cant1;
-    private String cant2;
-    private String cant3;
-    private String cant4;
+    private String cant1, cant2, cant3, cant4;
     private String actual;
-    private TextView part, com, cantidad1, cantidad2, cantidad3, cantidad4, fech, pr1, pr2, pr3, pr4, tot;
+    private TextView txtPartner, txtComercial, txtCantidad1, txtCantidad2, txtCantidad3, txtCantidad4, fecha, txtPrecio1, txtPrecio2, txtPrecio3, txtPrecio4, tot;
     private int precio1, precio2, precio3, precio4, total, p1, p2, p3, p4;
     private Button editar;
     private Button confirmar;
     private File XMLfile;
+    ArrayList<Producto> productOrder;
 
-    private int fecha;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resumen_gestion_pedido);
 
-        bundle = getIntent().getExtras();
-        part = (TextView) findViewById(R.id.tvPartner);
-        com = (TextView) findViewById(R.id.tvComercial);
-        fech = (TextView) findViewById(R.id.tvFecha);
-        cantidad1 = (TextView) findViewById(R.id.tvCantidad1);
-        cantidad2 = (TextView) findViewById(R.id.tvCantidad2);
-        cantidad3 = (TextView) findViewById(R.id.tvCantidad3);
-        cantidad4 = (TextView) findViewById(R.id.tvCantidad4);
-        pr1 = (TextView) findViewById(R.id.tvPr1);
-        pr2 = (TextView) findViewById(R.id.tvPr2);
-        pr3 = (TextView) findViewById(R.id.tvPr3);
-        pr4 = (TextView) findViewById(R.id.tvPr4);
+        txtPartner = (TextView) findViewById(R.id.tvPartner);
+        txtComercial = (TextView) findViewById(R.id.tvComercial);
+        fecha = (TextView) findViewById(R.id.tvFecha);
+        txtCantidad1 = (TextView) findViewById(R.id.tvCantidad1);
+        txtCantidad2 = (TextView) findViewById(R.id.tvCantidad2);
+        txtCantidad3 = (TextView) findViewById(R.id.tvCantidad3);
+        txtCantidad4 = (TextView) findViewById(R.id.tvCantidad4);
+        txtPrecio1 = (TextView) findViewById(R.id.tvPr1);
+        txtPrecio2 = (TextView) findViewById(R.id.tvPr2);
+        txtPrecio3 = (TextView) findViewById(R.id.tvPr3);
+        txtPrecio4 = (TextView) findViewById(R.id.tvPr4);
         tot = (TextView) findViewById(R.id.textView9);
         editar = (Button) findViewById(R.id.btnEditar);
         confirmar = (Button) findViewById(R.id.btnConfirmar);
 
+        bundle = getIntent().getExtras();
+
         XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/pedidos.xml");
 
-        partner = bundle.getString("partner");
-        comercial = bundle.getString("comercial");
-        cant1 = bundle.getString("Bat20");
-        cant2 = bundle.getString("Bat60");
-        cant3 = bundle.getString("BatSun");
-        cant4 = bundle.getString("BatHaiz");
+        partner = bundle.getString("partnerData");
+        comercial = bundle.getString("comercialData");
+        productOrder = (ArrayList<Producto>) bundle.getSerializable("arrayProductosPedido");
 
-        part.setText("Partner:      " + partner);
-        com.setText("Comercial:      " + comercial);
-        cantidad1.setText(cant1);
-        cantidad2.setText(cant2);
-        cantidad3.setText(cant3);
-        cantidad4.setText(cant4);
+        txtPartner.setText("Partner:    " + partner);
+        txtComercial.setText("Comercial:    " + comercial);
 
-        p1 = Integer.parseInt(cant1);
-        precio1 = 7500 * p1;
-        pr1.setText(precio1 + " $");
-
-        p2 = Integer.parseInt(cant2);
-        precio2 = 7500 * p2;
-        pr2.setText(precio2 + " $");
-
-        p3 = Integer.parseInt(cant3);
-        precio3 = 7500 * p3;
-        pr3.setText(precio3 + " $");
-
-        p4 = Integer.parseInt(cant4);
-        precio4 = 7500 * p4;
-        pr4.setText(precio4 + " $");
+        rellenarPantalla();
 
         total = precio1 + precio2 + precio3 + precio4;
         tot.setText(total + " $");
 
         actual = DateFormat.getDateTimeInstance().format(new Date());
 
-        fech.setText(actual);
+        fecha.setText(actual);
 
         editar.setOnClickListener((View v) -> onBackPressed());
 
         confirmar.setOnClickListener((View v) -> verificarPedido());
-
     }
 
     private void verificarPedido() {
@@ -219,14 +192,6 @@ public class PedidoResumenActivity extends AppCompatActivity {
             }
         }
     }
-    /*
-    private void finalizar(int i) {
-        Intent intent = new Intent();
-        intent.putExtra("result",i);
-        setResult(RESULT_OK, intent);
-        finish();
-    }
-    */
 
     private void rellenarLineas(XmlSerializer serializer) {
         if(p1 > 0){
@@ -327,5 +292,30 @@ public class PedidoResumenActivity extends AppCompatActivity {
         node.appendChild(doc.createTextNode(value));
         return node;
     }
+
+    @SuppressLint("SetTextI18n")
+    private void rellenarPantalla() {
+        System.out.println("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+        for(Producto p : productOrder) {
+
+            if (p.getCodigo().equalsIgnoreCase("Bat20")) {
+                txtCantidad1.setText(String.valueOf(p.getPedidos()));
+                txtPrecio1.setText(p.getPrecioUn() + " $");
+            }
+            if (p.getCodigo().equalsIgnoreCase("Bat60")) {
+                txtCantidad2.setText(String.valueOf(p.getPedidos()));
+                txtPrecio2.setText(p.getPrecioUn() + " $");
+            }
+            if (p.getCodigo().equalsIgnoreCase("BatSun")) {
+                txtCantidad3.setText(String.valueOf(p.getPedidos()));
+                txtPrecio3.setText(p.getPrecioUn() + " $");
+            }
+            if (p.getCodigo().equalsIgnoreCase("BatHaiz")) {
+                txtCantidad4.setText(String.valueOf(p.getPedidos()));
+                txtPrecio4.setText(p.getPrecioUn() + " $");
+            }
+        }
+    }
+
 
 }

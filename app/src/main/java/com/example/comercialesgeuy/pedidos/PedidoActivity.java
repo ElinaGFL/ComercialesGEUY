@@ -5,17 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.comercialesgeuy.R;
-import com.example.comercialesgeuy.cita.CalendarioNewActivity;
 import com.example.comercialesgeuy.partners.Partner;
 import com.example.comercialesgeuy.partners.XMLPullParserHandlerPartner;
 import com.example.comercialesgeuy.productos.Producto;
@@ -24,16 +21,21 @@ import com.example.comercialesgeuy.productos.XMLPullParserHandlerProducto;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PedidoActivity extends AppCompatActivity {
 
     Spinner spinnerPartner;
-    Button cancelar;
-    Button confirmar;
+    Spinner spinnerComercial;
+    Button btnCancelar;
+    Button btnConfirmar;
     ListView lstProductos;
     File XMLfile;
-    String partnerData;
+    String partnerData, comercialData;
+    private ListAdapter listAdapter;
+    ArrayList<Producto> productOrders = new ArrayList<>();
+    ArrayList<Producto> productOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +43,9 @@ public class PedidoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gestion_pedido);
 
         spinnerPartner = findViewById(R.id.spinnerPartner);
-        cancelar = findViewById(R.id.bCancelar);
-        confirmar = findViewById(R.id.bConfirmar);
+        spinnerComercial = findViewById(R.id.spinnerComercial);
+        btnCancelar = findViewById(R.id.bCancelar);
+        btnConfirmar = findViewById(R.id.bConfirmar);
         lstProductos = findViewById(R.id.lstProductos);
 
         XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/productos.xml");
@@ -51,7 +54,60 @@ public class PedidoActivity extends AppCompatActivity {
 
         spinnerPartnersOn();
 
+        spinnerComercialOn();
 
+        spinnerPartner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Partner partner = (Partner) parent.getSelectedItem();
+                displayUserData(partner);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        spinnerComercial.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                comercialData = (String) parent.getSelectedItem();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        btnConfirmar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productOrder = hacerPedido();
+                confirmarPedido();
+            }
+        });
+    }
+
+    private ArrayList<Producto> hacerPedido() {
+        productOrders.clear();
+        for(int i = 0; i < listAdapter.listProductos.size(); i++) {
+            if(listAdapter.listProductos.get(i).pedidos > 0) {
+                Producto producto = new Producto(
+                        listAdapter.listProductos.get(i).getCodigo(),
+                        listAdapter.listProductos.get(i).getDescripcion(),
+                        listAdapter.listProductos.get(i).getExistencias(),
+                        listAdapter.listProductos.get(i).getPrecioUn(),
+                        listAdapter.listProductos.get(i).pedidos
+                );
+
+                productOrders.add(producto);
+            }
+        }
+        return productOrders;
+    }
+
+    private void spinnerComercialOn() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.sComercial, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerComercial.setAdapter(adapter);
     }
 
     private void spinnerPartnersOn() {
@@ -64,16 +120,6 @@ public class PedidoActivity extends AppCompatActivity {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPartner.setAdapter(adapter);
-        spinnerPartner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Partner partner = (Partner) parent.getSelectedItem();
-                displayUserData(partner);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
     }
 
     private void displayUserData(Partner partner) {
@@ -88,8 +134,9 @@ public class PedidoActivity extends AppCompatActivity {
             List<Producto> productos;
             XMLPullParserHandlerProducto parser = new XMLPullParserHandlerProducto();
             productos = parser.parseXML();
-            ArrayAdapter<Producto> adapter = new ArrayAdapter<> (this,android.R.layout.simple_list_item_1, productos);
-            lstProductos.setAdapter(adapter);
+
+            listAdapter = new ListAdapter(this, (ArrayList<Producto>) productos);
+            lstProductos.setAdapter(listAdapter);
         } else{
             XMLfile.getParentFile().mkdirs();
             try{
@@ -114,6 +161,8 @@ public class PedidoActivity extends AppCompatActivity {
     private void confirmarPedido() {
         Intent intent = new Intent(this, PedidoResumenActivity.class);
         intent.putExtra("partnerData", partnerData);
+        intent.putExtra("comercialData", comercialData);
+        intent.putExtra("arrayProductosPedido", productOrder);
         startActivity(intent);
     }
 
