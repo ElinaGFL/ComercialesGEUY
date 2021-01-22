@@ -39,10 +39,10 @@ public class PedidoResumenActivity extends AppCompatActivity {
     private Bundle bundle;
     private String partner;
     private String comercial;
-    private String cant1, cant2, cant3, cant4;
     private String actual;
     private TextView txtPartner, txtComercial, txtCantidad1, txtCantidad2, txtCantidad3, txtCantidad4, fecha, txtPrecio1, txtPrecio2, txtPrecio3, txtPrecio4, tot;
-    private int precio1, precio2, precio3, precio4, total, p1, p2, p3, p4;
+    private double precio1, precio2, precio3, precio4, total;
+    int cant1, cant2, cant3, cant4;
     private Button editar;
     private Button confirmar;
     private File XMLfile;
@@ -81,9 +81,6 @@ public class PedidoResumenActivity extends AppCompatActivity {
 
         rellenarPantalla();
 
-        total = precio1 + precio2 + precio3 + precio4;
-        tot.setText(total + " $");
-
         actual = DateFormat.getDateTimeInstance().format(new Date());
 
         fecha.setText(actual);
@@ -96,16 +93,16 @@ public class PedidoResumenActivity extends AppCompatActivity {
     private void verificarPedido() {
         boolean confirm = false;
 
-        if(p1 > 0){
+        if(cant1 > 0){
             confirm = true;
         }
-        if(p2 > 0){
+        if(cant2 > 0){
             confirm = true;
         }
-        if(p3 > 0){
+        if(cant3 > 0){
             confirm = true;
         }
-        if(p4 > 0){
+        if(cant4 > 0){
             confirm = true;
         }
 
@@ -125,7 +122,7 @@ public class PedidoResumenActivity extends AppCompatActivity {
                 Document doc = dBuilder.parse(XMLfile);
                 doc.getDocumentElement().normalize();
                 //
-                addElement(doc, partner, comercial, actual, String.valueOf(total), p1, p2, p3 ,p4);
+                addElement(doc, partner, comercial, actual, String.valueOf(total), cant1, cant2, cant3, cant4);
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();
                 transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -194,17 +191,17 @@ public class PedidoResumenActivity extends AppCompatActivity {
     }
 
     private void rellenarLineas(XmlSerializer serializer) {
-        if(p1 > 0){
-            rellenarLineasPorUno(serializer, "IBattery-20", p1);
+        if(cant1 > 0){
+            rellenarLineasPorUno(serializer, "IBattery-20", cant1);
         }
-        if(p2 > 0){
-            rellenarLineasPorUno(serializer, "IBattery-60", p2);
+        if(cant2 > 0){
+            rellenarLineasPorUno(serializer, "IBattery-60", cant2);
         }
-        if(p3 > 0){
-            rellenarLineasPorUno(serializer, "IBattery+PackSun", p3);
+        if(cant3 > 0){
+            rellenarLineasPorUno(serializer, "IBattery+PackSun", cant3);
         }
-        if(p4 > 0){
-            rellenarLineasPorUno(serializer, "IBattery-PackHaizea", p4);
+        if(cant4 > 0){
+            rellenarLineasPorUno(serializer, "IBattery-PackHaizea", cant4);
         }
     }
 
@@ -250,38 +247,38 @@ public class PedidoResumenActivity extends AppCompatActivity {
         if(p1 > 0){
             Element nodeArticulo = doc.createElement("articulo");
             nodeArticulo.appendChild(doc.createTextNode("IBattery-20"));
-            nodeLineas.appendChild(nodeArticulo);
+            nodeLinea.appendChild(nodeArticulo);
 
             Element nodeCantidad = doc.createElement("cantidad");
             nodeCantidad.appendChild(doc.createTextNode(String.valueOf(p1)));
-            nodeLineas.appendChild(nodeCantidad);
+            nodeLinea.appendChild(nodeCantidad);
         }
         if(p2 > 0){
             Element nodeArticulo = doc.createElement("articulo");
             nodeArticulo.appendChild(doc.createTextNode("IBattery-60"));
-            nodeLineas.appendChild(nodeArticulo);
+            nodeLinea.appendChild(nodeArticulo);
 
             Element nodeCantidad = doc.createElement("cantidad");
             nodeCantidad.appendChild(doc.createTextNode(String.valueOf(p2)));
-            nodeLineas.appendChild(nodeCantidad);
+            nodeLinea.appendChild(nodeCantidad);
         }
         if(p3 > 0){
             Element nodeArticulo = doc.createElement("articulo");
             nodeArticulo.appendChild(doc.createTextNode("IBattery+PackSun"));
-            nodeLineas.appendChild(nodeArticulo);
+            nodeLinea.appendChild(nodeArticulo);
 
             Element nodeCantidad = doc.createElement("cantidad");
             nodeCantidad.appendChild(doc.createTextNode(String.valueOf(p3)));
-            nodeLineas.appendChild(nodeCantidad);
+            nodeLinea.appendChild(nodeCantidad);
         }
         if(p4 > 0){
             Element nodeArticulo = doc.createElement("articulo");
             nodeArticulo.appendChild(doc.createTextNode("IBattery-PackHaizea"));
-            nodeLineas.appendChild(nodeArticulo);
+            nodeLinea.appendChild(nodeArticulo);
 
             Element nodeCantidad = doc.createElement("cantidad");
             nodeCantidad.appendChild(doc.createTextNode(String.valueOf(p3)));
-            nodeLineas.appendChild(nodeCantidad);
+            nodeLinea.appendChild(nodeCantidad);
         }
 
         return tipo;
@@ -295,26 +292,35 @@ public class PedidoResumenActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void rellenarPantalla() {
-        System.out.println("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+        //System.out.println("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
         for(Producto p : productOrder) {
-
             if (p.getCodigo().equalsIgnoreCase("Bat20")) {
+                cant1 = p.getPedidos();
+                precio1 = p.getPedidos() * p.getPrecioUn();
                 txtCantidad1.setText(String.valueOf(p.getPedidos()));
-                txtPrecio1.setText(p.getPrecioUn() + " $");
+                txtPrecio1.setText(precio1 + " $");
             }
             if (p.getCodigo().equalsIgnoreCase("Bat60")) {
+                cant2 = p.getPedidos();
+                precio2 = p.getPedidos() * p.getPrecioUn();
                 txtCantidad2.setText(String.valueOf(p.getPedidos()));
-                txtPrecio2.setText(p.getPrecioUn() + " $");
+                txtPrecio2.setText(precio2 + " $");
             }
             if (p.getCodigo().equalsIgnoreCase("BatSun")) {
+                cant3 = p.getPedidos();
+                precio3 = p.getPedidos() * p.getPrecioUn();
                 txtCantidad3.setText(String.valueOf(p.getPedidos()));
-                txtPrecio3.setText(p.getPrecioUn() + " $");
+                txtPrecio3.setText(precio3 + " $");
             }
             if (p.getCodigo().equalsIgnoreCase("BatHaiz")) {
+                cant4 = p.getPedidos();
+                precio4 = p.getPedidos() * p.getPrecioUn();
                 txtCantidad4.setText(String.valueOf(p.getPedidos()));
-                txtPrecio4.setText(p.getPrecioUn() + " $");
+                txtPrecio4.setText(precio4 + " $");
             }
         }
+        total = precio1 + precio2 + precio3 + precio4;
+        tot.setText(String.format("%.2f", total) + " $");
     }
 
 

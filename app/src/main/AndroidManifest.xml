@@ -38,7 +38,7 @@
         <activity
             android:name=".cita.CalendarioNewActivity"
             android:theme="@style/Theme.PopUp" />
-        <activity android:name=".Contacto" />
+        <activity android:name=".partners.Contacto" />
         <activity android:name=".pedidos.PedidoResumenActivity" />
         <activity android:name=".EnvioDelegacion" />
         <activity android:name=".partners.PartnerActivity" />
