@@ -6,9 +6,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap mMap;
     static final int REQUEST_CODE = 123;
 
+    DBSQLite dbsqLite;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnEnvio = findViewById(R.id.btnEnvio);
 
         pidePermisos();
+
+        iniciarBD();
 
         btnCalendario.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +86,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
+
+    private void iniciarBD() {
+
+        dbsqLite = new DBSQLite(this);
+
+    }
+
     public void llamar(View v){
         Intent llamar = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: 943 52 95 65"));
 

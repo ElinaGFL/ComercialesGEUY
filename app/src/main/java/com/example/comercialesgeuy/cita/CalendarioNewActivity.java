@@ -1,5 +1,7 @@
 package com.example.comercialesgeuy.cita;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.comercialesgeuy.DBSQLite;
 import com.example.comercialesgeuy.R;
 
 import org.w3c.dom.Document;
@@ -37,7 +40,8 @@ public class CalendarioNewActivity extends AppCompatActivity {
     private EditText txtTexto;
     private Button btnGuardar;
     private String fecha, titulo, texto;
-    private File XMLfile;
+
+    DBSQLite dbSQLite;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +54,33 @@ public class CalendarioNewActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         fecha = extras.getString("fecha");
 
-        XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/citas.xml");
+        //XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/citas.xml");
 
         crearVentana();
 
-        btnGuardar.setOnClickListener(v -> guardarNuevaCita());
+        btnGuardar.setOnClickListener(v -> {
+            //guardarNuevaCita();
+            guardarNuevaCita1();
+        });
+    }
+
+    private void guardarNuevaCita1() {
+        recogerDatos();
+
+        dbSQLite = new DBSQLite(this);
+        SQLiteDatabase database = dbSQLite.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DBSQLite.CITAS_KEY_FECHA, fecha);
+        contentValues.put(DBSQLite.CITAS_KEY_CABECERA, titulo);
+        contentValues.put(DBSQLite.CITAS_KEY_TEXTO, texto);
+        //методом insert вставляем подготовленные строки в таблицу, этот метод принимает имя таблицы и объект contentValues со
+        //вставляемыми значениями, второй аргумент используется при вставке пустой строки
+        database.insert(DBSQLite.TABLE_CITAS, null, contentValues);
+
+        Toast.makeText(this, "Se ha añadido la cita al XML", Toast.LENGTH_SHORT).show();
+        finish();
+
     }
 
     private void crearVentana() {
@@ -77,6 +103,21 @@ public class CalendarioNewActivity extends AppCompatActivity {
         getWindow().setAttributes(params);
     }
 
+    private void recogerDatos() {
+        if (txtCabecera.getText().length() > 0) {
+            titulo = txtCabecera.getText().toString();
+        } else {
+            titulo = "Mi evento";
+        }
+
+        if (txtTexto.getText().length() > 0) {
+            texto = txtTexto.getText().toString();
+        } else {
+            texto = "";
+        }
+    }
+
+    /*
     private void guardarNuevaCita() {
         recogerDatos();
 
@@ -145,20 +186,6 @@ public class CalendarioNewActivity extends AppCompatActivity {
         }
     }
 
-    private void recogerDatos() {
-        if (txtCabecera.getText().length() > 0) {
-            titulo = txtCabecera.getText().toString();
-        } else {
-            titulo = "Mi evento";
-        }
-
-        if (txtTexto.getText().length() > 0) {
-            texto = txtTexto.getText().toString();
-        } else {
-            texto = "";
-        }
-    }
-
     private void addElement(Document doc, String fecha, String titulo, String texto) {
         Node root = doc.getDocumentElement();
 
@@ -181,4 +208,6 @@ public class CalendarioNewActivity extends AppCompatActivity {
         node.appendChild(doc.createTextNode(value));
         return node;
     }
+
+    */
 }
