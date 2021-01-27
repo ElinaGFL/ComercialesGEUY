@@ -68,7 +68,6 @@ public class CalendarioActivity extends AppCompatActivity {
 
         //moveToFirst() перемещает курсор на первую строку в результате запроса и заодно проверяет есть ли вообще записи в нем
         if (cursor.moveToFirst()) {
-            cita = new Cita();
 
 
             //далее мы получаем порядковые номера столбцов и курсор по их именам с помощью метода getColumnIndex()
@@ -79,6 +78,7 @@ public class CalendarioActivity extends AppCompatActivity {
             int textoIndex = cursor.getColumnIndex(DBSQLite.CITAS_KEY_TEXTO);
 
             do {
+                cita = new Cita();
 
                 cita.setFecha(cursor.getString(fechaIndex));
                 cita.setCabecera(cursor.getString(cabeceraIndex));
