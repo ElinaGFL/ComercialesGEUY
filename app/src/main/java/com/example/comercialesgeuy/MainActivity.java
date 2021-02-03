@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
     public void llamar(View v){
         Intent llamar = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: 943 52 95 65"));

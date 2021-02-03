@@ -40,7 +40,7 @@ public class PedidoResumenActivity extends AppCompatActivity {
     private String partner;
     private String comercial;
     private String actual;
-    private TextView txtPartner, txtComercial, txtCantidad1, txtCantidad2, txtCantidad3, txtCantidad4, fecha, txtPrecio1, txtPrecio2, txtPrecio3, txtPrecio4, tot;
+    private TextView txtPartner, txtComercial, fecha, tot;
     private double precio1, precio2, precio3, precio4, total;
     int cant1, cant2, cant3, cant4;
     private Button editar;
@@ -56,15 +56,9 @@ public class PedidoResumenActivity extends AppCompatActivity {
         txtPartner = (TextView) findViewById(R.id.tvPartner);
         txtComercial = (TextView) findViewById(R.id.tvComercial);
         fecha = (TextView) findViewById(R.id.tvFecha);
-        txtCantidad1 = (TextView) findViewById(R.id.tvCantidad1);
-        txtCantidad2 = (TextView) findViewById(R.id.tvCantidad2);
-        txtCantidad3 = (TextView) findViewById(R.id.tvCantidad3);
-        txtCantidad4 = (TextView) findViewById(R.id.tvCantidad4);
-        txtPrecio1 = (TextView) findViewById(R.id.tvPr1);
-        txtPrecio2 = (TextView) findViewById(R.id.tvPr2);
-        txtPrecio3 = (TextView) findViewById(R.id.tvPr3);
-        txtPrecio4 = (TextView) findViewById(R.id.tvPr4);
-        tot = (TextView) findViewById(R.id.textView9);
+
+
+        tot = (TextView) findViewById(R.id.CantidadTotal);
         editar = (Button) findViewById(R.id.btnEditar);
         confirmar = (Button) findViewById(R.id.btnConfirmar);
 
@@ -292,7 +286,7 @@ public class PedidoResumenActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void rellenarPantalla() {
-        //System.out.println("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+
         for(Producto p : productOrder) {
             if (p.getCodigo().equalsIgnoreCase("Bat20")) {
                 cant1 = p.getPedidos();
