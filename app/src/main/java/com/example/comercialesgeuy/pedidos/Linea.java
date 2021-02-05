@@ -2,24 +2,40 @@ package com.example.comercialesgeuy.pedidos;
 
 public class Linea {
 
-    private Producto producto;
-    private int cantidad;
-    private double precioLinea;
+    private int idLinea, idAlbaran, idProducto, cantidad, precioLinea;
 
-    public Linea(){}
+    public Linea() {}
 
-    public Linea(Producto producto, int cantidad) {
-        this.producto = producto;
+    public Linea(int idLinea, int idAlbaran, int idProducto, int cantidad, int precioLinea) {
+        this.idLinea = idLinea;
+        this.idAlbaran = idAlbaran;
+        this.idProducto = idProducto;
         this.cantidad = cantidad;
-        this.precioLinea = producto.getPrecioUn() * (double) cantidad;
+        this.precioLinea = precioLinea;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public int getIdLinea() {
+        return idLinea;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setIdLinea(int idLinea) {
+        this.idLinea = idLinea;
+    }
+
+    public int getIdAlbaran() {
+        return idAlbaran;
+    }
+
+    public void setIdAlbaran(int idAlbaran) {
+        this.idAlbaran = idAlbaran;
+    }
+
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
     }
 
     public int getCantidad() {
@@ -28,19 +44,14 @@ public class Linea {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
-        this.precioLinea = producto.getPrecioUn() * (double) cantidad;
     }
 
-    public double getPrecioLinea() {
+    public int getPrecioLinea() {
         return precioLinea;
     }
 
-    @Override
-    public String toString() {
-        return "Linea{" +
-                "producto=" + producto +
-                ", cantidad=" + cantidad +
-                ", pr_total=" + precioLinea +
-                '}';
+    public void setPrecioLinea(int precioLinea) {
+        this.precioLinea = precioLinea;
     }
+
 }

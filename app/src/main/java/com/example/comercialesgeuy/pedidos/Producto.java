@@ -3,38 +3,35 @@ package com.example.comercialesgeuy.pedidos;
 import java.io.Serializable;
 
 public class Producto implements Serializable {
-    private String codigo, descripcion;
-    public int existencias, pedidos = 0;
-    private double precioUn;
+    private int id, existencias;
+    private String codigo, descripcion, img;
+    private float prvent;
 
-    public Producto(){}
+    public Producto() {}
 
-    public Producto(String codigo, double precioUn) {
-        this.codigo = codigo;
-        this.precioUn = precioUn;
-    }
-
-    public Producto(String codigo, String descripcion, int existencias, double precioUn) {
+    public Producto(int id, String codigo, String descripcion,  float prvent, int existencias, String img) {
+        this.id = id;
+        this.existencias = existencias;
         this.codigo = codigo;
         this.descripcion = descripcion;
+        this.prvent = prvent;
+        this.img = img;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getExistencias() {
+        return existencias;
+    }
+
+    public void setExistencias(int existencias) {
         this.existencias = existencias;
-        this.precioUn = precioUn;
-    }
-
-    public Producto(String codigo, String descripcion, int existencias, double precioUn, int pedidos) {
-        this.codigo = codigo;
-        this.descripcion = descripcion;
-        this.existencias = existencias;
-        this.precioUn = precioUn;
-        this.pedidos = pedidos;
-    }
-
-    public int getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(int pedidos) {
-        this.pedidos = pedidos;
     }
 
     public String getCodigo() {
@@ -53,29 +50,19 @@ public class Producto implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public int getExistencias() {
-        return existencias;
+    public String getImg() {
+        return img;
     }
 
-    public void setExistencias(int existencias) {
-        this.existencias = existencias;
+    public void setImg(String img) {
+        this.img = img;
     }
 
-    public double getPrecioUn() {
-        return precioUn;
+    public float getPrvent() {
+        return prvent;
     }
 
-    public void setPrecioUn(double precioUn) {
-        this.precioUn = precioUn;
-    }
-
-    @Override
-    public String toString() {
-        return "Producto{" +
-                "codigo='" + codigo + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", existencias=" + existencias +
-                ", precioUn=" + precioUn +
-                '}';
+    public void setPrvent(float prvent) {
+        this.prvent = prvent;
     }
 }

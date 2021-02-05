@@ -49,10 +49,11 @@ public class PedidoActivity extends AppCompatActivity {
         //XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/productos.xml");
         //listaProductosOn();
 
-        spinnerPartnersOn();
+        //spinnerPartnersOn();
 
-        spinnerComercialOn();
+        //spinnerComercialOn();
 
+        /*
         spinnerPartner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -81,8 +82,10 @@ public class PedidoActivity extends AppCompatActivity {
                 confirmarPedido();
             }
         });
-    }
 
+         */
+    }
+    /*
     private ArrayList<Producto> hacerPedido() {
         productOrders.clear();
         for(int i = 0; i < listAdapter.listProductos.size(); i++) {

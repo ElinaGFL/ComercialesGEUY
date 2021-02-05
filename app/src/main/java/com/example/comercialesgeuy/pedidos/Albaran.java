@@ -4,16 +4,43 @@ import java.util.ArrayList;
 
 public class Albaran {
 
-    private String partner, comercial, fechaPedido;
+    private int id, idComerc, idPartner;
+    private String fechaPedido, fechaEnvio, fechaPago;
     private ArrayList<Linea> lineas;
 
     public Albaran() {}
 
-    public Albaran(String partner, String comercial, String fechaPedido, ArrayList<Linea> lineas) {
-        this.partner = partner;
-        this.comercial = comercial;
+    public Albaran(int id, int idComerc, int idPartner, String fechaPedido, String fechaEnvio, String fechaPago) {
+        this.id = id;
+        this.idComerc = idComerc;
+        this.idPartner = idPartner;
         this.fechaPedido = fechaPedido;
-        this.lineas = lineas;
+        this.fechaEnvio = fechaEnvio;
+        this.fechaPago = fechaPago;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getIdComerc() {
+        return idComerc;
+    }
+
+    public void setIdComerc(int idComerc) {
+        this.idComerc = idComerc;
+    }
+
+    public int getIdPartner() {
+        return idPartner;
+    }
+
+    public void setIdPartner(int idPartner) {
+        this.idPartner = idPartner;
     }
 
     public String getFechaPedido() {
@@ -24,20 +51,20 @@ public class Albaran {
         this.fechaPedido = fechaPedido;
     }
 
-    public String getPartner() {
-        return partner;
+    public String getFechaEnvio() {
+        return fechaEnvio;
     }
 
-    public void setPartner(String partner) {
-        this.partner = partner;
+    public void setFechaEnvio(String fechaEnvio) {
+        this.fechaEnvio = fechaEnvio;
     }
 
-    public String getComercial() {
-        return comercial;
+    public String getFechaPago() {
+        return fechaPago;
     }
 
-    public void setComercial(String comercial) {
-        this.comercial = comercial;
+    public void setFechaPago(String fechaPago) {
+        this.fechaPago = fechaPago;
     }
 
     public ArrayList<Linea> getLineas() {

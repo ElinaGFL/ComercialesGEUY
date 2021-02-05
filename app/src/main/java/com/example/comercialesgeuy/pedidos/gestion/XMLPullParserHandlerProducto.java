@@ -64,9 +64,11 @@ public class XMLPullParserHandlerProducto {
             } else if (tag.equals("descripcion")) {
                 producto.setDescripcion(xmlText);
             } else if (tag.equals("precioUn")) {
-                producto.setPrecioUn(Double.parseDouble(xmlText));
+                producto.setPrvent(Float.parseFloat(xmlText));
             } else if (tag.equals("existencias")) {
                 producto.setExistencias(Integer.parseInt(xmlText));
+            } else if (tag.equals("img")) {
+            producto.setExistencias(Integer.parseInt(xmlText));
             }
         }
     }

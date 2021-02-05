@@ -93,6 +93,8 @@ public class DBSQLite extends SQLiteOpenHelper {
     public static final String PARTNERS_KEY_ID = "_id";
     public static final String PARTNERS_KEY_NOMBRE = "NOMBRE";
     public static final String PARTNERS_KEY_APELLIDOS = "APELLIDOS";
+    public static final String PARTNERS_KEY_POBLACION = "POBLACION";
+    public static final String PARTNERS_KEY_CIF = "CIF";
     public static final String PARTNERS_KEY_EMAIL = "EMAIL";
     public static final String PARTNERS_KEY_TLFN = "TELEFONO";
     public static final String PARTNERS_KEY_FK_COMERC = COMERCIALES_KEY_ID;
@@ -103,6 +105,8 @@ public class DBSQLite extends SQLiteOpenHelper {
                     PARTNERS_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     PARTNERS_KEY_NOMBRE + " TEXT," +
                     PARTNERS_KEY_APELLIDOS + " TEXT," +
+                    PARTNERS_KEY_POBLACION + " TEXT," +
+                    PARTNERS_KEY_CIF + " TEXT," +
                     PARTNERS_KEY_EMAIL + " TEXT," +
                     PARTNERS_KEY_TLFN + " TEXT," +
                     PARTNERS_KEY_FK_COMERC + " INTEGER NOT NULL," +
@@ -128,7 +132,7 @@ public class DBSQLite extends SQLiteOpenHelper {
                     PRODUCTOS_KEY_DESCRIPCION + " TEXT, " +
                     PRODUCTOS_KEY_PRVENT + " TEXT," +
                     PRODUCTOS_KEY_EXISTENCIAS + " TEXT," +
-                    PRODUCTOS_KEY_IMG + " BLOB" + ")";
+                    PRODUCTOS_KEY_IMG + " TEXT" + ")";
 
     // TABLA ALBARANES
 
