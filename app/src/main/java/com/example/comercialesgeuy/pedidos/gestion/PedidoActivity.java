@@ -1,27 +1,23 @@
-package com.example.comercialesgeuy.pedidos;
+package com.example.comercialesgeuy.pedidos.gestion;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.example.comercialesgeuy.R;
 import com.example.comercialesgeuy.partners.Partner;
-import com.example.comercialesgeuy.partners.PartnerNewActivity;
-import com.example.comercialesgeuy.partners.XMLPullParserHandlerPartner;
-import com.example.comercialesgeuy.productos.Producto;
-import com.example.comercialesgeuy.productos.XMLPullParserHandlerProducto;
+import com.example.comercialesgeuy.antiguo.XMLPullParserHandlerPartner;
+import com.example.comercialesgeuy.pedidos.ListAdapter;
+import com.example.comercialesgeuy.pedidos.resumen.PedidoResumenActivity;
+import com.example.comercialesgeuy.pedidos.Producto;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,27 +27,27 @@ public class PedidoActivity extends AppCompatActivity {
     Spinner spinnerComercial;
     Button btnCancelar;
     Button btnConfirmar;
-    ListView lstProductos;
-    File XMLfile;
+    RecyclerView rcvProductos;
     String partnerData, comercialData;
     private ListAdapter listAdapter;
     ArrayList<Producto> productOrders = new ArrayList<>();
     ArrayList<Producto> productOrder;
 
+    //File XMLfile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gestion_pedido);
+        setContentView(R.layout.activity_pedido_gestion);
 
         spinnerPartner = findViewById(R.id.spinnerPartner);
         spinnerComercial = findViewById(R.id.spinnerComercial);
         btnCancelar = findViewById(R.id.bCancelar);
         btnConfirmar = findViewById(R.id.bConfirmar);
-        lstProductos = findViewById(R.id.lstProductos);
+        rcvProductos = findViewById(R.id.rcvProductos);
 
-        XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/productos.xml");
-
-        listaProductosOn();
+        //XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/productos.xml");
+        //listaProductosOn();
 
         spinnerPartnersOn();
 
@@ -130,6 +126,8 @@ public class PedidoActivity extends AppCompatActivity {
         //Toast.makeText(this, userData, Toast.LENGTH_LONG).show();
     }
 
+    /*
+
     private void listaProductosOn() {
         if(XMLfile.exists()){
             List<Producto> productos;
@@ -159,8 +157,10 @@ public class PedidoActivity extends AppCompatActivity {
         }
     }
 
+     */
+
     private void confirmarPedido() {
-        Intent intent = new Intent(this, PartnerNewActivity.class);
+        Intent intent = new Intent(this, PedidoResumenActivity.class);
         intent.putExtra("partnerData", partnerData);
         intent.putExtra("comercialData", comercialData);
         intent.putExtra("arrayProductosPedido", productOrder);

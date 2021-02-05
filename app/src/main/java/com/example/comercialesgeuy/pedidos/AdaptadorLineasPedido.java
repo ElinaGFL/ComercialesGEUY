@@ -1,17 +1,11 @@
 package com.example.comercialesgeuy.pedidos;
 
-import android.content.Intent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.comercialesgeuy.R;
-import com.example.comercialesgeuy.partners.RecyclerAdapter;
-import com.example.comercialesgeuy.productos.Producto;
 
 import java.util.List;
 
@@ -43,9 +37,9 @@ public class AdaptadorLineasPedido extends RecyclerView.Adapter<AdaptadorLineasP
 
         public RecyclerHolder(@NonNull View itemView) {
             super(itemView);
-            titulo=itemView.findViewById(R.id.tituloPedido);
-            cantidad=itemView.findViewById(R.id.candidadPedido);
-            precio=itemView.findViewById(R.id.precioUnidades);
+            //titulo=itemView.findViewById(R.id.tituloPedido);
+            //cantidad=itemView.findViewById(R.id.candidadPedido);
+            //precio=itemView.findViewById(R.id.precioUnidades);
         }
     }
 }

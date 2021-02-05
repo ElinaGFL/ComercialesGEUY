@@ -13,4 +13,7 @@
     <string name="calendarioHintTexto">Información sobre su cita</string>
     <string name="calendarioHintCabecera">Título de cita</string>
     <string name="title_activity_maps">Map</string>
+    <string name="fecha">Fecha</string>
+    <string name="comercial">Comercial</string>
+    <string name="img_linea">Es una imagen de producto</string>
 </resources>

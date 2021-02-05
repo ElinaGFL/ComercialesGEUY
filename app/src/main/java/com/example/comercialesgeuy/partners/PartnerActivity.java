@@ -13,7 +13,7 @@ import android.util.Log;
 
 import com.example.comercialesgeuy.DBSQLite;
 import com.example.comercialesgeuy.R;
-import com.example.comercialesgeuy.cita.Cita;
+import com.example.comercialesgeuy.antiguo.XMLPullParserHandlerPartner;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;

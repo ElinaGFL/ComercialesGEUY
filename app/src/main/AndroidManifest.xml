@@ -39,11 +39,11 @@
             android:name=".cita.CalendarioNewActivity"
             android:theme="@style/Theme.PopUp" />
         <activity android:name=".partners.Contacto" />
-        <activity android:name=".pedidos.PedidoResumenActivity" />
+        <activity android:name=".pedidos.resumen.PedidoResumenActivity" />
         <activity android:name=".EnvioDelegacion" />
         <activity android:name=".partners.PartnerActivity" />
         <activity android:name=".cita.CalendarioActivity" />
-        <activity android:name=".pedidos.PedidoActivity" />
+        <activity android:name=".pedidos.gestion.PedidoActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

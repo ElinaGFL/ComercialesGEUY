@@ -1,6 +1,8 @@
-package com.example.comercialesgeuy.productos;
+package com.example.comercialesgeuy.antiguo;
 
 import android.os.Environment;
+
+import com.example.comercialesgeuy.partners.Partner;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -11,19 +13,19 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class XMLPullParserHandlerProducto {
+public class XMLPullParserHandlerPartner {
 
-    private List<Producto> listaProductos = new ArrayList<>();
-    private Producto producto;
+    private List<Partner> ListaPartners = new ArrayList<>();
+    private Partner partner;
     private String tag;
 
-    public List<Producto> parseXML() {
+    public List<Partner> parseXML() {
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(true);
             XmlPullParser xpp = factory.newPullParser();
 
-            InputStream stream = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/GEUY/productos.xml"));
+            InputStream stream = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/GEUY/partners.xml"));
             xpp.setInput(stream, null);
 
             int eventType = xpp.getEventType();
@@ -42,13 +44,13 @@ public class XMLPullParserHandlerProducto {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return listaProductos;
+        return ListaPartners;
     }
 
     private void handleStartTag(String name) {
-        if (name.equals("producto")) {
-            producto = new Producto();
-            listaProductos.add(producto);
+        if (name.equals("partner")) {
+            partner = new Partner();
+            ListaPartners.add(partner);
         } else {
             tag = name;
         }
@@ -56,15 +58,15 @@ public class XMLPullParserHandlerProducto {
 
     private void handleText(String text) {
         String xmlText = text;
-        if (producto != null && tag != null) {
-            if (tag.equals("codigo")) {
-                producto.setCodigo(xmlText);
-            } else if (tag.equals("descripcion")) {
-                producto.setDescripcion(xmlText);
-            } else if (tag.equals("precioUn")) {
-                producto.setPrecioUn(Double.parseDouble(xmlText));
-            } else if (tag.equals("existencias")) {
-                producto.setExistencias(Integer.parseInt(xmlText));
+        if (partner != null && tag != null) {
+            if (tag.equals("nombre")) {
+                partner.setNombre(xmlText);
+            } else if (tag.equals("apellidos")) {
+                partner.setApellidos(xmlText);
+            } else if (tag.equals("telefono")) {
+                partner.setTelefono(xmlText);
+            } else if (tag.equals("correo")) {
+                partner.setCorreo(xmlText);
             }
         }
     }

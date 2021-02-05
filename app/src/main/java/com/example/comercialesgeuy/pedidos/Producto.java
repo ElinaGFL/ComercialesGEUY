@@ -1,4 +1,4 @@
-package com.example.comercialesgeuy.productos;
+package com.example.comercialesgeuy.pedidos;
 
 import java.io.Serializable;
 

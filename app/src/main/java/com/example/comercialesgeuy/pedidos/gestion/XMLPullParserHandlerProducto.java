@@ -1,6 +1,8 @@
-package com.example.comercialesgeuy.cita;
+package com.example.comercialesgeuy.pedidos.gestion;
 
 import android.os.Environment;
+
+import com.example.comercialesgeuy.pedidos.Producto;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -11,19 +13,19 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class XMLPullParserHandlerCita {
+public class XMLPullParserHandlerProducto {
 
-    private List<Cita> ListaCitas = new ArrayList<>();
-    private Cita cita;
+    private List<Producto> listaProductos = new ArrayList<>();
+    private Producto producto;
     private String tag;
 
-    public List<Cita> parseXML() {
+    public List<Producto> parseXML() {
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(true);
             XmlPullParser xpp = factory.newPullParser();
 
-            InputStream stream = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/GEUY/citas.xml"));
+            InputStream stream = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/GEUY/productos.xml"));
             xpp.setInput(stream, null);
 
             int eventType = xpp.getEventType();
@@ -42,13 +44,13 @@ public class XMLPullParserHandlerCita {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ListaCitas;
+        return listaProductos;
     }
 
     private void handleStartTag(String name) {
-        if (name.equals("cita")) {
-            cita = new Cita();
-            ListaCitas.add(cita);
+        if (name.equals("producto")) {
+            producto = new Producto();
+            listaProductos.add(producto);
         } else {
             tag = name;
         }
@@ -56,13 +58,15 @@ public class XMLPullParserHandlerCita {
 
     private void handleText(String text) {
         String xmlText = text;
-        if (cita != null && tag != null) {
-            if (tag.equals("fecha")) {
-                cita.setFecha(xmlText);
-            } else if (tag.equals("titulo")) {
-                cita.setCabecera(xmlText);
-            } else if (tag.equals("texto")) {
-                cita.setTexto(xmlText);
+        if (producto != null && tag != null) {
+            if (tag.equals("codigo")) {
+                producto.setCodigo(xmlText);
+            } else if (tag.equals("descripcion")) {
+                producto.setDescripcion(xmlText);
+            } else if (tag.equals("precioUn")) {
+                producto.setPrecioUn(Double.parseDouble(xmlText));
+            } else if (tag.equals("existencias")) {
+                producto.setExistencias(Integer.parseInt(xmlText));
             }
         }
     }

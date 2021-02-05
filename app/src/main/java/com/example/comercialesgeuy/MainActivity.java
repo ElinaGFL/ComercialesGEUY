@@ -6,11 +6,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +16,7 @@ import android.widget.Button;
 
 import com.example.comercialesgeuy.cita.CalendarioActivity;
 import com.example.comercialesgeuy.partners.PartnerActivity;
-import com.example.comercialesgeuy.pedidos.PedidoActivity;
+import com.example.comercialesgeuy.pedidos.gestion.PedidoActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

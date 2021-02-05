@@ -4,25 +4,29 @@
         <codigo>Bat20</codigo>
         <descripcion>IBattery-20</descripcion>
         <precioUn>5000</precioUn>
-        <existencias>100</existencias>
+        <existencias>50</existencias>
+        <img>bateria.jpg</img>
     </producto>
     <producto>
         <codigo>Bat60</codigo>
         <descripcion>IBattery-60</descripcion>
         <precioUn>7500</precioUn>
-        <existencias>90</existencias>
+        <existencias>45</existencias>
+        <img>bateria.jpg</img>
     </producto>
     <producto>
         <codigo>BatSun</codigo>
         <descripcion>IBattery + PackSun</descripcion>
         <precioUn>7999.99</precioUn>
-        <existencias>80</existencias>
+        <existencias>40</existencias>
+        <img>solar.jpg</img>
     </producto>
     <producto>
         <codigo>BatHaiz</codigo>
         <descripcion>IBattery + PackHaizea</descripcion>
         <precioUn>9999.99</precioUn>
-        <existencias>70</existencias>
+        <existencias>35</existencias>
+        <img>molino.jpg</img>
     </producto>
 </productos>
 

@@ -1,8 +1,8 @@
-package com.example.comercialesgeuy.partners;
+package com.example.comercialesgeuy.antiguo;
 
 import android.os.Environment;
 
-import com.example.comercialesgeuy.partners.Partner;
+import com.example.comercialesgeuy.cita.Cita;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -13,19 +13,19 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class XMLPullParserHandlerPartner {
+public class XMLPullParserHandlerCita {
 
-    private List<Partner> ListaPartners = new ArrayList<>();
-    private Partner partner;
+    private List<Cita> ListaCitas = new ArrayList<>();
+    private Cita cita;
     private String tag;
 
-    public List<Partner> parseXML() {
+    public List<Cita> parseXML() {
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(true);
             XmlPullParser xpp = factory.newPullParser();
 
-            InputStream stream = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/GEUY/partners.xml"));
+            InputStream stream = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/GEUY/citas.xml"));
             xpp.setInput(stream, null);
 
             int eventType = xpp.getEventType();
@@ -44,13 +44,13 @@ public class XMLPullParserHandlerPartner {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ListaPartners;
+        return ListaCitas;
     }
 
     private void handleStartTag(String name) {
-        if (name.equals("partner")) {
-            partner = new Partner();
-            ListaPartners.add(partner);
+        if (name.equals("cita")) {
+            cita = new Cita();
+            ListaCitas.add(cita);
         } else {
             tag = name;
         }
@@ -58,15 +58,13 @@ public class XMLPullParserHandlerPartner {
 
     private void handleText(String text) {
         String xmlText = text;
-        if (partner != null && tag != null) {
-            if (tag.equals("nombre")) {
-                partner.setNombre(xmlText);
-            } else if (tag.equals("apellidos")) {
-                partner.setApellidos(xmlText);
-            } else if (tag.equals("telefono")) {
-                partner.setTelefono(xmlText);
-            } else if (tag.equals("correo")) {
-                partner.setCorreo(xmlText);
+        if (cita != null && tag != null) {
+            if (tag.equals("fecha")) {
+                cita.setFecha(xmlText);
+            } else if (tag.equals("titulo")) {
+                cita.setCabecera(xmlText);
+            } else if (tag.equals("texto")) {
+                cita.setTexto(xmlText);
             }
         }
     }

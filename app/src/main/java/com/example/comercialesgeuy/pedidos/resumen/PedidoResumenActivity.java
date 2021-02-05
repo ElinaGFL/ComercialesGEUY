@@ -1,43 +1,11 @@
 
 
-package com.example.comercialesgeuy.pedidos;
-/*
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.util.Xml;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+package com.example.comercialesgeuy.pedidos.resumen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.comercialesgeuy.R;
-import com.example.comercialesgeuy.productos.Producto;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.xmlpull.v1.XmlSerializer;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
 public class PedidoResumenActivity extends AppCompatActivity {
-
+/*
     private Bundle bundle;
     private String partner;
     private String comercial;
@@ -319,7 +287,6 @@ public class PedidoResumenActivity extends AppCompatActivity {
         tot.setText(String.format("%.2f", total) + " $");
     }
 
-
+*/
 }
 
-*/

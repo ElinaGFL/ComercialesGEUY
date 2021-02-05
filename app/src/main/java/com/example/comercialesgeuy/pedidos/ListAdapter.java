@@ -6,10 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.comercialesgeuy.R;
-import com.example.comercialesgeuy.productos.Producto;
 
 import java.util.ArrayList;
 
@@ -45,7 +43,7 @@ public class ListAdapter extends BaseAdapter {
         final ListViewHolder listViewHolder;
         if(convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = layoutInflater.inflate(R.layout.activity_pedido_listview,parent,false);
+            row = layoutInflater.inflate(R.layout.activity_pedido_producto,parent,false);
             listViewHolder = new ListViewHolder();
             listViewHolder.tvProductName = row.findViewById(R.id.tvProductName);
             listViewHolder.ivProduct = row.findViewById(R.id.ivProduct);
