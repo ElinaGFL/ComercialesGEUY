@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBSQLite extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "GEUYDB";
 
     public DBSQLite(Context context) {
@@ -17,6 +17,7 @@ public class DBSQLite extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREAR_COMERCIALES);
         db.execSQL(CREAR_CITAS);
+        db.execSQL(CREAR_PARTNERS);
         db.execSQL(INSERT_USUARIOS);
     }
 
@@ -24,6 +25,7 @@ public class DBSQLite extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMERCIALES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CITAS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PARTNERS);
 
         onCreate(db);
     }
@@ -86,6 +88,7 @@ public class DBSQLite extends SQLiteOpenHelper {
     public static final String PARTNERS_KEY_APELLIDOS = "APELLIDOS";
     public static final String PARTNERS_KEY_EMAIL = "EMAIL";
     public static final String PARTNERS_KEY_TLFN = "TELEFONO";
+    public static final String PARTNERS_KEY_FK_COMERC = "FK_COMERCIALES";
 
     private static final String CREAR_PARTNERS =
             "CREATE TABLE " + TABLE_PARTNERS + "(" +
@@ -94,5 +97,11 @@ public class DBSQLite extends SQLiteOpenHelper {
                     PARTNERS_KEY_APELLIDOS + " TEXT," +
                     PARTNERS_KEY_EMAIL + " TEXT," +
                     PARTNERS_KEY_TLFN + " TEXT," +
-                    "FOREIGN KEY (" + COMERCIALES_KEY_ID + ") REFERENCES " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_ID + ")";
+                    "CONSTRAINT " + PARTNERS_KEY_FK_COMERC + " FOREIGN KEY (" + COMERCIALES_KEY_ID + ") REFERENCES " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_ID + ") )";
+
+    private static final String INSERT_PARTNERS =
+            "INSERT INTO " + TABLE_PARTNERS + "(" + PARTNERS_KEY_NOMBRE + ", " + PARTNERS_KEY_APELLIDOS + "," + PARTNERS_KEY_EMAIL + "," + PARTNERS_KEY_TLFN +")" +
+                    " VALUES " + "('ANER', 'ONYX', 'ANER ZARAUTZ', 'ANER CORP'), " + "('Javi', 'Seara123', 'Javier' , 'Cebanc-CDEA')" ;
+
+
 }

@@ -6,11 +6,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.example.comercialesgeuy.DBSQLite;
 import com.example.comercialesgeuy.R;
+import com.example.comercialesgeuy.cita.Cita;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PartnerActivity extends AppCompatActivity implements RecyclerAdapter.RecyclerItemClick, SearchView.OnQueryTextListener {
@@ -20,6 +26,10 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
     private List<Partner> partnerList;
     private FloatingActionButton btnAddPartner;
 
+    List<Partner> lstPartners;
+    DBSQLite dbSQLite;
+    SQLiteDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +37,9 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
 
         btnAddPartner = findViewById(R.id.btnAddPartner);
         rvPartners = findViewById(R.id.rvPartners);
+
+        dbSQLite = new DBSQLite(this);
+        database = dbSQLite.getWritableDatabase();
 
         initValues();
 
@@ -43,9 +56,50 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvPartners.setLayoutManager(manager);
 
-        partnerList = leerPartners();
+        partnerList = leerPartners1();
         adapter = new RecyclerAdapter(partnerList, this);
         rvPartners.setAdapter(adapter);
+    }
+
+    private List<Partner> leerPartners1() {
+        lstPartners = new ArrayList<>();
+        Partner partner;
+
+        Cursor cursor = database.query(DBSQLite.TABLE_PARTNERS, null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+
+            int idIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_ID);
+            int nombreIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_NOMBRE);
+            int apellidosIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_APELLIDOS);
+            int emailIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_EMAIL);
+            int tlfnIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_TLFN);
+
+            do {
+                partner = new Partner();
+
+                partner.setId(cursor.getInt(idIndex));
+                partner.setNombre(cursor.getString(nombreIndex));
+                partner.setApellidos(cursor.getString(apellidosIndex));
+                partner.setCorreo(cursor.getString(emailIndex));
+                partner.setTelefono(cursor.getString(tlfnIndex));
+                lstPartners.add(partner);
+                /*
+                Log.d("mLog", "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+                Log.d("mLog", "ID = " + cursor.getInt(idIndex) +
+                        ", fecha = " + cursor.getString(fechaIndex) +
+                        ", cabecera = " + cursor.getString(cabeceraIndex) +
+                        ", texto = " + cursor.getString(textoIndex));
+                 */
+                //cursor.moveToNext() перебираем все строки в курсоре пока не добираемся до последней
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog", "0 rows");
+        }
+        //освобождаем память, т.к. курсор уже не будет нигде использоваться
+        cursor.close();
+
+        return lstPartners;
     }
 
     private List<Partner> leerPartners() {

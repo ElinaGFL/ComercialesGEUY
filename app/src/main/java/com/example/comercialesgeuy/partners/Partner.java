@@ -3,14 +3,24 @@ package com.example.comercialesgeuy.partners;
 public class Partner {
 
         private String nombre, apellidos, correo, telefono;
+        int id;
 
         public Partner(){}
 
-        public Partner(String nombre, String apellidos, String correo, String telefono){
+        public Partner(int id, String nombre, String apellidos, String correo, String telefono){
+                this.id = id;
                 this.nombre = nombre;
                 this.apellidos = apellidos;
                 this.correo = correo;
                 this.telefono = telefono;
+        }
+
+        public int getId() {
+                return id;
+        }
+
+        public void setId(int id) {
+                this.id = id;
         }
 
         public void setNombre(String nombre) {

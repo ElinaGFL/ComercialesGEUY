@@ -14,6 +14,7 @@ import android.widget.Spinner;
 
 import com.example.comercialesgeuy.R;
 import com.example.comercialesgeuy.partners.Partner;
+import com.example.comercialesgeuy.partners.PartnerNewActivity;
 import com.example.comercialesgeuy.partners.XMLPullParserHandlerPartner;
 import com.example.comercialesgeuy.productos.Producto;
 import com.example.comercialesgeuy.productos.XMLPullParserHandlerProducto;
@@ -159,7 +160,7 @@ public class PedidoActivity extends AppCompatActivity {
     }
 
     private void confirmarPedido() {
-        Intent intent = new Intent(this, PedidoResumenActivity.class);
+        Intent intent = new Intent(this, PartnerNewActivity.class);
         intent.putExtra("partnerData", partnerData);
         intent.putExtra("comercialData", comercialData);
         intent.putExtra("arrayProductosPedido", productOrder);

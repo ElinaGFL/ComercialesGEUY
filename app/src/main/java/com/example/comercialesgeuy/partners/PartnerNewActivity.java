@@ -2,7 +2,9 @@ package com.example.comercialesgeuy.partners;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.comercialesgeuy.DBSQLite;
 import com.example.comercialesgeuy.R;
 
 import org.w3c.dom.Document;
@@ -38,7 +41,9 @@ public class PartnerNewActivity extends AppCompatActivity {
     EditText txtNuevoCorreo;
     Button btnNuevoPartner;
     private String nombre, apellidos, telefono, correo;
-    private File XMLfile;
+    //private File XMLfile;
+
+    DBSQLite dbSQLite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +56,7 @@ public class PartnerNewActivity extends AppCompatActivity {
         txtNuevoCorreo = findViewById(R.id.txtNuevoCorreo);
         btnNuevoPartner=findViewById(R.id.btnNuevoPartner);
 
-        XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/partners.xml");
+        //XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/partners.xml");
 
         btnNuevoPartner.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,11 +84,34 @@ public class PartnerNewActivity extends AppCompatActivity {
                 }
                 volverAtras();
                  */
-                guardarNuevoPartner();
+                guardarNuevoPartner1();
             }
         });
     }
 
+    private void guardarNuevoPartner1() {
+        recogerDatos();
+
+        dbSQLite = new DBSQLite(this);
+        SQLiteDatabase database = dbSQLite.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DBSQLite.PARTNERS_KEY_NOMBRE, nombre);
+        contentValues.put(DBSQLite.PARTNERS_KEY_APELLIDOS, apellidos);
+        contentValues.put(DBSQLite.PARTNERS_KEY_EMAIL, correo);
+        contentValues.put(DBSQLite.PARTNERS_KEY_TLFN, telefono);
+        contentValues.put(DBSQLite.COMERCIALES_KEY_ID, 1);
+
+        database.insert(DBSQLite.TABLE_PARTNERS, null, contentValues);
+
+        Toast.makeText(this, "Se ha añadido el partner", Toast.LENGTH_SHORT).show();
+
+        //dbSQLite.close();
+
+        finish();
+    }
+
+    /*
     private void guardarNuevoPartner() {
 
         recogerDatos();
@@ -158,6 +186,31 @@ public class PartnerNewActivity extends AppCompatActivity {
         }
     }
 
+    private void addElement(Document doc, String nombre, String apellidos, String telefono, String correo) {
+        Node root = doc.getDocumentElement();
+
+        root.appendChild(createElement(doc, nombre, apellidos, telefono, correo));
+    }
+
+    private static Node createElement(Document doc, String nombre, String apellidos, String telefono, String correo) {
+        Element tipo = doc.createElement("partner");
+
+        tipo.appendChild(createAllElements(doc, tipo, "nombre", nombre));
+        tipo.appendChild(createAllElements(doc, tipo, "apellidos", apellidos));
+        tipo.appendChild(createAllElements(doc, tipo, "telefono", telefono));
+        tipo.appendChild(createAllElements(doc, tipo, "correo", correo));
+
+        return tipo;
+    }
+
+    // utility method to create text node
+    private static Node createAllElements(Document doc, Element element, String name, String value) {
+        Element node = doc.createElement(name);
+        node.appendChild(doc.createTextNode(value));
+        return node;
+    }
+    */
+
     private void recogerDatos() {
         boolean relleno = true;
 
@@ -201,29 +254,6 @@ public class PartnerNewActivity extends AppCompatActivity {
 
     }
 
-    private void addElement(Document doc, String nombre, String apellidos, String telefono, String correo) {
-        Node root = doc.getDocumentElement();
-
-        root.appendChild(createElement(doc, nombre, apellidos, telefono, correo));
-    }
-
-    private static Node createElement(Document doc, String nombre, String apellidos, String telefono, String correo) {
-        Element tipo = doc.createElement("partner");
-
-        tipo.appendChild(createAllElements(doc, tipo, "nombre", nombre));
-        tipo.appendChild(createAllElements(doc, tipo, "apellidos", apellidos));
-        tipo.appendChild(createAllElements(doc, tipo, "telefono", telefono));
-        tipo.appendChild(createAllElements(doc, tipo, "correo", correo));
-
-        return tipo;
-    }
-
-    // utility method to create text node
-    private static Node createAllElements(Document doc, Element element, String name, String value) {
-        Element node = doc.createElement(name);
-        node.appendChild(doc.createTextNode(value));
-        return node;
-    }
 
     public void volverAtras(){
         Intent i = new Intent(this, PartnerActivity.class);

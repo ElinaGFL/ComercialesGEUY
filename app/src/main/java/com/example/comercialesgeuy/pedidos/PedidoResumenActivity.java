@@ -1,5 +1,7 @@
-package com.example.comercialesgeuy.pedidos;
 
+
+package com.example.comercialesgeuy.pedidos;
+/*
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Environment;
@@ -319,3 +321,5 @@ public class PedidoResumenActivity extends AppCompatActivity {
 
 
 }
+
+*/

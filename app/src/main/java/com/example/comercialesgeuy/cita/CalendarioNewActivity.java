@@ -80,7 +80,7 @@ public class CalendarioNewActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Se ha añadido la cita", Toast.LENGTH_SHORT).show();
 
-        dbSQLite.close();
+        //dbSQLite.close();
 
         finish();
 
