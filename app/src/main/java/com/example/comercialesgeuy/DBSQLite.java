@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBSQLite extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "GEUYDB";
 
     public DBSQLite(Context context) {
@@ -27,6 +27,10 @@ public class DBSQLite extends SQLiteOpenHelper {
 
         onCreate(db);
     }
+
+    // TABLA PARTNERS
+
+
 
     // TABLA COMERCIALES
 
@@ -64,13 +68,16 @@ public class DBSQLite extends SQLiteOpenHelper {
 
     public static final String CITAS_KEY_ID = "_id";
     public static final String CITAS_KEY_FECHA = "FECHA";
+    public static final String CITAS_KEY_HORA = "HORA";
     public static final String CITAS_KEY_CABECERA = "CABECERA";
     public static final String CITAS_KEY_TEXTO = "TEXTO";
 
+    //CREATE TABLE CITAS (_id INTEGER PRIM KEY AUTOINCR, FECHA TEXT, ...
     private static final String CREAR_CITAS =
             "CREATE TABLE " + TABLE_CITAS + "(" +
                     CITAS_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    CITAS_KEY_FECHA + " TEXT NOT NULL, " +
-                    CITAS_KEY_CABECERA + " TEXT NOT NULL," +
+                    CITAS_KEY_FECHA + " TEXT, " +
+                    CITAS_KEY_HORA + " TEXT, " +
+                    CITAS_KEY_CABECERA + " TEXT," +
                     CITAS_KEY_TEXTO + " TEXT" + ")";
 }

@@ -78,7 +78,7 @@ public class CalendarioNewActivity extends AppCompatActivity {
         //вставляемыми значениями, второй аргумент используется при вставке пустой строки
         database.insert(DBSQLite.TABLE_CITAS, null, contentValues);
 
-        Toast.makeText(this, "Se ha añadido la cita al XML", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Se ha añadido la cita", Toast.LENGTH_SHORT).show();
         finish();
 
     }
@@ -127,7 +127,9 @@ public class CalendarioNewActivity extends AppCompatActivity {
             try {
                 dBuilder = dbFactory.newDocumentBuilder();
                 Document doc = dBuilder.parse(XMLfile);
+
                 doc.getDocumentElement().normalize();
+
                 addElement(doc, fecha, titulo, texto);
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();

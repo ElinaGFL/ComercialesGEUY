@@ -2,14 +2,25 @@ package com.example.comercialesgeuy.cita;
 
 public class Cita {
 
-    private String fecha, cabecera, texto;
+    private String fecha, hora, cabecera, texto;
+    private int id;
 
     public Cita() {}
 
-    public Cita(String fecha, String cabecera, String texto) {
+    public Cita (int id, String fecha, String hora, String cabecera, String texto) {
+        this.id = id;
         this.fecha = fecha;
+        this.hora = hora;
         this.cabecera = cabecera;
         this.texto = texto;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFecha() {
@@ -18,6 +29,14 @@ public class Cita {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 
     public String getCabecera() {
