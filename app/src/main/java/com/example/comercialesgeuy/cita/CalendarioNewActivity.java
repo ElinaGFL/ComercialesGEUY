@@ -79,6 +79,9 @@ public class CalendarioNewActivity extends AppCompatActivity {
         database.insert(DBSQLite.TABLE_CITAS, null, contentValues);
 
         Toast.makeText(this, "Se ha añadido la cita", Toast.LENGTH_SHORT).show();
+
+        dbSQLite.close();
+
         finish();
 
     }

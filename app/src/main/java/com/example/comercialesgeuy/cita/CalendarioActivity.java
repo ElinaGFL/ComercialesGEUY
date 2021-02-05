@@ -120,7 +120,7 @@ public class CalendarioActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(CalendarioActivity.this);
-                builder.setTitle("Delete");
+                builder.setTitle("Borrar la cita");
                 builder.setMessage("Are you sure you want to delete?");
                 builder.setIcon(android.R.drawable.ic_dialog_alert);
 
@@ -132,13 +132,11 @@ public class CalendarioActivity extends AppCompatActivity {
 
                         Log.d("mLog", "cita id = " +  cita.getId());
 
-                        int deleteItem=
-                                database.delete(dbSQLite.TABLE_CITAS, dbSQLite.CITAS_KEY_ID + "=" + cita.getId(), null);
-
+                        int deleteItem = database.delete(dbSQLite.TABLE_CITAS, dbSQLite.CITAS_KEY_ID + "=" + cita.getId(), null);
 
                         Log.d("mLog", "updates rows count = " + deleteItem);
 
-                        if(deleteItem>0)
+                        if(deleteItem > 0)
                             Toast.makeText(getApplicationContext(), "Successfully Deleted", Toast.LENGTH_SHORT).show();
                         else
                             Toast.makeText(getApplicationContext(), "Not", Toast.LENGTH_SHORT).show();
@@ -146,10 +144,10 @@ public class CalendarioActivity extends AppCompatActivity {
                 });
 
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int ii) {
-                                dialog.dismiss();
-                            }
+                        public void onClick(DialogInterface dialog, int ii) {
+                            dialog.dismiss();
                         }
+                    }
                 );
                 builder.show();
 
@@ -187,11 +185,12 @@ public class CalendarioActivity extends AppCompatActivity {
                 cita.setTexto(cursor.getString(textoIndex));
                 listaCitas.add(cita);
                 /*
+                Log.d("mLog", "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
                 Log.d("mLog", "ID = " + cursor.getInt(idIndex) +
                         ", fecha = " + cursor.getString(fechaIndex) +
                         ", cabecera = " + cursor.getString(cabeceraIndex) +
                         ", texto = " + cursor.getString(textoIndex));
-                */
+                 */
                 //cursor.moveToNext() перебираем все строки в курсоре пока не добираемся до последней
             } while (cursor.moveToNext());
         } else {

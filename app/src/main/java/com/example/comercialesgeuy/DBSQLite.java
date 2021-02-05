@@ -28,10 +28,6 @@ public class DBSQLite extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // TABLA PARTNERS
-
-
-
     // TABLA COMERCIALES
 
     public static final String TABLE_COMERCIALES = "COMERCIALES";
@@ -59,8 +55,8 @@ public class DBSQLite extends SQLiteOpenHelper {
                     COMERCIALES_KEY_DELEG + " TEXT" + ")";
 
     private static final String INSERT_USUARIOS =
-            "INSERT INTO " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_USR + ", " + COMERCIALES_KEY_PWD + ")" +
-                    " VALUES " + "('ANER', 'ONYX'), " + "('Javi', 'Seara123');";
+            "INSERT INTO " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_USR + ", " + COMERCIALES_KEY_PWD + "," + COMERCIALES_KEY_NOMBRE + "," + COMERCIALES_KEY_EMPRESA +")" +
+                    " VALUES " + "('ANER', 'ONYX', 'ANER ZARAUTZ', 'ANER CORP'), " + "('Javi', 'Seara123', 'Javier' , 'Cebanc-CDEA')" ;
 
     // TABLA CITAS
 
@@ -80,4 +76,23 @@ public class DBSQLite extends SQLiteOpenHelper {
                     CITAS_KEY_HORA + " TEXT, " +
                     CITAS_KEY_CABECERA + " TEXT," +
                     CITAS_KEY_TEXTO + " TEXT" + ")";
+
+    // TABLA PARTNERS
+
+    public static final String TABLE_PARTNERS = "PARTNERS";
+
+    public static final String PARTNERS_KEY_ID = "_id";
+    public static final String PARTNERS_KEY_NOMBRE = "NOMBRE";
+    public static final String PARTNERS_KEY_APELLIDOS = "APELLIDOS";
+    public static final String PARTNERS_KEY_EMAIL = "EMAIL";
+    public static final String PARTNERS_KEY_TLFN = "TELEFONO";
+
+    private static final String CREAR_PARTNERS =
+            "CREATE TABLE " + TABLE_PARTNERS + "(" +
+                    PARTNERS_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    PARTNERS_KEY_NOMBRE + " TEXT," +
+                    PARTNERS_KEY_APELLIDOS + " TEXT," +
+                    PARTNERS_KEY_EMAIL + " TEXT," +
+                    PARTNERS_KEY_TLFN + " TEXT," +
+                    "FOREIGN KEY (" + COMERCIALES_KEY_ID + ") REFERENCES " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_ID + ")";
 }
