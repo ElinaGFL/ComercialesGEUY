@@ -1,16 +1,26 @@
 package com.example.comercialesgeuy;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.comercialesgeuy.pedidos.Producto;
+import com.example.comercialesgeuy.pedidos.gestion.XMLParserProducto;
+
+import java.util.List;
+
 public class DBSQLite extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "GEUYDB";
+
+    private static Context mContext;
+    List<Producto> productoList = null;
 
     public DBSQLite(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        mContext = context;
     }
 
     @Override
@@ -22,7 +32,29 @@ public class DBSQLite extends SQLiteOpenHelper {
         db.execSQL(CREAR_ALBARANES);
         db.execSQL(CREAR_LINEAS);
 
-        db.execSQL(INSERT_USUARIOS);
+        db.execSQL(INSERT_COMERCIALES);
+        insertXMLProductos(db);
+    }
+
+    private void insertXMLProductos(SQLiteDatabase db) {
+        XMLParserProducto parser = new XMLParserProducto();
+
+        try {
+            productoList = parser.parseXML(mContext.getAssets().open("productos.xml"));
+
+            for (Producto prod : productoList) {
+                ContentValues values = new ContentValues();
+
+                values.put(PRODUCTOS_KEY_CODIGO, prod.getCodigo());
+                values.put(PRODUCTOS_KEY_DESCRIPCION, prod.getDescripcion());
+                values.put(PRODUCTOS_KEY_PRVENT, prod.getPrvent());
+                values.put(PRODUCTOS_KEY_EXISTENCIAS, prod.getExistencias());
+                values.put(PRODUCTOS_KEY_IMG, prod.getImg());
+                db.insert(TABLE_PRODUCTOS, null, values);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -63,7 +95,7 @@ public class DBSQLite extends SQLiteOpenHelper {
                     COMERCIALES_KEY_TLFN + " TEXT," +
                     COMERCIALES_KEY_DELEG + " TEXT" + ")";
 
-    private static final String INSERT_USUARIOS =
+    private static final String INSERT_COMERCIALES =
             "INSERT INTO " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_USR + ", " + COMERCIALES_KEY_PWD + "," + COMERCIALES_KEY_NOMBRE + "," + COMERCIALES_KEY_EMPRESA +")" +
                     " VALUES " + "('ANER', 'ONYX', 'ANER ZARAUTZ', 'ANER CORP'), " + "('Javi', 'Seara123', 'Javier' , 'Cebanc-CDEA')" ;
 
@@ -97,7 +129,7 @@ public class DBSQLite extends SQLiteOpenHelper {
     public static final String PARTNERS_KEY_CIF = "CIF";
     public static final String PARTNERS_KEY_EMAIL = "EMAIL";
     public static final String PARTNERS_KEY_TLFN = "TELEFONO";
-    public static final String PARTNERS_KEY_FK_COMERC = COMERCIALES_KEY_ID;
+    public static final String PARTNERS_KEY_FK_COMERC = "FK_COMERC_ID";
     //public static final String PARTNERS_KEY_FK_COMERC = "FK_COMERCIALES1";
 
     private static final String CREAR_PARTNERS =
@@ -110,7 +142,7 @@ public class DBSQLite extends SQLiteOpenHelper {
                     PARTNERS_KEY_EMAIL + " TEXT," +
                     PARTNERS_KEY_TLFN + " TEXT," +
                     PARTNERS_KEY_FK_COMERC + " INTEGER NOT NULL," +
-                    "FOREIGN KEY (" + PARTNERS_KEY_FK_COMERC + ") REFERENCES " + TABLE_COMERCIALES + "(" + PARTNERS_KEY_FK_COMERC + ") )";
+                    "FOREIGN KEY (" + PARTNERS_KEY_FK_COMERC + ") REFERENCES " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_ID + ") )";
                     //"CONSTRAINT " + PARTNERS_KEY_FK_COMERC + " FOREIGN KEY (" + COMERCIALES_KEY_ID + ") REFERENCES " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_ID + ") )";
 
 
@@ -134,13 +166,15 @@ public class DBSQLite extends SQLiteOpenHelper {
                     PRODUCTOS_KEY_EXISTENCIAS + " TEXT," +
                     PRODUCTOS_KEY_IMG + " TEXT" + ")";
 
+
+
     // TABLA ALBARANES
 
     public static final String TABLE_ALBARANES = "ALBARANES";
 
     public static final String ALBARANES_KEY_ID = "_id";
-    public static final String ALBARANES_KEY_FK_COMERC = COMERCIALES_KEY_ID;
-    public static final String ALBARANES_KEY_FK_PARTNER = PARTNERS_KEY_ID;
+    public static final String ALBARANES_KEY_FK_COMERC = "FK_COMERC_ID";
+    public static final String ALBARANES_KEY_FK_PARTNER = "FK_PARTNER_ID";
     public static final String ALBARANES_KEY_FECHAALBARAN = "FECHAALBARAN";
     public static final String ALBARANES_KEY_FECHAENVIO = "FECHAENVIO";
     public static final String ALBARANES_KEY_FECHAPAGO = "FECHAPAGO";
@@ -153,16 +187,16 @@ public class DBSQLite extends SQLiteOpenHelper {
                     ALBARANES_KEY_FECHAALBARAN + " TEXT," +
                     ALBARANES_KEY_FECHAENVIO + " TEXT," +
                     ALBARANES_KEY_FECHAPAGO + " TEXT," +
-                    "FOREIGN KEY (" + ALBARANES_KEY_FK_COMERC + ") REFERENCES " + TABLE_COMERCIALES + "(" + ALBARANES_KEY_FK_COMERC + ")," +
-                    "FOREIGN KEY (" + ALBARANES_KEY_FK_PARTNER + ") REFERENCES " + TABLE_PARTNERS + "(" + ALBARANES_KEY_FK_PARTNER + ") )";
+                    "FOREIGN KEY (" + ALBARANES_KEY_FK_COMERC + ") REFERENCES " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_ID + ")," +
+                    "FOREIGN KEY (" + ALBARANES_KEY_FK_PARTNER + ") REFERENCES " + TABLE_PARTNERS + "(" + PARTNERS_KEY_ID + ") )";
 
     // TABLA LINEAS
 
     public static final String TABLE_LINEAS = "LINEAS";
 
     public static final String LINEAS_KEY_ID = "_id";
-    public static final String LINEAS_KEY_FK_ALBARAN = ALBARANES_KEY_ID;
-    public static final String LINEAS_KEY_FK_PRODUCTO = PRODUCTOS_KEY_ID;
+    public static final String LINEAS_KEY_FK_ALBARAN = "FK_ALBARAN_ID";
+    public static final String LINEAS_KEY_FK_PRODUCTO = "FK_PRODUCTO_ID";
     public static final String LINEAS_KEY_CANTIDAD = "CANTIDAD";
     public static final String LINEAS_KEY_PRECIOLINEA = "PRECIOLINEA";
 
@@ -174,6 +208,6 @@ public class DBSQLite extends SQLiteOpenHelper {
                     LINEAS_KEY_CANTIDAD + " INTEGER," +
                     LINEAS_KEY_PRECIOLINEA + " REAL," +
                     "PRIMARY KEY (" + LINEAS_KEY_ID + "," + LINEAS_KEY_FK_ALBARAN + "), " +
-                    "FOREIGN KEY (" + LINEAS_KEY_FK_ALBARAN + ") REFERENCES " + TABLE_ALBARANES + "(" + LINEAS_KEY_FK_ALBARAN + ")," +
-                    "FOREIGN KEY (" + LINEAS_KEY_FK_PRODUCTO + ") REFERENCES " + TABLE_PRODUCTOS + "(" + LINEAS_KEY_FK_PRODUCTO + ") )";
+                    "FOREIGN KEY (" + LINEAS_KEY_FK_ALBARAN + ") REFERENCES " + TABLE_ALBARANES + "(" + ALBARANES_KEY_ID + ")," +
+                    "FOREIGN KEY (" + LINEAS_KEY_FK_PRODUCTO + ") REFERENCES " + TABLE_PRODUCTOS + "(" + PRODUCTOS_KEY_ID + ") )";
 }

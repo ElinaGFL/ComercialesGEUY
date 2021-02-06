@@ -68,7 +68,7 @@ public class CalendarioNewActivity extends AppCompatActivity {
         recogerDatos();
 
         dbSQLite = new DBSQLite(this);
-        SQLiteDatabase database = dbSQLite.getWritableDatabase();
+        SQLiteDatabase db = dbSQLite.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(DBSQLite.CITAS_KEY_FECHA, fecha);
@@ -76,7 +76,7 @@ public class CalendarioNewActivity extends AppCompatActivity {
         contentValues.put(DBSQLite.CITAS_KEY_TEXTO, texto);
         //методом insert вставляем подготовленные строки в таблицу, этот метод принимает имя таблицы и объект contentValues со
         //вставляемыми значениями, второй аргумент используется при вставке пустой строки
-        database.insert(DBSQLite.TABLE_CITAS, null, contentValues);
+        db.insert(DBSQLite.TABLE_CITAS, null, contentValues);
 
         Toast.makeText(this, "Se ha añadido la cita", Toast.LENGTH_SHORT).show();
 

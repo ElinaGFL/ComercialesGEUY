@@ -22,15 +22,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Spinner
-            android:id="@+id/spinnerComercial"
-            android:layout_width="200dp"
-            android:layout_height="41dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView7"
-            app:layout_constraintTop_toTopOf="@+id/textView7" />
-
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
@@ -39,8 +30,6 @@
             android:layout_marginTop="28dp"
             android:text="@string/comercial"
             android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/spinnerComercial"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
 
@@ -121,6 +110,15 @@
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <TextView
+            android:id="@+id/txtComercial"
+            android:layout_width="187dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="32dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView7"
+            app:layout_constraintTop_toTopOf="@+id/textView7" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

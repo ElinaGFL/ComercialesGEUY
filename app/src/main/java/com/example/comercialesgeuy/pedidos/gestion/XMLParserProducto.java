@@ -13,44 +13,44 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class XMLPullParserHandlerProducto {
+public class XMLParserProducto {
 
-    private List<Producto> listaProductos = new ArrayList<>();
+    private List<Producto> productoList = new ArrayList<>();
     private Producto producto;
     private String tag;
 
-    public List<Producto> parseXML() {
+    public List<Producto> parseXML(InputStream stream) {
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(true);
-            XmlPullParser xpp = factory.newPullParser();
+            XmlPullParser parser = factory.newPullParser();
 
-            InputStream stream = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/GEUY/productos.xml"));
-            xpp.setInput(stream, null);
+            //InputStream stream = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/GEUY/productos.xml"));
+            parser.setInput(stream, null);
 
-            int eventType = xpp.getEventType();
+            int eventType = parser.getEventType();
 
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_TAG) {
-                    handleStartTag(xpp.getName());
+                    handleStartTag(parser.getName());
                 } else if (eventType == XmlPullParser.END_TAG) {
                     tag = null;
                 } else if (eventType == XmlPullParser.TEXT) {
-                    handleText(xpp.getText());
+                    handleText(parser.getText());
                 }
-                eventType = xpp.next();
+                eventType = parser.next();
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return listaProductos;
+        return productoList;
     }
 
     private void handleStartTag(String name) {
         if (name.equals("producto")) {
             producto = new Producto();
-            listaProductos.add(producto);
+            productoList.add(producto);
         } else {
             tag = name;
         }
@@ -63,12 +63,12 @@ public class XMLPullParserHandlerProducto {
                 producto.setCodigo(xmlText);
             } else if (tag.equals("descripcion")) {
                 producto.setDescripcion(xmlText);
-            } else if (tag.equals("precioUn")) {
+            } else if (tag.equals("prvent")) {
                 producto.setPrvent(Float.parseFloat(xmlText));
             } else if (tag.equals("existencias")) {
                 producto.setExistencias(Integer.parseInt(xmlText));
             } else if (tag.equals("img")) {
-            producto.setExistencias(Integer.parseInt(xmlText));
+                producto.setImg(xmlText);
             }
         }
     }

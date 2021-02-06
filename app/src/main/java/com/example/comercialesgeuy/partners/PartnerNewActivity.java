@@ -100,7 +100,7 @@ public class PartnerNewActivity extends AppCompatActivity {
         contentValues.put(DBSQLite.PARTNERS_KEY_APELLIDOS, apellidos);
         contentValues.put(DBSQLite.PARTNERS_KEY_EMAIL, correo);
         contentValues.put(DBSQLite.PARTNERS_KEY_TLFN, telefono);
-        contentValues.put(DBSQLite.COMERCIALES_KEY_ID, 1);
+        contentValues.put(DBSQLite.PARTNERS_KEY_FK_COMERC, 1);
 
         database.insert(DBSQLite.TABLE_PARTNERS, null, contentValues);
 

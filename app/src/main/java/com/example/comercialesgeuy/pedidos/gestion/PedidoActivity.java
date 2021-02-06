@@ -4,13 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.example.comercialesgeuy.DBSQLite;
+import com.example.comercialesgeuy.MyAppVariables;
 import com.example.comercialesgeuy.R;
 import com.example.comercialesgeuy.partners.Partner;
 import com.example.comercialesgeuy.antiguo.XMLPullParserHandlerPartner;
@@ -24,16 +30,17 @@ import java.util.List;
 public class PedidoActivity extends AppCompatActivity {
 
     Spinner spinnerPartner;
-    Spinner spinnerComercial;
+    TextView txtComercial;
+    //Spinner spinnerComercial;
     Button btnCancelar;
     Button btnConfirmar;
     RecyclerView rcvProductos;
     String partnerData, comercialData;
-    private ListAdapter listAdapter;
-    ArrayList<Producto> productOrders = new ArrayList<>();
-    ArrayList<Producto> productOrder;
 
     //File XMLfile;
+
+    DBSQLite dbSQLite;
+    SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +48,29 @@ public class PedidoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pedido_gestion);
 
         spinnerPartner = findViewById(R.id.spinnerPartner);
-        spinnerComercial = findViewById(R.id.spinnerComercial);
+        txtComercial = findViewById(R.id.txtComercial);
+        //spinnerComercial = findViewById(R.id.spinnerComercial);
         btnCancelar = findViewById(R.id.bCancelar);
         btnConfirmar = findViewById(R.id.bConfirmar);
         rcvProductos = findViewById(R.id.rcvProductos);
 
-        //XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/productos.xml");
-        //listaProductosOn();
+        dbSQLite = new DBSQLite(this);
+        database = dbSQLite.getWritableDatabase();
 
-        //spinnerPartnersOn();
-
+        spinnerPartnersOn();
+        txtComercialOn();
         //spinnerComercialOn();
 
+
+
+
         /*
+        XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/productos.xml");
+        listaProductosOn();
+
+        spinnerPartnersOn();
+        spinnerComercialOn();
+
         spinnerPartner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -85,6 +102,60 @@ public class PedidoActivity extends AppCompatActivity {
 
          */
     }
+
+    private void txtComercialOn() {
+        String empresa;
+        int idComerc = ((MyAppVariables) this.getApplication()).getComercIdConect();
+
+        Cursor cursor = database.rawQuery("SELECT * FROM COMERCIALES WHERE _id = " + idComerc, null);
+        if(cursor.moveToFirst()){
+            empresa = cursor.getString(cursor.getColumnIndex("USR"));
+            txtComercial.setText(empresa);
+        }
+    }
+
+    private void spinnerPartnersOn() {
+        List<Partner> partnerList = rellenarPartnerList();
+        ArrayAdapter<Partner> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, partnerList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPartner.setAdapter(adapter);
+    }
+
+    private List<Partner> rellenarPartnerList() {
+        List<Partner> partnerList  = new ArrayList<>();
+        Partner partner;
+        Cursor cursor = database.query(DBSQLite.TABLE_PARTNERS, null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_ID);
+            int nombreIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_NOMBRE);
+            int apellidosIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_APELLIDOS);
+            int emailIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_EMAIL);
+            int tlfnIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_TLFN);
+
+            do {
+                partner = new Partner();
+                partner.setId(cursor.getInt(idIndex));
+                partner.setNombre(cursor.getString(nombreIndex));
+                partner.setApellidos(cursor.getString(apellidosIndex));
+                partner.setCorreo(cursor.getString(emailIndex));
+                partner.setTelefono(cursor.getString(tlfnIndex));
+                partnerList.add(partner);
+                /*
+                Log.d("mLog", "ID = " + cursor.getInt(idIndex) +
+                        ", fecha = " + cursor.getString(fechaIndex) +
+                        ", cabecera = " + cursor.getString(cabeceraIndex) +
+                        ", texto = " + cursor.getString(textoIndex));
+                 */
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog", "0 rows");
+        }
+        cursor.close();
+        return partnerList;
+    }
+
+
     /*
     private ArrayList<Producto> hacerPedido() {
         productOrders.clear();
@@ -129,12 +200,10 @@ public class PedidoActivity extends AppCompatActivity {
         //Toast.makeText(this, userData, Toast.LENGTH_LONG).show();
     }
 
-    /*
-
     private void listaProductosOn() {
         if(XMLfile.exists()){
             List<Producto> productos;
-            XMLPullParserHandlerProducto parser = new XMLPullParserHandlerProducto();
+            XMLParserProducto parser = new XMLParserProducto();
             productos = parser.parseXML();
 
             listAdapter = new ListAdapter(this, (ArrayList<Producto>) productos);
@@ -160,8 +229,6 @@ public class PedidoActivity extends AppCompatActivity {
         }
     }
 
-     */
-
     private void confirmarPedido() {
         Intent intent = new Intent(this, PedidoResumenActivity.class);
         intent.putExtra("partnerData", partnerData);
@@ -169,5 +236,5 @@ public class PedidoActivity extends AppCompatActivity {
         intent.putExtra("arrayProductosPedido", productOrder);
         startActivity(intent);
     }
-
+     */
 }

@@ -21,7 +21,7 @@ import java.util.List;
 
 public class PartnerActivity extends AppCompatActivity implements RecyclerAdapter.RecyclerItemClick, SearchView.OnQueryTextListener {
 
-    private RecyclerView rvPartners;
+    private RecyclerView rcvPartners;
     private RecyclerAdapter adapter;
     private List<Partner> partnerList;
     private FloatingActionButton btnAddPartner;
@@ -36,7 +36,7 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
         setContentView(R.layout.activity_partners);
 
         btnAddPartner = findViewById(R.id.btnAddPartner);
-        rvPartners = findViewById(R.id.rvPartners);
+        rcvPartners = findViewById(R.id.rvPartners);
 
         dbSQLite = new DBSQLite(this);
         database = dbSQLite.getWritableDatabase();
@@ -54,11 +54,11 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
     //rellenar y mostrar partner
     private void initValues(){
         LinearLayoutManager manager = new LinearLayoutManager(this);
-        rvPartners.setLayoutManager(manager);
+        rcvPartners.setLayoutManager(manager);
 
         partnerList = leerPartners1();
         adapter = new RecyclerAdapter(partnerList, this);
-        rvPartners.setAdapter(adapter);
+        rcvPartners.setAdapter(adapter);
     }
 
     private List<Partner> leerPartners1() {
@@ -85,23 +85,41 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
                 partner.setTelefono(cursor.getString(tlfnIndex));
                 lstPartners.add(partner);
                 /*
-                Log.d("mLog", "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
                 Log.d("mLog", "ID = " + cursor.getInt(idIndex) +
                         ", fecha = " + cursor.getString(fechaIndex) +
                         ", cabecera = " + cursor.getString(cabeceraIndex) +
                         ", texto = " + cursor.getString(textoIndex));
                  */
-                //cursor.moveToNext() перебираем все строки в курсоре пока не добираемся до последней
             } while (cursor.moveToNext());
         } else {
             Log.d("mLog", "0 rows");
         }
-        //освобождаем память, т.к. курсор уже не будет нигде использоваться
+
         cursor.close();
 
         return lstPartners;
     }
 
+    public void itemClick(Partner item) {
+        Intent intent = new Intent(this, Contacto.class);
+        intent.putExtra("nombre",item.getNombre());
+        intent.putExtra("apellido",item.getApellidos());
+        intent.putExtra("correo",item.getCorreo());
+        intent.putExtra("telefono",item.getTelefono());
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+
+     /*
     private List<Partner> leerPartners() {
         List<Partner> partners;
 
@@ -111,7 +129,6 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
         return partners;
     }
 
-    /*
     public ArrayList<Partner> leerPartners(){
 
         ArrayList<Partner> listado = new ArrayList<Partner>();
@@ -149,24 +166,5 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
         return listado;
     }
      */
-
-    public void itemClick(Partner item) {
-        Intent intent = new Intent(this, Contacto.class);
-        intent.putExtra("nombre",item.getNombre());
-        intent.putExtra("apellido",item.getApellidos());
-        intent.putExtra("correo",item.getCorreo());
-        intent.putExtra("telefono",item.getTelefono());
-        startActivity(intent);
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
-    }
 }
 

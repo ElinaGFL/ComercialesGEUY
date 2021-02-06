@@ -21,8 +21,8 @@ public class AdaptadorLineasPedido extends RecyclerView.Adapter<AdaptadorLineasP
     @Override
     public void onBindViewHolder(@NonNull RecyclerHolder holder, int position) {
         holder.titulo.setText(produc.get(position).getDescripcion());
-        holder.cantidad.setText(produc.get(position).getPedidos());
-        holder.precio.setText((int) produc.get(position).getPrecioUn());
+        holder.cantidad.setText(produc.get(position).getExistencias());
+        holder.precio.setText((int) produc.get(position).getPrvent());
     }
 
     @Override

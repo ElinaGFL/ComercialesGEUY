@@ -15,7 +15,7 @@ public class ListAdapter extends BaseAdapter {
 
     public ArrayList<Producto> listProductos;
     private Context context;
-    private int cont;
+    private int cont = 0;
 
     public ListAdapter(Context context, ArrayList<Producto> listProductos) {
         this.context = context;
@@ -60,7 +60,7 @@ public class ListAdapter extends BaseAdapter {
 
         listViewHolder.tvProductName.setText(products.getDescripcion());
         listViewHolder.ivProduct.setImageResource(R.mipmap.bateria);
-        listViewHolder.tvPrice.setText(products.getPrecioUn()+" $");
+        listViewHolder.tvPrice.setText(products.getPrvent()+" $");
         //listViewHolder.edTextQuantity.setText(products.getExistencias()+" un.");
         listViewHolder.edTextQuantity.setText("0 un.");
 
@@ -79,14 +79,14 @@ public class ListAdapter extends BaseAdapter {
         Producto productos = getItem(position);
 
         if(value > 0){
-            if(productos.existencias > productos.pedidos) {
-                productos.pedidos++;
+            if(productos.getExistencias() > cont) {
+                cont++;
             }
         }else{
-            if(productos.pedidos > 0) {
-                productos.pedidos--;
+            if(cont > 0) {
+                cont--;
             }
         }
-        edTextQuantity.setText(productos.pedidos + " un.");
+        edTextQuantity.setText(cont + " un.");
     }
 }
