@@ -59,16 +59,22 @@ public class XMLParserProducto {
     private void handleText(String text) {
         String xmlText = text;
         if (producto != null && tag != null) {
-            if (tag.equals("codigo")) {
-                producto.setCodigo(xmlText);
-            } else if (tag.equals("descripcion")) {
-                producto.setDescripcion(xmlText);
-            } else if (tag.equals("prvent")) {
-                producto.setPrvent(Float.parseFloat(xmlText));
-            } else if (tag.equals("existencias")) {
-                producto.setExistencias(Integer.parseInt(xmlText));
-            } else if (tag.equals("img")) {
-                producto.setImg(xmlText);
+            switch (tag) {
+                case "codigo":
+                    producto.setCodigo(xmlText);
+                    break;
+                case "descripcion":
+                    producto.setDescripcion(xmlText);
+                    break;
+                case "prvent":
+                    producto.setPrvent(Float.parseFloat(xmlText));
+                    break;
+                case "existencias":
+                    producto.setExistencias(Integer.parseInt(xmlText));
+                    break;
+                case "img":
+                    producto.setImg(xmlText);
+                    break;
             }
         }
     }

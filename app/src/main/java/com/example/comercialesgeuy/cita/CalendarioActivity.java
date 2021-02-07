@@ -44,7 +44,8 @@ public class CalendarioActivity extends AppCompatActivity {
     List<Cita> listaCitas;
     ArrayAdapter<Cita> adapter;
 
-    int LAUNCH_SECOND_ACTIVITY = 1;
+    //para request code para intent
+    final private int LAUNCH_SECOND_ACTIVITY = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,8 @@ public class CalendarioActivity extends AppCompatActivity {
 
         button3 = findViewById(R.id.button3);
 
-        dbSQLite = new DBSQLite(this); //this, CITAS, cursor, 1
+        //creamos el objeto de la clase DBSQLite
+        dbSQLite = new DBSQLite(this);
         database = dbSQLite.getWritableDatabase();
 
         //listaCitasOn();
@@ -219,7 +221,6 @@ public class CalendarioActivity extends AppCompatActivity {
      */
 
     private void nuevaCita() {
-
         Intent intent = new Intent(this, CalendarioNewActivity.class);
         intent.putExtra("fecha", fecha);
         startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);

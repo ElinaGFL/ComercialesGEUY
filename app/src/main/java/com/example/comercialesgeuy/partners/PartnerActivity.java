@@ -5,11 +5,13 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.comercialesgeuy.DBSQLite;
 import com.example.comercialesgeuy.R;
@@ -30,6 +32,8 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
     DBSQLite dbSQLite;
     SQLiteDatabase database;
 
+    int LAUNCH_SECOND_ACTIVITY = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,11 +52,12 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
 
     private void nuevoPartner() {
         Intent i = new Intent(this, PartnerNewActivity.class);
-        startActivity(i);
+        startActivityForResult(i, LAUNCH_SECOND_ACTIVITY);
     }
 
     //rellenar y mostrar partner
     private void initValues(){
+        rcvPartners.setAdapter(null);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rcvPartners.setLayoutManager(manager);
 
@@ -107,6 +112,21 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
         intent.putExtra("correo",item.getCorreo());
         intent.putExtra("telefono",item.getTelefono());
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
+            if(resultCode == Activity.RESULT_OK){
+                Toast.makeText(this, "Se ha añadido el partner", Toast.LENGTH_SHORT).show();
+                initValues();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
     }
 
     @Override

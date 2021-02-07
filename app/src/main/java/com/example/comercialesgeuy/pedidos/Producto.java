@@ -1,7 +1,5 @@
 package com.example.comercialesgeuy.pedidos;
 
-import com.example.comercialesgeuy.pedidos.gestion.RecyclerAdapterPedidoGestion;
-
 import java.io.Serializable;
 
 public class Producto implements Serializable {

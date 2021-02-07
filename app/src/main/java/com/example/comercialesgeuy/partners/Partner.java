@@ -1,6 +1,8 @@
 package com.example.comercialesgeuy.partners;
 
-public class Partner {
+import java.io.Serializable;
+
+public class Partner implements Serializable {
 
         private String nombre, apellidos, correo, telefono;
         int id;

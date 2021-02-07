@@ -28,6 +28,34 @@
         <existencias>35</existencias>
         <img>molino.jpg</img>
     </producto>
+    <producto>
+        <codigo>Bat20</codigo>
+        <descripcion>IBattery-20</descripcion>
+        <prvent>5000</prvent>
+        <existencias>50</existencias>
+        <img>bateria.jpg</img>
+    </producto>
+    <producto>
+        <codigo>Bat60</codigo>
+        <descripcion>IBattery-60</descripcion>
+        <prvent>7500</prvent>
+        <existencias>45</existencias>
+        <img>bateria.jpg</img>
+    </producto>
+    <producto>
+        <codigo>BatSun</codigo>
+        <descripcion>IBattery + PackSun</descripcion>
+        <prvent>7999.99</prvent>
+        <existencias>40</existencias>
+        <img>solar.jpg</img>
+    </producto>
+    <producto>
+        <codigo>BatHaiz</codigo>
+        <descripcion>IBattery + PackHaizea</descripcion>
+        <prvent>9999.99</prvent>
+        <existencias>35</existencias>
+        <img>molino.jpg</img>
+    </producto>
 </productos>
 
 

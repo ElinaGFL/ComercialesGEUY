@@ -2,6 +2,7 @@ package com.example.comercialesgeuy;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class DBSQLite extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "GEUYDB";
 
     private static Context mContext;
@@ -59,14 +60,14 @@ public class DBSQLite extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMERCIALES);
-        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_CITAS);
-        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_PARTNERS);
-        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTOS);
-        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALBARANES);
-        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_LINEAS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LINEAS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALBARANES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CITAS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTOS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PARTNERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMERCIALES);
 
-        //onCreate(db);
+        onCreate(db);
     }
 
     // TABLA COMERCIALES
@@ -145,7 +146,6 @@ public class DBSQLite extends SQLiteOpenHelper {
                     "FOREIGN KEY (" + PARTNERS_KEY_FK_COMERC + ") REFERENCES " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_ID + ") )";
                     //"CONSTRAINT " + PARTNERS_KEY_FK_COMERC + " FOREIGN KEY (" + COMERCIALES_KEY_ID + ") REFERENCES " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_ID + ") )";
 
-
     // TABLA PRODUCTOS
 
     public static final String TABLE_PRODUCTOS = "PRODUCTOS";
@@ -165,8 +165,6 @@ public class DBSQLite extends SQLiteOpenHelper {
                     PRODUCTOS_KEY_PRVENT + " TEXT," +
                     PRODUCTOS_KEY_EXISTENCIAS + " TEXT," +
                     PRODUCTOS_KEY_IMG + " TEXT" + ")";
-
-
 
     // TABLA ALBARANES
 
@@ -210,4 +208,30 @@ public class DBSQLite extends SQLiteOpenHelper {
                     "PRIMARY KEY (" + LINEAS_KEY_ID + "," + LINEAS_KEY_FK_ALBARAN + "), " +
                     "FOREIGN KEY (" + LINEAS_KEY_FK_ALBARAN + ") REFERENCES " + TABLE_ALBARANES + "(" + ALBARANES_KEY_ID + ")," +
                     "FOREIGN KEY (" + LINEAS_KEY_FK_PRODUCTO + ") REFERENCES " + TABLE_PRODUCTOS + "(" + PRODUCTOS_KEY_ID + ") )";
+
+
+    //queries
+
+    public Comercial queryUsuario(String usuario, String contrasenna) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Comercial comercial = null;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM COMERCIALES WHERE TRIM(USR) = '" + usuario + "' AND TRIM(PWD) = '" + contrasenna + "'", null);
+        //Cursor cursor = db.query(DBSQLite.TABLE_COMERCIALES, new String[]{DBSQLite.COMERCIALES_KEY_ID, DBSQLite.COMERCIALES_KEY_USR, DBSQLite.COMERCIALES_KEY_PWD}, DBSQLite.COMERCIALES_KEY_USR + "=? and " + DBSQLite.COMERCIALES_KEY_PWD + "=?", new String[]{usuario, contrasenna}, null, null, null, "1");
+        if (cursor != null)
+            cursor.moveToFirst();
+        if (cursor != null && cursor.getCount() > 0) {
+            comercial = new Comercial();
+
+            comercial.setId(cursor.getInt(cursor.getColumnIndex(DBSQLite.COMERCIALES_KEY_ID)));
+            comercial.setNombre(cursor.getString(cursor.getColumnIndex(DBSQLite.COMERCIALES_KEY_NOMBRE)));
+            comercial.setApellidos(cursor.getString(cursor.getColumnIndex(DBSQLite.COMERCIALES_KEY_APELLIDOS)));
+            comercial.setNombre(cursor.getString(cursor.getColumnIndex(DBSQLite.COMERCIALES_KEY_NOMBRE)));
+            comercial.setEmpresa(cursor.getString(cursor.getColumnIndex(DBSQLite.COMERCIALES_KEY_EMPRESA)));
+            comercial.setEmail(cursor.getString(cursor.getColumnIndex(DBSQLite.COMERCIALES_KEY_EMAIL)));
+            comercial.setTelefono(cursor.getString(cursor.getColumnIndex(DBSQLite.COMERCIALES_KEY_TLFN)));
+        }
+        // return user
+        return comercial;
+    }
 }

@@ -2,6 +2,7 @@ package com.example.comercialesgeuy.partners;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -104,10 +105,13 @@ public class PartnerNewActivity extends AppCompatActivity {
 
         database.insert(DBSQLite.TABLE_PARTNERS, null, contentValues);
 
-        Toast.makeText(this, "Se ha añadido el partner", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Se ha añadido el partner", Toast.LENGTH_SHORT).show();
 
         //dbSQLite.close();
 
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("result",1);
+        setResult(Activity.RESULT_OK,returnIntent);
         finish();
     }
 

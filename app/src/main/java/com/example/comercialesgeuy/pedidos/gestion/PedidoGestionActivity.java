@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,8 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -24,29 +20,27 @@ import com.example.comercialesgeuy.DBSQLite;
 import com.example.comercialesgeuy.MyAppVariables;
 import com.example.comercialesgeuy.R;
 import com.example.comercialesgeuy.partners.Partner;
-import com.example.comercialesgeuy.partners.RecyclerAdapter;
 import com.example.comercialesgeuy.pedidos.Producto;
 import com.example.comercialesgeuy.pedidos.resumen.PedidoResumenActivity;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class PedidoGestionActivity extends AppCompatActivity {
 
+    TextView txtComercialGP;
     Spinner spinnerPartner;
-    TextView txtComercial;
-    Button btnCancelar, btnConfirmar;
     RecyclerView rcvProductos;
-    List<Producto> productList;
-    String partnerData;
-    ArrayList<Producto> productOrders = new ArrayList<>();
+    Button btnCancelar, btnConfirmar;
+    String partnerData, empresa;
+    Partner partner;
     ArrayList<Producto> productOrder;
-
-    String empresa;
 
     DBSQLite dbSQLite;
     SQLiteDatabase database;
+
+    private final int LAUNCH_SECOND_ACTIVITY = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +48,10 @@ public class PedidoGestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pedido_gestion);
 
         spinnerPartner = findViewById(R.id.spinnerPartner);
-        txtComercial = findViewById(R.id.txtComercial);
-        btnCancelar = findViewById(R.id.bCancelar);
-        btnConfirmar = findViewById(R.id.bConfirmar);
-        rcvProductos = findViewById(R.id.rcvProductos);
+        txtComercialGP = findViewById(R.id.txtComercialGP);
+        btnCancelar = findViewById(R.id.btnCancelarGP);
+        btnConfirmar = findViewById(R.id.btnConfirmarGP);
+        rcvProductos = findViewById(R.id.rcvProductosGP);
 
         dbSQLite = new DBSQLite(this);
         database = dbSQLite.getWritableDatabase();
@@ -69,7 +63,7 @@ public class PedidoGestionActivity extends AppCompatActivity {
         spinnerPartner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Partner partner = (Partner) parent.getSelectedItem();
+                partner = (Partner) parent.getSelectedItem();
                 displayUserData(partner);
             }
             @Override
@@ -77,13 +71,12 @@ public class PedidoGestionActivity extends AppCompatActivity {
             }
         });
 
-        btnConfirmar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                productOrder = hacerPedido();
-                confirmarPedido();
-            }
+        btnConfirmar.setOnClickListener(v -> {
+            productOrder = hacerPedido();
+            confirmarPedido(productOrder);
         });
+
+        btnCancelar.setOnClickListener(v -> finish());
 
         /*
         XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/productos.xml");
@@ -128,7 +121,7 @@ public class PedidoGestionActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rcvProductos.setLayoutManager(manager);
 
-        productList = leerProductos();
+        List<Producto> productList = leerProductos();
         RecyclerAdapterPedidoGestion adapter = new RecyclerAdapterPedidoGestion(productList);
         rcvProductos.setAdapter(adapter);
     }
@@ -141,7 +134,7 @@ public class PedidoGestionActivity extends AppCompatActivity {
     }
 
     private List<Producto> leerProductos() {
-        productList = new ArrayList<Producto>();
+        ArrayList<Producto> productos = new ArrayList<>();
         Producto producto;
 
         Cursor cursor = database.query(DBSQLite.TABLE_PRODUCTOS, null, null, null, null, null, null);
@@ -164,7 +157,7 @@ public class PedidoGestionActivity extends AppCompatActivity {
                 producto.setPrvent(cursor.getInt(prventIndex));
                 producto.setExistencias(cursor.getInt(existencIndex));
                 producto.setImg(cursor.getString(imgIndex));
-                productList.add(producto);
+                productos.add(producto);
                 /*
                 Log.d("mLog", "ID = " + cursor.getInt(idIndex) +
                         ", fecha = " + cursor.getString(fechaIndex) +
@@ -178,23 +171,18 @@ public class PedidoGestionActivity extends AppCompatActivity {
         //освобождаем память, т.к. курсор уже не будет нигде использоваться
         cursor.close();
 
-        return productList;
+        return productos;
     }
 
+    //recogemos el nombre desde la clase MyAppVariables con todos variables globales
     private void txtComercialOn() {
-        int idComerc = ((MyAppVariables) this.getApplication()).getComercIdConect();
-
-        Cursor cursor = database.rawQuery("SELECT * FROM COMERCIALES WHERE _id = " + idComerc, null);
-
-        if(cursor.moveToFirst()){
-            empresa = cursor.getString(cursor.getColumnIndex("USR"));
-            txtComercial.setText(empresa);
-        }
+        txtComercialGP.setText(((MyAppVariables) this.getApplication()).getComercNombre());
     }
 
     private void spinnerPartnersOn() {
         List<Partner> partnerList = rellenarPartnerList();
-        ArrayAdapter<Partner> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, partnerList);
+        ArrayAdapter<Partner> adapter = new ArrayAdapter<>(this, R.layout.spinner_item_partner, partnerList);
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPartner.setAdapter(adapter);
     }
@@ -234,8 +222,9 @@ public class PedidoGestionActivity extends AppCompatActivity {
     }
 
     private ArrayList<Producto> hacerPedido() {
-        productOrders.clear();
-        int size = ((RecyclerAdapterPedidoGestion) rcvProductos.getAdapter()).getItemCount();
+        ArrayList<Producto> productOrders = new ArrayList<>();
+        //productOrders.clear();
+        int size = ((RecyclerAdapterPedidoGestion) Objects.requireNonNull(rcvProductos.getAdapter())).getItemCount();
 
         for (int i = 0; i < size; i++) {
             if (((RecyclerAdapterPedidoGestion) rcvProductos.getAdapter()).getItem(i).getCantidadPedida() > 0) {
@@ -264,12 +253,22 @@ public class PedidoGestionActivity extends AppCompatActivity {
         return productOrders;
     }
 
-    private void confirmarPedido() {
+    private void confirmarPedido(ArrayList<Producto> productOrder) {
         Intent intent = new Intent(this, PedidoResumenActivity.class);
-        intent.putExtra("partnerData", partnerData);
-        intent.putExtra("comercialData", empresa);
+        intent.putExtra("partner", partner);
         intent.putExtra("arrayProductosPedido", productOrder);
-        startActivity(intent);
+        startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == LAUNCH_SECOND_ACTIVITY && resultCode == RESULT_OK){
+            boolean res = Objects.requireNonNull(intent.getExtras()).getBoolean("Atras");
+            if (res){
+                finish();
+            }
+        }
     }
 
     /*
