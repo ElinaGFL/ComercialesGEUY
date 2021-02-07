@@ -1,4 +1,4 @@
-package com.example.comercialesgeuy.pedidos;
+package com.example.comercialesgeuy.antiguo;
 
 import android.widget.EditText;
 import android.widget.ImageButton;

@@ -1,5 +1,6 @@
 package com.example.comercialesgeuy.cita;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -14,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -32,7 +32,7 @@ public class CalendarioActivity extends AppCompatActivity {
 
     private CalendarView calendarView;
     private FloatingActionButton fltNuevaVisita;
-    private ListView lstVisitas;
+    private ListView lstCitas;
     private int dia, mes, anio, hora, minuto;
     private String fecha;
 
@@ -44,6 +44,8 @@ public class CalendarioActivity extends AppCompatActivity {
     List<Cita> listaCitas;
     ArrayAdapter<Cita> adapter;
 
+    int LAUNCH_SECOND_ACTIVITY = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +53,7 @@ public class CalendarioActivity extends AppCompatActivity {
 
         calendarView = findViewById(R.id.calendarView);
         fltNuevaVisita = findViewById(R.id.fltNuevaCita);
-        lstVisitas = findViewById(R.id.lstCitas);
+        lstCitas = findViewById(R.id.lstCitas);
 
         button3 = findViewById(R.id.button3);
 
@@ -115,7 +117,7 @@ public class CalendarioActivity extends AppCompatActivity {
             timepick.show();
         });
 
-        lstVisitas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lstCitas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
 
@@ -155,10 +157,11 @@ public class CalendarioActivity extends AppCompatActivity {
             }
         });
 
-        fltNuevaVisita.setOnClickListener(v -> nuevaVisita());
+        fltNuevaVisita.setOnClickListener(v -> nuevaCita());
     }
 
     private void bdCitasOn() {
+        lstCitas.setAdapter(null);
         listaCitas = new ArrayList<>();
         Cita cita;
 
@@ -200,7 +203,7 @@ public class CalendarioActivity extends AppCompatActivity {
         cursor.close();
 
         adapter = new ArrayAdapter<> (this,android.R.layout.simple_list_item_1, listaCitas);
-        lstVisitas.setAdapter(adapter);
+        lstCitas.setAdapter(adapter);
     }
 
     /*
@@ -215,9 +218,25 @@ public class CalendarioActivity extends AppCompatActivity {
     }
      */
 
-    private void nuevaVisita() {
+    private void nuevaCita() {
+
         Intent intent = new Intent(this, CalendarioNewActivity.class);
         intent.putExtra("fecha", fecha);
-        startActivity(intent);
+        startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
+            if(resultCode == Activity.RESULT_OK){
+                Toast.makeText(this, "Se ha añadido la cita", Toast.LENGTH_SHORT).show();
+                bdCitasOn();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
     }
 }

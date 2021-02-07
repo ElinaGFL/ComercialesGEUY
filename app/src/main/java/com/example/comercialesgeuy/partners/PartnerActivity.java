@@ -94,7 +94,7 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
         } else {
             Log.d("mLog", "0 rows");
         }
-
+        //освобождаем память, т.к. курсор уже не будет нигде использоваться
         cursor.close();
 
         return lstPartners;

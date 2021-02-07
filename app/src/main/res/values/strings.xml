@@ -16,4 +16,5 @@
     <string name="fecha">Fecha</string>
     <string name="comercial">Comercial</string>
     <string name="img_linea">Es una imagen de producto</string>
+    <string name="gestionPedido">Gestión del Pedido</string>
 </resources>

@@ -25,7 +25,6 @@ public class Contacto extends AppCompatActivity {
         ImageButton llamada = (ImageButton)findViewById(R.id.ibLlamada);
         ImageButton correo = (ImageButton)findViewById(R.id.ibCorreo);
 
-
         Bundle extra = this.getIntent().getExtras();
         nom.setText(extra.getString("nombre"));
         ape.setText(extra.getString("apellido"));

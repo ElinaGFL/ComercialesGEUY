@@ -44,7 +44,7 @@
         <activity android:name=".EnvioDelegacion" />
         <activity android:name=".partners.PartnerActivity" />
         <activity android:name=".cita.CalendarioActivity" />
-        <activity android:name=".pedidos.gestion.PedidoActivity" />
+        <activity android:name=".pedidos.gestion.PedidoGestionActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

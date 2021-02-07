@@ -1,6 +1,8 @@
 package com.example.comercialesgeuy.cita;
 
+import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
@@ -78,10 +80,15 @@ public class CalendarioNewActivity extends AppCompatActivity {
         //вставляемыми значениями, второй аргумент используется при вставке пустой строки
         db.insert(DBSQLite.TABLE_CITAS, null, contentValues);
 
-        Toast.makeText(this, "Se ha añadido la cita", Toast.LENGTH_SHORT).show();
+
 
         //dbSQLite.close();
 
+        //finish();
+
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("result",1);
+        setResult(Activity.RESULT_OK,returnIntent);
         finish();
 
     }
