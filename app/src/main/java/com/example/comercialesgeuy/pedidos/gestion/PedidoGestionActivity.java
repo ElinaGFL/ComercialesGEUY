@@ -73,7 +73,11 @@ public class PedidoGestionActivity extends AppCompatActivity {
         btnConfirmar.setOnClickListener(v -> {
             productOrder = hacerPedido();
             if(productOrder.size() > 0) {
-                confirmarPedido(productOrder);
+                if(spinnerPartner.getSelectedItem() != null) {
+                    confirmarPedido(productOrder);
+                }else {
+                    Toast.makeText(this, "No hay partner", Toast.LENGTH_LONG).show();
+                }
             }else {
                 Toast.makeText(this, "El pedido está vacío", Toast.LENGTH_LONG).show();
             }
@@ -107,10 +111,16 @@ public class PedidoGestionActivity extends AppCompatActivity {
     private void spinnerPartnersOn() {
         int comercId = ((MyAppVariables) this.getApplication()).getComercialId();
         List<Partner> partnerList = dbSQLite.rellenarPartnerList(comercId);
-        ArrayAdapter<Partner> adapter = new ArrayAdapter<>(this, R.layout.spinner_item_partner, partnerList);
+        if(partnerList.size() > 0) {
+            ArrayAdapter<Partner> adapter = new ArrayAdapter<>(this, R.layout.spinner_item_partner, partnerList);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerPartner.setAdapter(adapter);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerPartner.setAdapter(adapter);
+        }else {
+            Toast.makeText(this, "No hay partners", Toast.LENGTH_LONG).show();
+
+        }
+
     }
 
     private ArrayList<Producto> hacerPedido() {

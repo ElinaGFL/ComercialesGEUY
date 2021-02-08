@@ -73,7 +73,7 @@ public class CalendarioNewActivity extends AppCompatActivity {
         int height = dm.heightPixels;
 
         //los numeros definen el tamaño de la ventana
-        getWindow().setLayout((int) (width * .8), (int) (height * .4));
+        getWindow().setLayout((int) (width * .8), (int) (height * .5));
 
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.gravity = Gravity.CENTER;

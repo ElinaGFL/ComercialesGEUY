@@ -20,7 +20,6 @@ import java.util.List;
 public class RecyclerAdapterPedidoGestion extends RecyclerView.Adapter<RecyclerAdapterPedidoGestion.ProductViewHolder> {
     List<Producto> productoList;
 
-
     RecyclerAdapterPedidoGestion(List<Producto> productoList){
         this.productoList = productoList;
     }
