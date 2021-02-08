@@ -1,7 +1,6 @@
 package com.example.comercialesgeuy;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.text.TextUtils;
 import android.widget.Toast;
+import com.example.comercialesgeuy.MyAppVariables;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -19,6 +20,8 @@ public class LoginActivity extends AppCompatActivity {
 
     DBSQLite dbSQLite;
     SQLiteDatabase database;
+
+    private final int LAUNCH_SECOND_ACTIVITY = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,21 +42,35 @@ public class LoginActivity extends AppCompatActivity {
                 if (!emptyValidation()) {
                     Comercial comercial = dbSQLite.queryUsuario(edtUsuario.getText().toString(), edtContrasenna.getText().toString());
                     if (comercial != null) {
-                        Bundle mBundle = new Bundle();
-                        mBundle.putString("user", comercial.getEmail());
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtras(mBundle);
-                        startActivity(intent);
-                        Toast.makeText(LoginActivity.this, "Welcome " + comercial.getNombre(), Toast.LENGTH_SHORT).show();
+                        ((MyAppVariables) LoginActivity.this.getApplication()).setComercial(comercial);
+                        confirmarUsuario(comercial);
                     } else {
-                        Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Usuario no encontrado", Toast.LENGTH_SHORT).show();
                         edtContrasenna.setText("");
                     }
                 }else{
-                    Toast.makeText(LoginActivity.this, "Empty Fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Campos vacíos", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void confirmarUsuario(Comercial comercial) {
+        Toast.makeText(LoginActivity.this, "Bienvenido " + comercial.getNombre(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == LAUNCH_SECOND_ACTIVITY && resultCode == RESULT_OK){
+            boolean res = Objects.requireNonNull(intent.getExtras()).getBoolean("Atras");
+            if (res){
+                Toast.makeText(LoginActivity.this, "Usted ha cerrado la sesión", Toast.LENGTH_SHORT).show();
+                edtContrasenna.setText("");
+            }
+        }
     }
 
     private boolean emptyValidation() {

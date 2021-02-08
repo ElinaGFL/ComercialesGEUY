@@ -1,21 +1,19 @@
 package com.example.comercialesgeuy.partners;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.example.comercialesgeuy.DBSQLite;
+import com.example.comercialesgeuy.MyAppVariables;
 import com.example.comercialesgeuy.R;
-import com.example.comercialesgeuy.antiguo.XMLPullParserHandlerPartner;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -68,40 +66,8 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
 
     private List<Partner> leerPartners1() {
         lstPartners = new ArrayList<>();
-        Partner partner;
-
-        Cursor cursor = database.query(DBSQLite.TABLE_PARTNERS, null, null, null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-
-            int idIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_ID);
-            int nombreIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_NOMBRE);
-            int apellidosIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_APELLIDOS);
-            int emailIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_EMAIL);
-            int tlfnIndex = cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_TLFN);
-
-            do {
-                partner = new Partner();
-
-                partner.setId(cursor.getInt(idIndex));
-                partner.setNombre(cursor.getString(nombreIndex));
-                partner.setApellidos(cursor.getString(apellidosIndex));
-                partner.setCorreo(cursor.getString(emailIndex));
-                partner.setTelefono(cursor.getString(tlfnIndex));
-                lstPartners.add(partner);
-                /*
-                Log.d("mLog", "ID = " + cursor.getInt(idIndex) +
-                        ", fecha = " + cursor.getString(fechaIndex) +
-                        ", cabecera = " + cursor.getString(cabeceraIndex) +
-                        ", texto = " + cursor.getString(textoIndex));
-                 */
-            } while (cursor.moveToNext());
-        } else {
-            Log.d("mLog", "0 rows");
-        }
-        //освобождаем память, т.к. курсор уже не будет нигде использоваться
-        cursor.close();
-
+        int comercId = ((MyAppVariables) this.getApplication()).getComercialId();
+        lstPartners = dbSQLite.rellenarPartnerList(comercId);
         return lstPartners;
     }
 
@@ -138,53 +104,5 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
     public boolean onQueryTextChange(String newText) {
         return false;
     }
-
-     /*
-    private List<Partner> leerPartners() {
-        List<Partner> partners;
-
-        XMLPullParserHandlerPartner parser = new XMLPullParserHandlerPartner();
-        partners = parser.parseXML();
-
-        return partners;
-    }
-
-    public ArrayList<Partner> leerPartners(){
-
-        ArrayList<Partner> listado = new ArrayList<Partner>();
-
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(getAssets().open("partner.xml"));
-            Element raiz = doc.getDocumentElement();
-            NodeList items = raiz.getElementsByTagName("partner");
-
-            for( int i = 0; i < items.getLength(); i++ ) {
-                Node nodoCliente = items.item(i);
-                Partner partn = new Partner();
-
-                if (nodoCliente.getNodeType() == Node.ELEMENT_NODE) {
-                    Element partner1 = (Element) nodoCliente;
-
-                    String nombre = partner1.getElementsByTagName("nombre").item(0).getTextContent();
-                    partn.setNombre(nombre);
-                    String apellidos = partner1.getElementsByTagName("apellido").item(0).getTextContent();
-                    partn.setApellidos(apellidos);
-
-                    String telefono = partner1.getElementsByTagName("telefono").item(0).getTextContent();
-                    partn.setTelefono(telefono);
-                    String correo = partner1.getElementsByTagName("correo").item(0).getTextContent();
-                    partn.setCorreo(correo);
-
-                    listado.add(partn);
-                }
-            }
-        } catch (Exception ex) {
-
-        }
-        return listado;
-    }
-     */
 }
 

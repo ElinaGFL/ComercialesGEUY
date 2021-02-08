@@ -32,6 +32,8 @@ public class Producto implements Serializable {
         }
     }
 
+
+
     public int getId() {
         return id;
     }
@@ -46,6 +48,10 @@ public class Producto implements Serializable {
 
     public void setExistencias(int existencias) {
         this.existencias = existencias;
+    }
+
+    public void setExistenciasDespuesCompra(int existencias) {
+        this.existencias -= existencias;
     }
 
     public String getCodigo() {

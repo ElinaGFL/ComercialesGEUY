@@ -1,6 +1,7 @@
 package com.example.comercialesgeuy;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import android.os.Bundle;
@@ -37,6 +38,13 @@ public class EnvioDelegacion extends AppCompatActivity {
         correo ="geuyazul@gmail.com";
         asunto ="Envio semanal de XML";
         mensaje ="Envio el XML de Partners semanal adjunto";
+
+        DBSQLite dbSQLite = new DBSQLite(this);
+        SQLiteDatabase database = dbSQLite.getWritableDatabase();
+
+        DBtoXML dbxml = new DBtoXML(this,database);
+        dbxml.exportData();
+
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

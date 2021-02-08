@@ -4,53 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/pop_bg1"
     tools:context=".MainActivity">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnCalend"
-        android:layout_width="157dp"
-        android:layout_height="84dp"
-        android:layout_marginTop="120dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/button_item"
         android:onClick="siguienteLayout"
         android:text="@string/calendarioCitas"
-        app:layout_constraintEnd_toStartOf="@+id/btnParner"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnParner"
-        android:layout_width="125dp"
-        android:layout_height="86dp"
-        android:layout_marginTop="120dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/button_item"
         android:text="@string/gestionPartners"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnCalend"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnEnvio"
-        android:layout_width="160dp"
-        android:layout_height="83dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/enviosDelegacion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnPed"
-        app:layout_constraintTop_toBottomOf="@+id/btnParner" />
-
-    <Button
-        android:id="@+id/btnPed"
-        android:layout_width="125dp"
-        android:layout_height="86dp"
-        android:layout_marginTop="32dp"
-        android:onClick="siguienteLayout"
-        android:text="@string/gestionPedidos"
-        app:layout_constraintEnd_toStartOf="@+id/btnEnvio"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCalend" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnEnvio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/button_item"
+        android:text="@string/enviosDelegacion"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPed" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnPed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/button_item"
+        android:onClick="siguienteLayout"
+        android:text="@string/gestionPedidos"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnParner" />
 
     <ImageButton
         android:id="@+id/btnLlamarComercial"
@@ -63,20 +77,19 @@
         app:layout_constraintHorizontal_bias="0.196"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPed"
+        app:layout_constraintTop_toBottomOf="@+id/btnEnvio"
         app:srcCompat="@android:drawable/stat_sys_phone_call"
         tools:srcCompat="@android:drawable/stat_sys_phone_call" />
 
     <ImageButton
         android:id="@+id/btnCorreoComercial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:contentDescription="@string/app_name"
         android:onClick="correo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnLlamarComercial"
-        app:layout_constraintTop_toBottomOf="@+id/btnEnvio"
+        app:layout_constraintTop_toTopOf="@+id/btnLlamarComercial"
         app:srcCompat="@android:drawable/ic_dialog_email"
         tools:srcCompat="@android:drawable/ic_dialog_email" />
 
@@ -93,5 +106,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLlamarComercial" />
+
+    <Button
+        android:id="@+id/btnLogOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_item"
+        android:text="@string/cerrarSesión"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

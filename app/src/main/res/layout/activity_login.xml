@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0.8"
-            android:background="@drawable/pop_bg" />
+            android:background="@drawable/pop_bg1" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
             android:layout_marginTop="48dp"
             android:src="@mipmap/ic_launcher_foreground" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnEntrar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/button_login"
+            android:background="@drawable/button_item"
             android:text="@string/entrar"
             android:textColor="@color/white" />
     </RelativeLayout>

@@ -1,38 +1,19 @@
 package com.example.comercialesgeuy.partners;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.comercialesgeuy.DBSQLite;
+import com.example.comercialesgeuy.MyAppVariables;
 import com.example.comercialesgeuy.R;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.xmlpull.v1.XmlSerializer;
-
-import java.io.File;
-import java.io.FileOutputStream;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 public class PartnerNewActivity extends AppCompatActivity {
 
@@ -42,9 +23,9 @@ public class PartnerNewActivity extends AppCompatActivity {
     EditText txtNuevoCorreo;
     Button btnNuevoPartner;
     private String nombre, apellidos, telefono, correo;
-    //private File XMLfile;
 
     DBSQLite dbSQLite;
+    SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +37,9 @@ public class PartnerNewActivity extends AppCompatActivity {
         txtNuevoTelefono = findViewById(R.id.txtNuevoTelefono);
         txtNuevoCorreo = findViewById(R.id.txtNuevoCorreo);
         btnNuevoPartner=findViewById(R.id.btnNuevoPartner);
+
+        dbSQLite = new DBSQLite(this);
+        database = dbSQLite.getWritableDatabase();
 
         //XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/partners.xml");
 
@@ -93,127 +77,20 @@ public class PartnerNewActivity extends AppCompatActivity {
     private void guardarNuevoPartner1() {
         recogerDatos();
 
-        dbSQLite = new DBSQLite(this);
-        SQLiteDatabase database = dbSQLite.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(DBSQLite.PARTNERS_KEY_NOMBRE, nombre);
-        contentValues.put(DBSQLite.PARTNERS_KEY_APELLIDOS, apellidos);
-        contentValues.put(DBSQLite.PARTNERS_KEY_EMAIL, correo);
-        contentValues.put(DBSQLite.PARTNERS_KEY_TLFN, telefono);
-        contentValues.put(DBSQLite.PARTNERS_KEY_FK_COMERC, 1);
-
-        database.insert(DBSQLite.TABLE_PARTNERS, null, contentValues);
-
+        int comercId = ((MyAppVariables) this.getApplication()).getComercialId();
+        if(comercId > 0) {
+            dbSQLite.insertarPartner(nombre, apellidos, correo, telefono, comercId);
+        }
+        finalizar();
         //Toast.makeText(this, "Se ha añadido el partner", Toast.LENGTH_SHORT).show();
+    }
 
-        //dbSQLite.close();
-
+    private void finalizar() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra("result",1);
         setResult(Activity.RESULT_OK,returnIntent);
         finish();
     }
-
-    /*
-    private void guardarNuevoPartner() {
-
-        recogerDatos();
-
-        if(XMLfile.exists()){
-
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder;
-            try {
-                dBuilder = dbFactory.newDocumentBuilder();
-                Document doc = dBuilder.parse(XMLfile);
-                doc.getDocumentElement().normalize();
-                addElement(doc, nombre, apellidos, telefono, correo);
-                TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                Transformer transformer = transformerFactory.newTransformer();
-                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-                DOMSource source = new DOMSource(doc);
-                StreamResult result = new StreamResult(XMLfile);
-                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                transformer.transform(source, result);
-                Toast.makeText(this, "Se ha añadido el partner al XML", Toast.LENGTH_SHORT).show();
-                finish();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }else{
-
-            XMLfile.getParentFile().mkdirs();
-            try{
-                if(XMLfile.createNewFile()){
-                    FileOutputStream fos = new FileOutputStream(XMLfile);
-                    XmlSerializer serializer = Xml.newSerializer();
-                    serializer.setOutput(fos, "UTF-8");
-                    serializer.startDocument("UTF-8", true);
-                    serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
-                    serializer.startTag("", "partners");
-
-                    serializer.startTag("", "partner");
-
-                    serializer.startTag("", "nombre");
-                    serializer.text(nombre);
-                    serializer.endTag("", "nombre");
-
-                    serializer.startTag("", "apellidos");
-                    serializer.text(apellidos);
-                    serializer.endTag("", "apellidos");
-
-                    serializer.startTag("", "telefono");
-                    serializer.text(telefono);
-                    serializer.endTag("", "telefono");
-
-                    serializer.startTag("", "correo");
-                    serializer.text(correo);
-                    serializer.endTag("", "correo");
-
-                    serializer.endTag("", "partner");
-
-                    serializer.endTag("", "partners");
-                    serializer.endDocument();
-                    serializer.endDocument();
-                    serializer.flush();
-                    fos.close();
-                    finish();
-                }else{
-                    Toast.makeText(getApplicationContext(), "No se ha podido crear el archivo", Toast.LENGTH_SHORT).show();
-                }
-            }catch(Exception e){
-                Log.e("Exception", "Error de creación nuevo fichero");
-            }
-        }
-    }
-
-    private void addElement(Document doc, String nombre, String apellidos, String telefono, String correo) {
-        Node root = doc.getDocumentElement();
-
-        root.appendChild(createElement(doc, nombre, apellidos, telefono, correo));
-    }
-
-    private static Node createElement(Document doc, String nombre, String apellidos, String telefono, String correo) {
-        Element tipo = doc.createElement("partner");
-
-        tipo.appendChild(createAllElements(doc, tipo, "nombre", nombre));
-        tipo.appendChild(createAllElements(doc, tipo, "apellidos", apellidos));
-        tipo.appendChild(createAllElements(doc, tipo, "telefono", telefono));
-        tipo.appendChild(createAllElements(doc, tipo, "correo", correo));
-
-        return tipo;
-    }
-
-    // utility method to create text node
-    private static Node createAllElements(Document doc, Element element, String name, String value) {
-        Element node = doc.createElement(name);
-        node.appendChild(doc.createTextNode(value));
-        return node;
-    }
-    */
 
     private void recogerDatos() {
         boolean relleno = true;
@@ -256,11 +133,5 @@ public class PartnerNewActivity extends AppCompatActivity {
             }
         //}
 
-    }
-
-
-    public void volverAtras(){
-        Intent i = new Intent(this, PartnerActivity.class);
-        startActivity(i);
     }
 }

@@ -5,15 +5,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
+import com.example.comercialesgeuy.cita.Cita;
+import com.example.comercialesgeuy.partners.Partner;
 import com.example.comercialesgeuy.pedidos.Producto;
 import com.example.comercialesgeuy.pedidos.gestion.XMLParserProducto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DBSQLite extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 10;
     public static final String DATABASE_NAME = "GEUYDB";
 
     private static Context mContext;
@@ -105,19 +109,20 @@ public class DBSQLite extends SQLiteOpenHelper {
     public static final String TABLE_CITAS = "CITAS";
 
     public static final String CITAS_KEY_ID = "_id";
-    public static final String CITAS_KEY_FECHA = "FECHA";
-    public static final String CITAS_KEY_HORA = "HORA";
+    public static final String CITAS_KEY_FECHAHORA = "FECHAHORA";
     public static final String CITAS_KEY_CABECERA = "CABECERA";
     public static final String CITAS_KEY_TEXTO = "TEXTO";
+    public static final String CITAS_KEY_FK_COMERC = "FK_COMERC_ID";
 
     //CREATE TABLE CITAS (_id INTEGER PRIM KEY AUTOINCR, FECHA TEXT, ...
     private static final String CREAR_CITAS =
             "CREATE TABLE " + TABLE_CITAS + "(" +
                     CITAS_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    CITAS_KEY_FECHA + " TEXT, " +
-                    CITAS_KEY_HORA + " TEXT, " +
-                    CITAS_KEY_CABECERA + " TEXT," +
-                    CITAS_KEY_TEXTO + " TEXT" + ")";
+                    CITAS_KEY_FECHAHORA + " TEXT, " +
+                    CITAS_KEY_CABECERA + " TEXT, " +
+                    CITAS_KEY_TEXTO + " TEXT, " +
+                    CITAS_KEY_FK_COMERC + " INTEGER, " +
+                    "FOREIGN KEY (" + CITAS_KEY_FK_COMERC + ") REFERENCES " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_ID + ") )";
 
     // TABLA PARTNERS
 
@@ -216,7 +221,7 @@ public class DBSQLite extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Comercial comercial = null;
 
-        Cursor cursor = db.rawQuery("SELECT * FROM COMERCIALES WHERE TRIM(USR) = '" + usuario + "' AND TRIM(PWD) = '" + contrasenna + "'", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM COMERCIALES WHERE UPPER(TRIM(USR)) = UPPER(TRIM('" + usuario + "')) AND TRIM(PWD) = '" + contrasenna + "'", null);
         //Cursor cursor = db.query(DBSQLite.TABLE_COMERCIALES, new String[]{DBSQLite.COMERCIALES_KEY_ID, DBSQLite.COMERCIALES_KEY_USR, DBSQLite.COMERCIALES_KEY_PWD}, DBSQLite.COMERCIALES_KEY_USR + "=? and " + DBSQLite.COMERCIALES_KEY_PWD + "=?", new String[]{usuario, contrasenna}, null, null, null, "1");
         if (cursor != null)
             cursor.moveToFirst();
@@ -231,7 +236,165 @@ public class DBSQLite extends SQLiteOpenHelper {
             comercial.setEmail(cursor.getString(cursor.getColumnIndex(DBSQLite.COMERCIALES_KEY_EMAIL)));
             comercial.setTelefono(cursor.getString(cursor.getColumnIndex(DBSQLite.COMERCIALES_KEY_TLFN)));
         }
-        // return user
+        db.close();
+        cursor.close();
         return comercial;
+    }
+
+    public List<Producto> leerProductos() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Producto> productos = new ArrayList<>();
+        Producto producto;
+
+        Cursor cursor = db.query(DBSQLite.TABLE_PRODUCTOS, null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                producto = new Producto();
+
+                producto.setId(cursor.getInt(cursor.getColumnIndex(DBSQLite.PRODUCTOS_KEY_ID)));
+                producto.setCodigo(cursor.getString(cursor.getColumnIndex(DBSQLite.PRODUCTOS_KEY_CODIGO)));
+                producto.setDescripcion(cursor.getString(cursor.getColumnIndex(DBSQLite.PRODUCTOS_KEY_DESCRIPCION)));
+                producto.setPrvent(cursor.getInt(cursor.getColumnIndex(DBSQLite.PRODUCTOS_KEY_PRVENT)));
+                producto.setExistencias(cursor.getInt(cursor.getColumnIndex(DBSQLite.PRODUCTOS_KEY_EXISTENCIAS)));
+                producto.setImg(cursor.getString(cursor.getColumnIndex(DBSQLite.PRODUCTOS_KEY_IMG)));
+                productos.add(producto);
+                /*
+                Log.d("mLog", "ID = " + cursor.getInt(idIndex) +
+                        ", fecha = " + cursor.getString(fechaIndex) +
+                        ", cabecera = " + cursor.getString(cabeceraIndex) +
+                        ", texto = " + cursor.getString(textoIndex));
+                 */
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog", "0 rows");
+        }
+        db.close();
+        cursor.close();
+        return productos;
+    }
+
+    public List<Partner> rellenarPartnerList(int comercId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Partner> partnerList  = new ArrayList<>();
+        Partner partner;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DBSQLite.TABLE_PARTNERS + " WHERE FK_COMERC_ID = " + comercId, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                partner = new Partner();
+
+                partner.setId(cursor.getInt(cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_ID)));
+                partner.setNombre(cursor.getString(cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_NOMBRE)));
+                partner.setApellidos(cursor.getString(cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_APELLIDOS)));
+                partner.setCorreo(cursor.getString(cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_EMAIL)));
+                partner.setTelefono(cursor.getString(cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_TLFN)));
+                partnerList.add(partner);
+                Log.d("mLog", "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+                Log.d("mLog", "ID = " + cursor.getInt(cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_ID)));
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog", "0 rows");
+        }
+        db.close();
+        cursor.close();
+        return partnerList;
+    }
+
+    public List<Cita> leerCitas(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Cita> listaCitas = new ArrayList<>();
+        Cita cita;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DBSQLite.TABLE_CITAS + " WHERE FK_COMERC_ID = " + id, null);
+
+        //moveToFirst() перемещает курсор на первую строку в результате запроса и заодно проверяет есть ли вообще записи в нем
+        if (cursor.moveToFirst()) {
+
+            //далее мы получаем порядковые номера столбцов и курсор по их именам с помощью метода getColumnIndex()
+            //эти номера потом мы используем для чтения данных с помощью getInt() и getString() и выводим данные в лог
+
+            do {
+                cita = new Cita();
+
+                cita.setId(cursor.getInt(cursor.getColumnIndex(DBSQLite.CITAS_KEY_ID)));
+                cita.setFechaHora(cursor.getString(cursor.getColumnIndex(DBSQLite.CITAS_KEY_FECHAHORA)));
+                cita.setCabecera(cursor.getString(cursor.getColumnIndex(DBSQLite.CITAS_KEY_CABECERA)));
+                cita.setTexto(cursor.getString(cursor.getColumnIndex(DBSQLite.CITAS_KEY_TEXTO)));
+                listaCitas.add(cita);
+                /*
+                Log.d("mLog", "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+                Log.d("mLog", "ID = " + cursor.getInt(idIndex) +
+                        ", fecha = " + cursor.getString(fechaIndex) +
+                        ", cabecera = " + cursor.getString(cabeceraIndex) +
+                        ", texto = " + cursor.getString(textoIndex));
+                 */
+                //cursor.moveToNext() перебираем все строки в курсоре пока не добираемся до последней
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog", "0 rows");
+        }
+        //освобождаем память, т.к. курсор уже не будет нигде использоваться
+        db.close();
+        cursor.close();
+
+        return listaCitas;
+    }
+
+    public void insertarCita(String fecha, String titulo, String texto, int comercId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBSQLite.CITAS_KEY_FECHAHORA, fecha);
+        contentValues.put(DBSQLite.CITAS_KEY_CABECERA, titulo);
+        contentValues.put(DBSQLite.CITAS_KEY_TEXTO, texto);
+        contentValues.put(DBSQLite.CITAS_KEY_FK_COMERC, comercId);
+        //методом insert вставляем подготовленные строки в таблицу, этот метод принимает имя таблицы и объект contentValues со
+        //вставляемыми значениями, второй аргумент используется при вставке пустой строки
+        db.insert(DBSQLite.TABLE_CITAS, null, contentValues);
+        db.close();
+    }
+
+    public void insertarPartner(String nombre, String apellidos, String correo, String telefono, int comercId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DBSQLite.PARTNERS_KEY_NOMBRE, nombre);
+        contentValues.put(DBSQLite.PARTNERS_KEY_APELLIDOS, apellidos);
+        contentValues.put(DBSQLite.PARTNERS_KEY_EMAIL, correo);
+        contentValues.put(DBSQLite.PARTNERS_KEY_TLFN, telefono);
+        contentValues.put(DBSQLite.PARTNERS_KEY_FK_COMERC, comercId);
+
+        db.insert(DBSQLite.TABLE_PARTNERS, null, contentValues);
+        db.close();
+    }
+
+    public void insertarPedido(ArrayList<Producto> productOrder, int comercId, Partner partner, String sEdtFechaPedido, String sEdtFechaEnvio, String sEdtFechaPago) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("FK_COMERC_ID", comercId);
+        contentValues.put("FK_PARTNER_ID", partner.getId());
+        contentValues.put("FECHAALBARAN", sEdtFechaPedido);
+        contentValues.put("FECHAENVIO", sEdtFechaEnvio);
+        contentValues.put("FECHAPAGO", sEdtFechaPago);
+
+        //db.insert(DBSQLite.TABLE_ALBARANES, null, contentValues);
+
+        long inserted = db.insert(DBSQLite.TABLE_ALBARANES, null, contentValues);
+
+        for(Producto prod : productOrder) {
+            prod.setExistenciasDespuesCompra(prod.getCantidadPedida());
+            String sql = "UPDATE PRODUCTOS SET EXISTENCIAS = " + prod.getExistencias() + " WHERE _id = '" + prod.getId() + "'";
+            db.execSQL(sql);
+
+            float precioLinea = prod.getPrvent() * prod.getCantidadPedida();
+
+            String sql1 = "INSERT INTO LINEAS (FK_ALBARAN_ID, FK_PRODUCTO_ID, CANTIDAD, PRECIOLINEA) values ( " +
+                     inserted + ", '" + prod.getId() + "', " + prod.getCantidadPedida() + ", " + precioLinea + ")";
+            db.execSQL(sql1);
+        }
+
+        db.close();
     }
 }

@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.comercialesgeuy.cita.CalendarioActivity;
 import com.example.comercialesgeuy.partners.PartnerActivity;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     Button btnCalendario;
     Button btnpartners;
     Button btnPed;
-    Button btnEnvio;
+    Button btnEnvio, btnLogOut;
     Button btnllamar;
     Button btnCorreo;
     private GoogleMap mMap;
@@ -43,12 +44,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_main);
 
         btnCalendario = findViewById(R.id.btnCalend);
-
         btnpartners = findViewById(R.id.btnParner);
-
         btnPed = findViewById(R.id.btnPed);
-
         btnEnvio = findViewById(R.id.btnEnvio);
+        btnLogOut = findViewById(R.id.btnLogOut);
 
         pidePermisos();
 
@@ -60,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 siguienteLayout(btnCalendario);
             }
         });
+
         btnpartners.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +81,25 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                atras();
+            }
+        });
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+    }
+
+    private void atras() {
+        //volver al menu inicial
+        Intent intent = new Intent();
+        intent.putExtra("Atras", true);
+        setResult(RESULT_OK, intent);
+        //cerrar la actividad
+        finish();
     }
 
     private void iniciarBD() {

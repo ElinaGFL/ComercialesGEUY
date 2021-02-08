@@ -73,11 +73,13 @@
 
     <EditText
         android:id="@+id/edtFechaPedido"
-        android:layout_width="129dp"
-        android:layout_height="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:ems="10"
+        android:focusable="false"
         android:inputType="date"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/txtPedidoRP"
         app:layout_constraintTop_toTopOf="@+id/txtPedidoRP" />
 
@@ -93,11 +95,13 @@
 
     <EditText
         android:id="@+id/edtFechaEnvio"
-        android:layout_width="129dp"
-        android:layout_height="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:ems="10"
+        android:focusable="false"
         android:inputType="date"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/txtEnvioRP"
         app:layout_constraintTop_toTopOf="@+id/txtEnvioRP" />
 
@@ -113,11 +117,13 @@
 
     <EditText
         android:id="@+id/edtFechaPago"
-        android:layout_width="129dp"
-        android:layout_height="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:ems="10"
+        android:focusable="false"
         android:inputType="date"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/txtPagoRP"
         app:layout_constraintTop_toTopOf="@+id/txtPagoRP" />
 

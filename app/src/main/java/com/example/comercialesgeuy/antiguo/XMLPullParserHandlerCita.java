@@ -60,7 +60,7 @@ public class XMLPullParserHandlerCita {
         String xmlText = text;
         if (cita != null && tag != null) {
             if (tag.equals("fecha")) {
-                cita.setFecha(xmlText);
+                cita.setFechaHora(xmlText);
             } else if (tag.equals("titulo")) {
                 cita.setCabecera(xmlText);
             } else if (tag.equals("texto")) {

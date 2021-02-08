@@ -61,16 +61,4 @@ public class Partner implements Serializable {
         public String toString() {
                 return nombre + ' ' + apellidos;
         }
-
-        /*
-        @Override
-        public String toString() {
-                return "Partner {" +
-                        "nombre='" + nombre + '\'' +
-                        ", apellidos='" + apellidos + '\'' +
-                        ", correo='" + correo + '\'' +
-                        ", telefono='" + telefono + '\'' +
-                        '}';
-        }
-        */
 }
