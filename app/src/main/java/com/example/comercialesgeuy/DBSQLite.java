@@ -291,6 +291,8 @@ public class DBSQLite extends SQLiteOpenHelper {
                 partner.setApellidos(cursor.getString(cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_APELLIDOS)));
                 partner.setCorreo(cursor.getString(cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_EMAIL)));
                 partner.setTelefono(cursor.getString(cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_TLFN)));
+                partner.setCif(cursor.getString(cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_CIF)));
+                partner.setPoblacion(cursor.getString(cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_POBLACION)));
                 partnerList.add(partner);
                 Log.d("mLog", "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
                 Log.d("mLog", "ID = " + cursor.getInt(cursor.getColumnIndex(DBSQLite.PARTNERS_KEY_ID)));
@@ -356,7 +358,7 @@ public class DBSQLite extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void insertarPartner(String nombre, String apellidos, String correo, String telefono, int comercId) {
+    public void insertarPartner(String nombre, String apellidos, String correo, String telefono, String poblacion, String cif, int comercId) {
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -364,6 +366,8 @@ public class DBSQLite extends SQLiteOpenHelper {
         contentValues.put(DBSQLite.PARTNERS_KEY_APELLIDOS, apellidos);
         contentValues.put(DBSQLite.PARTNERS_KEY_EMAIL, correo);
         contentValues.put(DBSQLite.PARTNERS_KEY_TLFN, telefono);
+        contentValues.put(DBSQLite.PARTNERS_KEY_POBLACION, poblacion);
+        contentValues.put(DBSQLite.PARTNERS_KEY_CIF, cif);
         contentValues.put(DBSQLite.PARTNERS_KEY_FK_COMERC, comercId);
 
         db.insert(DBSQLite.TABLE_PARTNERS, null, contentValues);
@@ -408,14 +412,14 @@ public class DBSQLite extends SQLiteOpenHelper {
     }
 
 
-    public int modificarCita(Cita cita) {
-        /*
+    /*public int modificarCita(Cita cita) {
+
         SQLiteDatabase db = this.getReadableDatabase();
         int modificarItem = db.delete(DBSQLite.TABLE_CITAS, DBSQLite.CITAS_KEY_ID + "=" + cita.getId(), null);
         Log.d("mLog", "updates rows count = " + deleteItem);
         return deleteItem;
-         */
-    }
+
+    }*/
 
 
 }

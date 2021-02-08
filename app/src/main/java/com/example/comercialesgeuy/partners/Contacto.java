@@ -22,12 +22,16 @@ public class Contacto extends AppCompatActivity {
 
         TextView nom = (TextView)findViewById(R.id.nombrePartner);
         TextView ape = (TextView)findViewById(R.id.apellidoPartner);
+        TextView pob = (TextView)findViewById(R.id.PoblacionPartner);
+        TextView cif = (TextView)findViewById(R.id.cifPartner);
         ImageButton llamada = (ImageButton)findViewById(R.id.ibLlamada);
         ImageButton correo = (ImageButton)findViewById(R.id.ibCorreo);
 
         Bundle extra = this.getIntent().getExtras();
         nom.setText(extra.getString("nombre"));
         ape.setText(extra.getString("apellido"));
+        pob.setText(extra.getString("poblacion"));
+        cif.setText(extra.getString("cif"));
 
         llamada.setOnClickListener(new View.OnClickListener() {
             @Override

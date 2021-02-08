@@ -21,8 +21,10 @@ public class PartnerNewActivity extends AppCompatActivity {
     EditText txtNuevoApellidos;
     EditText txtNuevoTelefono;
     EditText txtNuevoCorreo;
+    EditText txtNuevoPoblacion;
+    EditText txtNuevoCif;
     Button btnNuevoPartner;
-    private String nombre, apellidos, telefono, correo;
+    private String nombre, apellidos, telefono, correo, poblacion, cif;
 
     DBSQLite dbSQLite;
     SQLiteDatabase database;
@@ -36,6 +38,8 @@ public class PartnerNewActivity extends AppCompatActivity {
         txtNuevoApellidos = findViewById(R.id.txtNuevoApellidos);
         txtNuevoTelefono = findViewById(R.id.txtNuevoTelefono);
         txtNuevoCorreo = findViewById(R.id.txtNuevoCorreo);
+        txtNuevoPoblacion = findViewById(R.id.txtNuevoPoblacion);
+        txtNuevoCif = findViewById(R.id.txtNuevoCIF);
         btnNuevoPartner=findViewById(R.id.btnNuevoPartner);
 
         dbSQLite = new DBSQLite(this);
@@ -79,7 +83,7 @@ public class PartnerNewActivity extends AppCompatActivity {
 
         int comercId = ((MyAppVariables) this.getApplication()).getComercialId();
         if(comercId > 0) {
-            dbSQLite.insertarPartner(nombre, apellidos, correo, telefono, comercId);
+            dbSQLite.insertarPartner(nombre, apellidos, correo, telefono, poblacion, cif, comercId);
         }
         finalizar();
         //Toast.makeText(this, "Se ha añadido el partner", Toast.LENGTH_SHORT).show();
@@ -131,6 +135,24 @@ public class PartnerNewActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "Correo no puede ser vacio.", Toast.LENGTH_SHORT);
                 toast.show();
             }
+
+        if (txtNuevoPoblacion.getText().length() > 0) {
+            poblacion = txtNuevoPoblacion.getText().toString();
+        } else {
+            relleno = false;
+            txtNuevoPoblacion.requestFocus();
+            Toast toast = Toast.makeText(getApplicationContext(), "Poblacion no puede ser vacio.", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+        if (txtNuevoCif.getText().length() > 0) {
+            cif = txtNuevoCif.getText().toString();
+        } else {
+            relleno = false;
+            txtNuevoCif.requestFocus();
+            Toast toast = Toast.makeText(getApplicationContext(), "CIF no puede ser vacio.", Toast.LENGTH_SHORT);
+            toast.show();
+        }
         //}
 
     }

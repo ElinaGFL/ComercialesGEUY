@@ -74,7 +74,7 @@ public class CalendarioActivity extends AppCompatActivity {
                     }
                 });
 
-                builder.setNegativeButton("Modificar", new DialogInterface.OnClickListener() {
+                /*builder.setNegativeButton("Modificar", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int ii) {
                             Cita cita = (Cita) parent.getAdapter().getItem(pos);
 
@@ -90,7 +90,7 @@ public class CalendarioActivity extends AppCompatActivity {
                             }
                         }
                     }
-                );
+                );*/
                 builder.show();
 
                 return true;

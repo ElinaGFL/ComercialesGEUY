@@ -8,6 +8,28 @@
     tools:context=".partners.Contacto">
 
     <TextView
+        android:id="@+id/cifPartner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="92dp"
+        android:text="Prueba cif"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="@id/nombrePartner"
+        app:layout_constraintTop_toTopOf="@id/nombrePartner" />
+
+    <TextView
+        android:id="@+id/PoblacionPartner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="84dp"
+        android:text="Prueba poblacion"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/nombrePartner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,7 +57,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="72dp"
         android:foreground="@drawable/llamada"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/apellidoPartner"
@@ -45,7 +67,7 @@
         android:id="@+id/ibCorreo"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="72dp"
         android:layout_marginEnd="32dp"
         android:foreground="@drawable/correo1"
         app:layout_constraintEnd_toEndOf="parent"

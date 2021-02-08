@@ -4,17 +4,19 @@ import java.io.Serializable;
 
 public class Partner implements Serializable {
 
-        private String nombre, apellidos, correo, telefono;
+        private String nombre, apellidos, correo, telefono, poblacion, cif;
         int id;
 
         public Partner(){}
 
-        public Partner(int id, String nombre, String apellidos, String correo, String telefono){
+        public Partner(int id, String nombre, String apellidos, String correo, String telefono, String poblacion, String cif){
                 this.id = id;
                 this.nombre = nombre;
                 this.apellidos = apellidos;
                 this.correo = correo;
                 this.telefono = telefono;
+                this.poblacion = poblacion;
+                this.cif = cif;
         }
 
         public int getId() {
@@ -31,6 +33,14 @@ public class Partner implements Serializable {
 
         public void setApellidos(String apellidos) {
                 this.apellidos = apellidos;
+        }
+
+        public void setPoblacion(String poblacion) {
+                this.poblacion = poblacion;
+        }
+
+        public void setCif(String cif) {
+                this.cif = cif;
         }
 
         public void setCorreo(String correo) {
@@ -55,6 +65,14 @@ public class Partner implements Serializable {
 
         public String getTelefono() {
                 return telefono;
+        }
+
+        public String getPoblacion() {
+                return poblacion;
+        }
+
+        public String getCif() {
+                return cif;
         }
 
         @Override

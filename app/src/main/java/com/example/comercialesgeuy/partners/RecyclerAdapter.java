@@ -37,6 +37,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         holder.apellidos.setText(partner.getApellidos());
         holder.telefono.setText(partner.getTelefono());
         holder.correo.setText(partner.getCorreo());
+        holder.poblacion.setText(partner.getPoblacion());
+        holder.cif.setText(partner.getCif());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +58,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         private TextView apellidos;
         private TextView telefono;
         private TextView correo;
+        private TextView poblacion;
+        private TextView cif;
 
         public RecyclerHolder(@NonNull View itemView){
             super(itemView);
@@ -63,6 +67,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             apellidos = itemView.findViewById(R.id.apellidoPartner);
             telefono = itemView.findViewById(R.id.telefonoPartner);
             correo = itemView.findViewById(R.id.emailPartner);
+            poblacion = itemView.findViewById(R.id.poblacionPartner);
+            cif = itemView.findViewById(R.id.CIFPartner);
         }
     }
 

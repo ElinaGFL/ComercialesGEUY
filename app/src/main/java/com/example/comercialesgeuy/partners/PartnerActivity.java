@@ -77,6 +77,8 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
         intent.putExtra("apellido",item.getApellidos());
         intent.putExtra("correo",item.getCorreo());
         intent.putExtra("telefono",item.getTelefono());
+        intent.putExtra("poblacion",item.getPoblacion());
+        intent.putExtra("cif",item.getCif());
         startActivity(intent);
     }
 
