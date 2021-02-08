@@ -406,14 +406,16 @@ public class DBSQLite extends SQLiteOpenHelper {
         Log.d("mLog", "updates rows count = " + deleteItem);
         return deleteItem;
     }
-    /*
+
 
     public int modificarCita(Cita cita) {
+        /*
         SQLiteDatabase db = this.getReadableDatabase();
         int modificarItem = db.delete(DBSQLite.TABLE_CITAS, DBSQLite.CITAS_KEY_ID + "=" + cita.getId(), null);
         Log.d("mLog", "updates rows count = " + deleteItem);
-        return deleteItem;        
+        return deleteItem;
+         */
     }
 
-     */
+
 }
