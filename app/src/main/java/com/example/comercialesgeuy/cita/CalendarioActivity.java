@@ -1,11 +1,16 @@
 package com.example.comercialesgeuy.cita;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
@@ -46,37 +51,43 @@ public class CalendarioActivity extends AppCompatActivity {
 
         bdCitasOn();
 
-        /*
         lstCitas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(CalendarioActivity.this);
-                builder.setTitle("Borrar la cita");
-                builder.setMessage("Are you sure you want to delete?");
+                builder.setTitle("Modificar la cita");
+                builder.setMessage("Quires modoficar o borrar la cita?");
                 builder.setIcon(android.R.drawable.ic_dialog_alert);
 
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int ii) {
-
                         Cita cita = (Cita) parent.getAdapter().getItem(pos);
+                        int resp = dbSQLite.deleteCita(cita);
 
-                        Log.d("mLog", "cita id = " +  cita.getId());
-
-                        int deleteItem = database.delete(dbSQLite.TABLE_CITAS, dbSQLite.CITAS_KEY_ID + "=" + cita.getId(), null);
-
-                        Log.d("mLog", "updates rows count = " + deleteItem);
-
-                        if(deleteItem > 0)
-                            Toast.makeText(getApplicationContext(), "Successfully Deleted", Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(getApplicationContext(), "Not", Toast.LENGTH_SHORT).show();
+                        if(resp > 0) {
+                            Toast.makeText(getApplicationContext(), "Ha borrado la cita", Toast.LENGTH_SHORT).show();
+                            bdCitasOn();
+                        }else {
+                            Toast.makeText(getApplicationContext(), "No se ha podido borrar", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Modificar", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int ii) {
-                            dialog.dismiss();
+                            Cita cita = (Cita) parent.getAdapter().getItem(pos);
+
+
+
+                            int resp = dbSQLite.modificarCita(cita);
+
+                            if(resp > 0) {
+                                Toast.makeText(getApplicationContext(), "Successfully Deleted", Toast.LENGTH_SHORT).show();
+                                bdCitasOn();
+                            }else {
+                                Toast.makeText(getApplicationContext(), "Not", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 );
@@ -85,7 +96,6 @@ public class CalendarioActivity extends AppCompatActivity {
                 return true;
             }
         });
-         */
 
         fltNuevaVisita.setOnClickListener(v -> recogerFecha());
     }

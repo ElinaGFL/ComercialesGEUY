@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.comercialesgeuy.cita.Cita;
 import com.example.comercialesgeuy.partners.Partner;
@@ -397,4 +398,22 @@ public class DBSQLite extends SQLiteOpenHelper {
 
         db.close();
     }
+
+    public int deleteCita(Cita cita) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Log.d("mLog", "cita id = " +  cita.getId());
+        int deleteItem = db.delete(DBSQLite.TABLE_CITAS, DBSQLite.CITAS_KEY_ID + "=" + cita.getId(), null);
+        Log.d("mLog", "updates rows count = " + deleteItem);
+        return deleteItem;
+    }
+    /*
+
+    public int modificarCita(Cita cita) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int modificarItem = db.delete(DBSQLite.TABLE_CITAS, DBSQLite.CITAS_KEY_ID + "=" + cita.getId(), null);
+        Log.d("mLog", "updates rows count = " + deleteItem);
+        return deleteItem;        
+    }
+
+     */
 }
