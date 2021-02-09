@@ -57,8 +57,8 @@ public class CalendarioModificacionActivity extends AppCompatActivity {
 
     private void guardarNuevaCita1() {
         recogerDatos();
-
-        int resp = dbSQLite.modificarCita(cita, fecha);
+        cita.setFechaHora(fecha);
+        int resp = dbSQLite.modificarCita(cita);
 
         if(resp > 0) {
             Toast.makeText(getApplicationContext(), "Ha modificado la cita", Toast.LENGTH_SHORT).show();

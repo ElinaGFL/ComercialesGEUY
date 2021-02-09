@@ -396,7 +396,7 @@ public class DBSQLite extends SQLiteOpenHelper {
     }
 
 
-    public int modificarCita(Cita cita, String fecha) {
+    public int modificarCita(Cita cita) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         ContentValues cv = new ContentValues();
@@ -406,7 +406,12 @@ public class DBSQLite extends SQLiteOpenHelper {
         cv.put(CITAS_KEY_TEXTO, cita.getTexto());
 
         String id = String.valueOf(cita.getId());
-        int modificarItem = db.update(TABLE_CITAS, cv, "_id = ?", new String[]{id});
+        Log.d("mLog", "cita id = " +  cita.getId());
+        Log.d("mLog", "cita FechaHora = " +  cita.getFechaHora());
+        Log.d("mLog", "cita Cabecera = " +  cita.getCabecera());
+        Log.d("mLog", "cita texto = " +  cita.getTexto());
+
+        int modificarItem = db.update(TABLE_CITAS, cv, CITAS_KEY_ID + "= ?", new String[]{id});
         Log.d("mLog", "updates rows count = " + modificarItem);
 
         //db.close();
