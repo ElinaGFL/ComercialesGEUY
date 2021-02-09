@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="92dp"
-        android:text="Prueba cif"
+        android:text="@string/CIF3"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="@id/nombrePartner"
         app:layout_constraintTop_toTopOf="@id/nombrePartner" />
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="84dp"
-        android:text="Prueba poblacion"
+        android:text="@string/Poblacion3"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="Prueba nombre"
+        android:text="@string/Nombre3"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:text="Prueba apellido"
+        android:text="@string/Apellido3"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="@id/nombrePartner"
         app:layout_constraintTop_toTopOf="@id/nombrePartner" />

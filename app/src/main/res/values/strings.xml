@@ -28,5 +28,21 @@
     <string name="Contraseña">Contraseña</string>
     <string name="entrar">ENTRAR</string>
     <string name="cerrarSesión">cerrar sesión</string>
+    <string name="Poblacion">Poblacion</string>
+    <string name="Poblacion2">Escribe aquí la Poblacion</string>
+    <string name="CIF">CIF</string>
+    <string name="CIF2">Escribe aquí el CIF</string>
+    <string name="Nombre">Nombre:</string>
+    <string name="Apellido">Apellido</string>
+    <string name="Nombre2">Escribe aquí el Nombre</string>
+    <string name="Apellido2">Escribe aquí el Apellido</string>
+    <string name="Telefono">Telefono</string>
+    <string name="Telefono2">Escribe aquí el Número</string>
+    <string name="Correo">Correo</string>
+    <string name="Correo2">Escribe aquí el Correo</string>
+    <string name="Nombre3">Prueba nombre</string>
+    <string name="Apellido3">Prueba apellido</string>
+    <string name="Poblacion3">Prueba poblacion</string>
+    <string name="CIF3">Prueba cif</string>
 
 </resources>
