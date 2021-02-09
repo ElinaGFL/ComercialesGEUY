@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.comercialesgeuy.DBSQLite;
 import com.example.comercialesgeuy.MyAppVariables;
 import com.example.comercialesgeuy.R;
+import com.example.comercialesgeuy.cita.CalendarioModificacionActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -49,8 +50,8 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
     }
 
     private void nuevoPartner() {
-        Intent i = new Intent(this, PartnerNewActivity.class);
-        startActivityForResult(i, LAUNCH_SECOND_ACTIVITY);
+        Intent intent = new Intent(this, PartnerNewActivity.class);
+        startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
     }
 
     //rellenar y mostrar partner
@@ -74,7 +75,7 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
     public void itemClick(Partner partner) {
         Intent intent = new Intent(this, PartnerInfoActivity.class);
         intent.putExtra("partner", partner);
-        startActivity(intent);
+        startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
     }
 
     @Override
@@ -82,13 +83,7 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
-            if(resultCode == Activity.RESULT_OK){
-                Toast.makeText(this, "Se ha añadido el partner", Toast.LENGTH_SHORT).show();
-                initValues();
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
-            }
+            initValues();
         }
     }
 

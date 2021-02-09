@@ -18,7 +18,7 @@ import java.util.List;
 public class DBSQLite extends SQLiteOpenHelper {
 
     private static Context context;
-    public static final int DATABASE_VERSION = 25;
+    public static final int DATABASE_VERSION = 26;
     public static final String DATABASE_NAME = "GEUYDB";
 
     public DBSQLite(Context context) {

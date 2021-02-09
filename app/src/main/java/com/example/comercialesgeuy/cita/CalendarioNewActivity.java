@@ -49,6 +49,7 @@ public class CalendarioNewActivity extends AppCompatActivity {
         recogerDatos();
 
         int comercId = ((MyAppVariables) this.getApplication()).getComercialId();
+
         if(comercId > 0) {
             dbSQLite.insertarCita(fecha, titulo, texto, comercId);
         }

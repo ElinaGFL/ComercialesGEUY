@@ -55,7 +55,7 @@ public class PartnerInfoActivity extends AppCompatActivity {
         llamada.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent llamar = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+partner.getTelefono()));
+                Intent llamar = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + partner.getTelefono()));
                 startActivity(llamar);
             }
         });
@@ -63,7 +63,7 @@ public class PartnerInfoActivity extends AppCompatActivity {
         correo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent email = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",partner.getCorreo(), null));
+                Intent email = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", partner.getCorreo(), null));
                 startActivity(email);
             }
         });
@@ -141,10 +141,7 @@ public class PartnerInfoActivity extends AppCompatActivity {
 
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
             if(resultCode == Activity.RESULT_OK){
-                Toast.makeText(this, "Se ha cambiado el partner", Toast.LENGTH_SHORT).show();
-
                 finish();
-                startActivity(getIntent());
             }
         /*
         if (resultCode == Activity.RESULT_CANCELED) {
