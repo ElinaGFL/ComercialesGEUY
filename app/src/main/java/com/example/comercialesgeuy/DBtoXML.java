@@ -14,6 +14,8 @@ import java.io.IOException;
 
 public class DBtoXML {
 
+    /*
+
     //private static final String EXPORT_FILE_NAME = "/sdcard/export.xml";
     File XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/export.xml");
 
@@ -143,7 +145,7 @@ public class DBtoXML {
             this( new BufferedOutputStream(_ctx.openFileOutput( XMLfile, Context.MODE_WORLD_READABLE)));
         }
 
-         */
+
 
         public Exporter( BufferedOutputStream bos )
         {
@@ -200,5 +202,6 @@ public class DBtoXML {
     class Importer {
 
     }
+    */
 
 }

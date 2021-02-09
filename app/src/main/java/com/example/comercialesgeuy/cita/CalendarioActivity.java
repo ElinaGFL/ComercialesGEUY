@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,7 +30,7 @@ public class CalendarioActivity extends AppCompatActivity {
     private CalendarView calendarView;
     private FloatingActionButton fltNuevaVisita;
     private ListView lstCitas;
-    private String date_time;
+    private String date_time = "";
     DBSQLite dbSQLite;
     SQLiteDatabase database;
     //request code para intent
@@ -57,8 +56,8 @@ public class CalendarioActivity extends AppCompatActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(CalendarioActivity.this);
                 builder.setTitle("Modificar la cita");
-                builder.setMessage("Quires modoficar o borrar la cita?");
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                builder.setMessage("Quires modificar o borrar la cita?");
+                builder.setIcon(android.R.drawable.ic_menu_edit);
 
                 builder.setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int ii) {
@@ -74,34 +73,25 @@ public class CalendarioActivity extends AppCompatActivity {
                     }
                 });
 
-                /*builder.setNegativeButton("Modificar", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int ii) {
-                            Cita cita = (Cita) parent.getAdapter().getItem(pos);
-
-
-
-                            int resp = dbSQLite.modificarCita(cita);
-
-                            if(resp > 0) {
-                                Toast.makeText(getApplicationContext(), "Successfully Deleted", Toast.LENGTH_SHORT).show();
-                                bdCitasOn();
-                            }else {
-                                Toast.makeText(getApplicationContext(), "Not", Toast.LENGTH_SHORT).show();
-                            }
-                        }
+                builder.setNegativeButton("Modificar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int ii) {
+                        Toast.makeText(getApplicationContext(), "Elige nueva fecha y hora", Toast.LENGTH_SHORT).show();
+                        Cita cita = (Cita) parent.getAdapter().getItem(pos);
+                        recogerFecha(1, cita);
                     }
-                );*/
-                builder.show();
+                });
 
+                builder.show();
                 return true;
             }
         });
 
-        fltNuevaVisita.setOnClickListener(v -> recogerFecha());
+        fltNuevaVisita.setOnClickListener(v -> {
+            recogerFecha(2, null);
+        });
     }
 
-    private void recogerFecha() {
-
+    private void recogerFecha(int id, Cita cita) {
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR);
         int mMonth = c.get(Calendar.MONTH);
@@ -117,7 +107,14 @@ public class CalendarioActivity extends AppCompatActivity {
                             (view1, hourOfDay, minute) -> {
                                 //respetar el formato ISO 8601, éste estándar define el formato para almacenar la fecha y hora: YYYY-MM-DD HH:MM:SS
                                 date_time = checkDigit(dayOfMonth) + "-" + checkDigit((monthOfYear + 1)) + "-" + checkDigit(year) + " " + checkDigit(hourOfDay) + ":" + checkDigit(minute) + ":00";
-                                nuevaCita();
+
+                                if(id == 1){
+                                    Toast.makeText(getApplicationContext(), "Elige nuevo titulo y texto", Toast.LENGTH_SHORT).show();
+                                    modificacionCita(cita);
+                                }else {
+                                    nuevaCita();
+                                }
+
                             }, mHour, mMinute, true);
                     timePickerDialog.show();
 
@@ -140,6 +137,13 @@ public class CalendarioActivity extends AppCompatActivity {
         ArrayAdapter<Cita> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaCitas);
         //"enchufar" el adaptador
         lstCitas.setAdapter(adapter);
+    }
+
+    private void modificacionCita(Cita cita) {
+        Intent intent = new Intent(this, CalendarioModificacionActivity.class);
+        intent.putExtra("fecha", date_time);
+        intent.putExtra("cita", cita);
+        startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
     }
 
     private void nuevaCita() {

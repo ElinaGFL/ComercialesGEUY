@@ -10,9 +10,7 @@ public class MyAppVariables extends Application {
         return comercial;
     }
 
-    public int getComercialId() {
-        return comercial.getId();
-    }
+    public int getComercialId() { return comercial.getId(); }
 
     public String getComercialNombre() {
         return comercial.getNombre();

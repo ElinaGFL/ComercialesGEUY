@@ -110,7 +110,7 @@ public class PedidoGestionActivity extends AppCompatActivity {
 
     private void spinnerPartnersOn() {
         int comercId = ((MyAppVariables) this.getApplication()).getComercialId();
-        List<Partner> partnerList = dbSQLite.rellenarPartnerList(comercId);
+        List<Partner> partnerList = dbSQLite.leerPartners(comercId);
         if(partnerList.size() > 0) {
             ArrayAdapter<Partner> adapter = new ArrayAdapter<>(this, R.layout.spinner_item_partner, partnerList);
 

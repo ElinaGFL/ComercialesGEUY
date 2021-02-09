@@ -79,13 +79,15 @@ public class PartnerNewActivity extends AppCompatActivity {
     }
 
     private void guardarNuevoPartner1() {
-        recogerDatos();
-
-        int comercId = ((MyAppVariables) this.getApplication()).getComercialId();
-        if(comercId > 0) {
-            dbSQLite.insertarPartner(nombre, apellidos, correo, telefono, poblacion, cif, comercId);
+        if(recogerDatos()){
+            int comercId = ((MyAppVariables) this.getApplication()).getComercialId();
+            if(comercId > 0) {
+                dbSQLite.insertarPartner(nombre, apellidos, correo, telefono, poblacion, cif, comercId);
+            }
+            finalizar();
         }
-        finalizar();
+
+
         //Toast.makeText(this, "Se ha añadido el partner", Toast.LENGTH_SHORT).show();
     }
 
@@ -96,7 +98,7 @@ public class PartnerNewActivity extends AppCompatActivity {
         finish();
     }
 
-    private void recogerDatos() {
+    private boolean recogerDatos() {
         boolean relleno = true;
 
         //while (relleno) {
@@ -154,6 +156,8 @@ public class PartnerNewActivity extends AppCompatActivity {
             toast.show();
         }
         //}
+
+        return relleno;
 
     }
 }

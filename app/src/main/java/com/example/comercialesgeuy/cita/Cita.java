@@ -1,6 +1,8 @@
 package com.example.comercialesgeuy.cita;
 
-public class Cita {
+import java.io.Serializable;
+
+public class Cita implements Serializable {
 
     private String fechaHora, cabecera, texto;
     private int id;
@@ -48,8 +50,8 @@ public class Cita {
 
     @Override
     public String toString() {
-        return "Fecha: " + fechaHora + "\n" +
+        return "Fecha y hora: " + fechaHora + "\n" +
                 "Título: " + cabecera + "\n" +
-                "Info: " + texto;
+                "Información: " + texto;
     }
 }

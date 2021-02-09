@@ -116,7 +116,6 @@ public class PedidoResumenActivity extends AppCompatActivity {
 
         btnConfirmar.setOnClickListener(v -> {
             realizarPedido();
-            //atras();
         });
 
         btnCancelar.setOnClickListener(v -> finish());

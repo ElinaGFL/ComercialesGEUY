@@ -42,8 +42,8 @@ public class EnvioDelegacion extends AppCompatActivity {
         DBSQLite dbSQLite = new DBSQLite(this);
         SQLiteDatabase database = dbSQLite.getWritableDatabase();
 
-        DBtoXML dbxml = new DBtoXML(this,database);
-        dbxml.exportData();
+        //DBtoXML dbxml = new DBtoXML(this,database);
+        //dbxml.exportData();
 
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override

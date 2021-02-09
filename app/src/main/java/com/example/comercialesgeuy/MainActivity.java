@@ -26,12 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
-    Button btnCalendario;
-    Button btnpartners;
-    Button btnPed;
-    Button btnEnvio, btnLogOut;
-    Button btnllamar;
-    Button btnCorreo;
+    Button btnCalendario, btnpartners, btnPed, btnEnvio, btnLogOut;
     private GoogleMap mMap;
     static final int REQUEST_CODE = 123;
 
@@ -53,40 +48,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         iniciarBD();
 
-        btnCalendario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                siguienteLayout(btnCalendario);
-            }
-        });
+        btnCalendario.setOnClickListener(v -> siguienteLayout(btnCalendario));
 
-        btnpartners.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                siguienteLayout(btnpartners);
-            }
-        });
+        btnpartners.setOnClickListener(v -> siguienteLayout(btnpartners));
 
-        btnEnvio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                siguienteLayout(btnEnvio);
-            }
-        });
+        btnEnvio.setOnClickListener(v -> siguienteLayout(btnEnvio));
 
-        btnPed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                siguienteLayout(btnPed);
-            }
-        });
+        btnPed.setOnClickListener(v -> siguienteLayout(btnPed));
 
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                atras();
-            }
-        });
+        btnLogOut.setOnClickListener(v -> atras());
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -103,18 +73,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void iniciarBD() {
-
         dbsqLite = new DBSQLite(this);
-
     }
 
     public void llamar(View v){
-        Intent llamar = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: 943 52 95 65"));
+        Intent llamar = new Intent(Intent.ACTION_DIAL, Uri.parse(((MyAppVariables) this.getApplication()).getComercial().getTelefono()));
 
         startActivity(llamar);
     }
     public void correo(View v){
-        Intent email = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto","jseara@cebanc.com", null));
+        Intent email = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",((MyAppVariables) this.getApplication()).getComercial().getEmail(), null));
         startActivity(email);
     }
 

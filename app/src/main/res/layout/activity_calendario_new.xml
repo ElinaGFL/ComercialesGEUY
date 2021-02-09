@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/pop_bg"
-    tools:context=".cita.CalendarioNewActivity">
+    android:layout_height="wrap_content"
+    android:background="@drawable/pop_bg">
 
     <TextView
-        android:id="@+id/txtFecha"
-        android:layout_width="match_parent"
+        android:id="@+id/txtTituloVentana"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:padding="10dp"
@@ -27,7 +26,7 @@
         android:id="@+id/txtCabecera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtFecha"
+        android:layout_below="@id/txtTituloVentana"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
@@ -38,7 +37,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtFecha" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTituloVentana" />
 
     <EditText
         android:id="@+id/txtTexto"
@@ -64,7 +63,9 @@
         android:layout_below="@id/txtTexto"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/calendarioGuardar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTexto" />

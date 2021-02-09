@@ -67,18 +67,13 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
     private List<Partner> leerPartners1() {
         lstPartners = new ArrayList<>();
         int comercId = ((MyAppVariables) this.getApplication()).getComercialId();
-        lstPartners = dbSQLite.rellenarPartnerList(comercId);
+        lstPartners = dbSQLite.leerPartners(comercId);
         return lstPartners;
     }
 
-    public void itemClick(Partner item) {
+    public void itemClick(Partner partner) {
         Intent intent = new Intent(this, Contacto.class);
-        intent.putExtra("nombre",item.getNombre());
-        intent.putExtra("apellido",item.getApellidos());
-        intent.putExtra("correo",item.getCorreo());
-        intent.putExtra("telefono",item.getTelefono());
-        intent.putExtra("poblacion",item.getPoblacion());
-        intent.putExtra("cif",item.getCif());
+        intent.putExtra("partner", partner);
         startActivity(intent);
     }
 
