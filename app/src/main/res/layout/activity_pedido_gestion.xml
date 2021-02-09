@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/gestionPedido"
+        android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,24 +25,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
         android:text="@string/comercial"
+        android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/txtComercialGP"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtGP" />
+        app:layout_constraintStart_toStartOf="@+id/txtGP"
+        app:layout_constraintTop_toBottomOf="@+id/txtGP" />
 
     <TextView
         android:id="@+id/txtComercialGP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:text="@string/comercial"
+        android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/txt2GP"
         app:layout_constraintTop_toTopOf="@+id/txt2GP" />
 
@@ -49,18 +46,18 @@
         android:id="@+id/txt3GP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="@string/partner"
+        android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/txt2GP"
+        app:layout_constraintStart_toStartOf="@+id/txt2GP"
         app:layout_constraintTop_toBottomOf="@+id/txt2GP" />
 
     <Spinner
         android:id="@+id/spinnerPartner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@+id/txt3GP"
+        app:layout_constraintStart_toStartOf="@+id/txtComercialGP"
         app:layout_constraintTop_toTopOf="@+id/txt3GP" />
 
     <androidx.recyclerview.widget.RecyclerView

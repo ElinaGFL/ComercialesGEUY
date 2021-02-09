@@ -72,7 +72,7 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
     }
 
     public void itemClick(Partner partner) {
-        Intent intent = new Intent(this, Contacto.class);
+        Intent intent = new Intent(this, PartnerInfoActivity.class);
         intent.putExtra("partner", partner);
         startActivity(intent);
     }

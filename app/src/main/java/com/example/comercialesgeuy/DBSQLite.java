@@ -428,4 +428,24 @@ public class DBSQLite extends SQLiteOpenHelper {
         //db.close();
         return deleteItem;
     }
+
+    public int modificarPartner(Partner partner) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(PARTNERS_KEY_NOMBRE, partner.getNombre());
+        cv.put(PARTNERS_KEY_APELLIDOS, partner.getApellidos());
+        cv.put(PARTNERS_KEY_EMAIL, partner.getCorreo());
+        cv.put(PARTNERS_KEY_TLFN, partner.getTelefono());
+        cv.put(PARTNERS_KEY_POBLACION, partner.getPoblacion());
+        cv.put(PARTNERS_KEY_CIF, partner.getCif());
+
+        String id = String.valueOf(partner.getId());
+
+        int modificarItem = db.update(TABLE_PARTNERS, cv, PARTNERS_KEY_ID + "= ?", new String[]{id});
+        Log.d("mLog", "updates rows count = " + modificarItem);
+
+        //db.close();
+        return modificarItem;
+    }
 }

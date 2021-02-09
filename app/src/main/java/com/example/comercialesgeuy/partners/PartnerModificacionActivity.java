@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.comercialesgeuy.DBSQLite;
 import com.example.comercialesgeuy.MyAppVariables;
 import com.example.comercialesgeuy.R;
+import com.example.comercialesgeuy.cita.Cita;
 
-public class PartnerNewActivity extends AppCompatActivity {
+public class PartnerModificacionActivity extends AppCompatActivity {
 
     EditText txtNuevoNombre;
     EditText txtNuevoApellidos;
@@ -23,8 +25,10 @@ public class PartnerNewActivity extends AppCompatActivity {
     EditText txtNuevoCorreo;
     EditText txtNuevoPoblacion;
     EditText txtNuevoCif;
+    TextView txtCabeceraPartner;
     Button btnNuevoPartner;
     private String nombre, apellidos, telefono, correo, poblacion, cif;
+    Partner partner;
 
     DBSQLite dbSQLite;
     SQLiteDatabase database;
@@ -41,38 +45,22 @@ public class PartnerNewActivity extends AppCompatActivity {
         txtNuevoPoblacion = findViewById(R.id.txtNuevoPoblacion);
         txtNuevoCif = findViewById(R.id.txtNuevoCIF);
         btnNuevoPartner=findViewById(R.id.btnNuevoPartner);
+        txtCabeceraPartner = findViewById(R.id.txtCabeceraPartner);
+
+        txtCabeceraPartner.setText("Cambiar Partner");
+        btnNuevoPartner.setText("Modificar");
 
         dbSQLite = new DBSQLite(this);
         database = dbSQLite.getWritableDatabase();
+
+        Bundle extras = getIntent().getExtras();
+        partner = (Partner) getIntent().getSerializableExtra("partner");
 
         //XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/partners.xml");
 
         btnNuevoPartner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                if (nvNombre.getText().length() <= 0) {
-                    nvNombre.setError("No puedes dejar el Nombre del nuevo parten en vacio!");
-                } else if (nvApellido.getText().length() <= 0) {
-                    nvApellido.setError("No puedes dejar el Nombre del nuevo parten en vacio!");
-                } else if (nvTelefono.getText().length() <= 0) {
-                    nvTelefono.setError("No puedes dejar el Nombre del nuevo parten en vacio!");
-                } else if (nvNombre.getText().length() <= 0) {
-                    nvCorreo.setError("No puedes dejar el Nombre del nuevo parten en vacio!");
-                } else {
-                    try {
-                        Toast toast1 =
-                                Toast.makeText(getApplicationContext(),
-                                        "Todavia no esta la funciona disponible.", Toast.LENGTH_SHORT);
-
-                        toast1.show();
-
-                    } catch (Exception ex) {
-                        Log.e("msg", "No se pudo introducir el nuevo partner");
-                    }
-                }
-                volverAtras();
-                 */
                 guardarNuevoPartner1();
             }
         });
@@ -81,8 +69,9 @@ public class PartnerNewActivity extends AppCompatActivity {
     private void guardarNuevoPartner1() {
         if(recogerDatos()){
             int comercId = ((MyAppVariables) this.getApplication()).getComercialId();
+            
             if(comercId > 0) {
-                dbSQLite.insertarPartner(nombre, apellidos, correo, telefono, poblacion, cif, comercId);
+                dbSQLite.modificarPartner(partner);
             }
             finalizar();
         }
@@ -103,7 +92,7 @@ public class PartnerNewActivity extends AppCompatActivity {
 
         //while (relleno) {
             if (txtNuevoNombre.getText().length() > 0) {
-                nombre = txtNuevoNombre.getText().toString();
+                partner.setNombre(txtNuevoNombre.getText().toString());
             } else {
                 relleno = false;
                 txtNuevoNombre.requestFocus();
@@ -112,7 +101,7 @@ public class PartnerNewActivity extends AppCompatActivity {
             }
 
             if (txtNuevoApellidos.getText().length() > 0) {
-                apellidos = txtNuevoApellidos.getText().toString();
+                partner.setApellidos(txtNuevoNombre.getText().toString());
             } else {
                 relleno = false;
                 txtNuevoApellidos.requestFocus();
@@ -121,7 +110,7 @@ public class PartnerNewActivity extends AppCompatActivity {
             }
 
             if (txtNuevoTelefono.getText().length() > 0) {
-                telefono = txtNuevoTelefono.getText().toString();
+                partner.setTelefono(txtNuevoNombre.getText().toString());
             } else {
                 relleno = false;
                 txtNuevoTelefono.requestFocus();
@@ -130,7 +119,7 @@ public class PartnerNewActivity extends AppCompatActivity {
             }
 
             if (txtNuevoCorreo.getText().length() > 0) {
-                correo = txtNuevoCorreo.getText().toString();
+                partner.setCorreo(txtNuevoNombre.getText().toString());
             } else {
                 relleno = false;
                 txtNuevoCorreo.requestFocus();
@@ -139,7 +128,7 @@ public class PartnerNewActivity extends AppCompatActivity {
             }
 
         if (txtNuevoPoblacion.getText().length() > 0) {
-            poblacion = txtNuevoPoblacion.getText().toString();
+            partner.setPoblacion(txtNuevoNombre.getText().toString());
         } else {
             relleno = false;
             txtNuevoPoblacion.requestFocus();
@@ -148,7 +137,7 @@ public class PartnerNewActivity extends AppCompatActivity {
         }
 
         if (txtNuevoCif.getText().length() > 0) {
-            cif = txtNuevoCif.getText().toString();
+            partner.setCif(txtNuevoNombre.getText().toString());
         } else {
             relleno = false;
             txtNuevoCif.requestFocus();
