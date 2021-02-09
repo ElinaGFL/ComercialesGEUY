@@ -141,7 +141,7 @@ public class PartnerInfoActivity extends AppCompatActivity {
 
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
             if(resultCode == Activity.RESULT_OK){
-                Toast.makeText(this, "Se ha añadido la cita", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Se ha cambiado el partner", Toast.LENGTH_SHORT).show();
 
                 finish();
                 startActivity(getIntent());

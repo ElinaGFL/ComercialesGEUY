@@ -1,5 +1,6 @@
 package com.example.comercialesgeuy.partners;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -33,6 +34,7 @@ public class PartnerModificacionActivity extends AppCompatActivity {
     DBSQLite dbSQLite;
     SQLiteDatabase database;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

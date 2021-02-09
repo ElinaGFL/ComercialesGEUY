@@ -442,6 +442,10 @@ public class DBSQLite extends SQLiteOpenHelper {
 
         String id = String.valueOf(partner.getId());
 
+        Log.d("mLog", "partner id = " +  partner.getId());
+        Log.d("mLog", "partner nombre = " +  partner.getNombre());
+        Log.d("mLog", "partner email = " +  partner.getCorreo());
+
         int modificarItem = db.update(TABLE_PARTNERS, cv, PARTNERS_KEY_ID + "= ?", new String[]{id});
         Log.d("mLog", "updates rows count = " + modificarItem);
 
