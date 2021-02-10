@@ -19,7 +19,7 @@ import java.util.List;
 public class DBSQLite extends SQLiteOpenHelper {
 
     private static Context context;
-    public static final int DATABASE_VERSION = 26;
+    public static final int DATABASE_VERSION = 29;
     public static final String DATABASE_NAME = "GEUYDB";
 
     public DBSQLite(Context context) {
@@ -39,12 +39,14 @@ public class DBSQLite extends SQLiteOpenHelper {
         db.execSQL(INSERT_COMERCIALES);
         insertXMLProductos(db);
     }
-
+    /*
     @Override
     public void onOpen(SQLiteDatabase db){
         super.onOpen(db);
         db.execSQL("PRAGMA foreign_keys=ON");
     }
+
+     */
 
     private void insertXMLProductos(SQLiteDatabase db) {
         List<Producto> productoList;
@@ -130,7 +132,7 @@ public class DBSQLite extends SQLiteOpenHelper {
                     CITAS_KEY_CABECERA + " TEXT, " +
                     CITAS_KEY_TEXTO + " TEXT, " +
                     CITAS_KEY_FK_COMERC + " INTEGER, " +
-                    "CONSTRAINT " + CITAS_KEY_FK_COMERC + " FOREIGN KEY (" + COMERCIALES_KEY_ID + ") REFERENCES " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_ID + ") ON DELETE CASCADE )";
+                    "FOREIGN KEY (" + COMERCIALES_KEY_ID + ") REFERENCES " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_ID + ") ON DELETE CASCADE )";
 
     // TABLA PARTNERS
 
@@ -156,7 +158,7 @@ public class DBSQLite extends SQLiteOpenHelper {
                     PARTNERS_KEY_EMAIL + " TEXT," +
                     PARTNERS_KEY_TLFN + " TEXT," +
                     PARTNERS_KEY_FK_COMERC + " INTEGER NOT NULL," +
-                    "CONSTRAINT " + PARTNERS_KEY_FK_COMERC + " FOREIGN KEY (" + COMERCIALES_KEY_ID + ") REFERENCES " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_ID + ") ON DELETE CASCADE )";
+                    "FOREIGN KEY (" + COMERCIALES_KEY_ID + ") REFERENCES " + TABLE_COMERCIALES + "(" + COMERCIALES_KEY_ID + ") ON DELETE CASCADE )";
 
     // TABLA PRODUCTOS
 
@@ -361,6 +363,12 @@ public class DBSQLite extends SQLiteOpenHelper {
         contentValues.put(CITAS_KEY_CABECERA, titulo);
         contentValues.put(CITAS_KEY_TEXTO, texto);
         contentValues.put(CITAS_KEY_FK_COMERC, comercId);
+
+        //Log.d("mLog", "cita id = " +  cita.getId());
+        Log.d("mLog", "cita FechaHora = " +  fecha);
+        Log.d("mLog", "cita Cabecera = " +  titulo);
+        Log.d("mLog", "cita texto = " +  texto);
+        Log.d("mLog", "cita FK = " +  comercId);
 
         db.insert(TABLE_CITAS, null, contentValues);
         //db.close();

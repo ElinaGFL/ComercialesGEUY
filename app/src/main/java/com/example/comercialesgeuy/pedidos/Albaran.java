@@ -84,7 +84,6 @@ public class Albaran {
                 ", fechaPedido='" + fechaPedido + '\'' +
                 ", fechaEnvio='" + fechaEnvio + '\'' +
                 ", fechaPago='" + fechaPago + '\'' +
-                ", lineas=" + lineas +
                 '}';
     }
 }

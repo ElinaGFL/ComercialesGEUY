@@ -63,9 +63,6 @@ public class ListaPedidosActivity extends AppCompatActivity implements SearchVie
         rcvPedido.setLayoutManager(manager);
 
         pedidoList = leerPedido();
-        for(Albaran albaran : pedidoList){
-            albaran.toString();
-        }
         adapter = new RecyclerAdapterPedidoLista(pedidoList, this);
         rcvPedido.setAdapter(adapter);
     }
