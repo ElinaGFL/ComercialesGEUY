@@ -44,5 +44,7 @@
     <string name="Apellido3">Prueba apellido</string>
     <string name="Poblacion3">Prueba poblacion</string>
     <string name="CIF3">Prueba cif</string>
+    <string name="textViewPedido">textViewPedido</string>
+    <string name="GPedido">Gestion de PEDIDO</string>
 
 </resources>

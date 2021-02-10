@@ -13,11 +13,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.comercialesgeuy.cita.CalendarioActivity;
 import com.example.comercialesgeuy.partners.PartnerActivity;
-import com.example.comercialesgeuy.pedidos.gestion.PedidoGestionActivity;
+import com.example.comercialesgeuy.pedidos.gestion.ListaPedidosActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             i = new Intent(this, EnvioDelegacion.class);
         }
        else if (boton==btnPed){
-           i = new Intent(this, PedidoGestionActivity.class);
+           i = new Intent(this, ListaPedidosActivity.class);
         }else {
            i= new Intent(this, MainActivity.class);
         }

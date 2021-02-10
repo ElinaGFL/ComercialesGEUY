@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.comercialesgeuy.cita.Cita;
 import com.example.comercialesgeuy.partners.Partner;
+import com.example.comercialesgeuy.pedidos.Albaran;
 import com.example.comercialesgeuy.pedidos.Producto;
 import com.example.comercialesgeuy.pedidos.gestion.XMLParserProducto;
 
@@ -300,6 +301,31 @@ public class DBSQLite extends SQLiteOpenHelper {
         //db.close();
         cursor.close();
         return partnerList;
+    }
+
+    public List<Albaran> leerPedido() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Albaran> AlbaranList  = new ArrayList<>();
+        Albaran albaran;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_ALBARANES, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                albaran = new Albaran();
+
+                albaran.setId(cursor.getInt(cursor.getColumnIndex(ALBARANES_KEY_ID)));
+                albaran.setFechaPedido(cursor.getString(cursor.getColumnIndex(ALBARANES_KEY_FECHAALBARAN)));
+                albaran.setFechaEnvio(cursor.getString(cursor.getColumnIndex(ALBARANES_KEY_FECHAENVIO)));
+                albaran.setFechaPago(cursor.getString(cursor.getColumnIndex(ALBARANES_KEY_FECHAPAGO)));
+                AlbaranList.add(albaran);
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog", "0 rows");
+        }
+        //db.close();
+        cursor.close();
+        return AlbaranList;
     }
 
     public List<Cita> leerCitas(int id) {

@@ -21,6 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ComercialesGEUY">
+        <activity android:name=".pedidos.gestion.RecyclerAdapterPedidoLista"></activity>
+        <activity android:name=".pedidos.gestion.ListaPedidosActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +56,7 @@
         <activity android:name=".partners.PartnerActivity" />
         <activity android:name=".cita.CalendarioActivity" />
         <activity android:name=".pedidos.gestion.PedidoGestionActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
