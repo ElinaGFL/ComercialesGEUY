@@ -26,7 +26,7 @@ public class RecyclerAdapterPedidoLista extends RecyclerView.Adapter<RecyclerAda
     @NonNull
     @Override
     public RecyclerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_lista_pedidos,parent,false);
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recycler_adapter_pedido_lista,parent,false);
         return new RecyclerHolder(v);
     }
 
@@ -34,7 +34,7 @@ public class RecyclerAdapterPedidoLista extends RecyclerView.Adapter<RecyclerAda
     public void onBindViewHolder(@NonNull RecyclerHolder holder, int position) {
         Albaran pedido = items.get(position);
 
-        holder.id.setText(pedido.getId());
+        holder.id.setText(String.valueOf(pedido.getId()));
         holder.fecha1.setText(pedido.getFechaEnvio());
         holder.fecha2.setText(pedido.getFechaPedido());
         holder.fecha3.setText(pedido.getFechaPago());
@@ -61,8 +61,8 @@ public class RecyclerAdapterPedidoLista extends RecyclerView.Adapter<RecyclerAda
         public RecyclerHolder(@NonNull View itemView){
             super(itemView);
             id = itemView.findViewById(R.id.nPedido);
-            fecha1 = itemView.findViewById(R.id.FechaEnvioPedido);
-            fecha2 = itemView.findViewById(R.id.FechaPedidoPedido);
+            fecha1 = itemView.findViewById(R.id.FechaPedidoPedido);
+            fecha2 = itemView.findViewById(R.id.FechaEnvioPedido);
             fecha3 = itemView.findViewById(R.id.FechaPagoPedido);
         }
     }

@@ -1,21 +1,16 @@
 package com.example.comercialesgeuy.pedidos.gestion;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-
 import com.example.comercialesgeuy.DBSQLite;
-import com.example.comercialesgeuy.MyAppVariables;
 import com.example.comercialesgeuy.R;
-import com.example.comercialesgeuy.partners.Partner;
-import com.example.comercialesgeuy.partners.PartnerInfoActivity;
-import com.example.comercialesgeuy.partners.PartnerNewActivity;
-import com.example.comercialesgeuy.partners.RecyclerAdapter;
 import com.example.comercialesgeuy.pedidos.Albaran;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -63,6 +58,12 @@ public class ListaPedidosActivity extends AppCompatActivity implements SearchVie
         rcvPedido.setLayoutManager(manager);
 
         pedidoList = leerPedido();
+
+        for(Albaran alb : pedidoList){
+            System.out.println("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+            System.out.println(alb.toString());
+        }
+
         adapter = new RecyclerAdapterPedidoLista(pedidoList, this);
         rcvPedido.setAdapter(adapter);
     }

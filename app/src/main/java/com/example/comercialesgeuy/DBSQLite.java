@@ -317,6 +317,8 @@ public class DBSQLite extends SQLiteOpenHelper {
                 albaran = new Albaran();
 
                 albaran.setId(cursor.getInt(cursor.getColumnIndex(ALBARANES_KEY_ID)));
+                albaran.setIdComerc(cursor.getInt(cursor.getColumnIndex(ALBARANES_KEY_FK_COMERC)));
+                albaran.setIdPartner(cursor.getInt(cursor.getColumnIndex(ALBARANES_KEY_FK_PARTNER)));
                 albaran.setFechaPedido(cursor.getString(cursor.getColumnIndex(ALBARANES_KEY_FECHAALBARAN)));
                 albaran.setFechaEnvio(cursor.getString(cursor.getColumnIndex(ALBARANES_KEY_FECHAENVIO)));
                 albaran.setFechaPago(cursor.getString(cursor.getColumnIndex(ALBARANES_KEY_FECHAPAGO)));

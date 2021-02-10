@@ -1,10 +1,8 @@
 package com.example.comercialesgeuy.partners;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -14,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.comercialesgeuy.DBSQLite;
 import com.example.comercialesgeuy.MyAppVariables;
 import com.example.comercialesgeuy.R;
-import com.example.comercialesgeuy.cita.CalendarioModificacionActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
