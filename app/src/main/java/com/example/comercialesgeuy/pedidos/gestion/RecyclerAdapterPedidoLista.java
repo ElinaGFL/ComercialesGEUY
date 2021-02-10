@@ -18,9 +18,6 @@ public class RecyclerAdapterPedidoLista extends RecyclerView.Adapter<RecyclerAda
     private List<Albaran> items;
     private RecyclerItemClick itemClick;
 
-    public RecyclerAdapterPedidoLista() {
-    }
-
     public RecyclerAdapterPedidoLista(List<Albaran> items, RecyclerItemClick itemClick) {
         this.items = items;
         this.itemClick = itemClick;
@@ -37,7 +34,7 @@ public class RecyclerAdapterPedidoLista extends RecyclerView.Adapter<RecyclerAda
     public void onBindViewHolder(@NonNull RecyclerHolder holder, int position) {
         Albaran pedido = items.get(position);
 
-        holder.id.setText(String.valueOf(pedido.getId()));
+        holder.id.setText(pedido.getId());
         holder.fecha1.setText(pedido.getFechaEnvio());
         holder.fecha2.setText(pedido.getFechaPedido());
         holder.fecha3.setText(pedido.getFechaPago());
@@ -64,9 +61,9 @@ public class RecyclerAdapterPedidoLista extends RecyclerView.Adapter<RecyclerAda
         public RecyclerHolder(@NonNull View itemView){
             super(itemView);
             id = itemView.findViewById(R.id.nPedido);
-            fecha1 = itemView.findViewById(R.id.edtFechaEnvio);
-            fecha2 = itemView.findViewById(R.id.edtFechaPedido);
-            fecha3 = itemView.findViewById(R.id.edtFechaPago);
+            fecha1 = itemView.findViewById(R.id.FechaEnvioPedido);
+            fecha2 = itemView.findViewById(R.id.FechaPedidoPedido);
+            fecha3 = itemView.findViewById(R.id.FechaPagoPedido);
         }
     }
 

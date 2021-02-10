@@ -75,4 +75,16 @@ public class Albaran {
         this.lineas = lineas;
     }
 
+    @Override
+    public String toString() {
+        return "Albaran{" +
+                "id=" + id +
+                ", idComerc=" + idComerc +
+                ", idPartner=" + idPartner +
+                ", fechaPedido='" + fechaPedido + '\'' +
+                ", fechaEnvio='" + fechaEnvio + '\'' +
+                ", fechaPago='" + fechaPago + '\'' +
+                ", lineas=" + lineas +
+                '}';
+    }
 }
