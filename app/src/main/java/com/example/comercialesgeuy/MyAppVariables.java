@@ -19,4 +19,5 @@ public class MyAppVariables extends Application {
     public void setComercial(Comercial comercial) {
         this.comercial = comercial;
     }
+
 }

@@ -1,8 +1,9 @@
 package com.example.comercialesgeuy.pedidos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Albaran {
+public class Albaran implements Serializable {
 
     private int id, idComerc, idPartner;
     private String fechaPedido, fechaEnvio, fechaPago;

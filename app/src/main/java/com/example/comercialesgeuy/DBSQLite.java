@@ -304,6 +304,55 @@ public class DBSQLite extends SQLiteOpenHelper {
         cursor.close();
         return partnerList;
     }
+    public Partner leerPartner(int idpartner) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Partner partnerList  = new Partner();
+        Partner partner;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PARTNERS + " WHERE "+ PARTNERS_KEY_ID +"= " + idpartner, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                partner = new Partner();
+
+                partner.setId(cursor.getInt(cursor.getColumnIndex(PARTNERS_KEY_ID)));
+                partner.setNombre(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_NOMBRE)));
+                partner.setApellidos(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_APELLIDOS)));
+                partner.setCorreo(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_EMAIL)));
+                partner.setTelefono(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_TLFN)));
+                partner.setCif(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_CIF)));
+                partner.setPoblacion(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_POBLACION)));
+
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog", "0 rows");
+        }
+        //db.close();
+        cursor.close();
+        return partnerList;
+    }
+
+    public String leerComercial(int idcomercial) {
+        SQLiteDatabase db = this.getReadableDatabase();
+       String comercial=null;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_COMERCIALES + " WHERE "+ COMERCIALES_KEY_ID +"= " + idcomercial, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                comercial=cursor.getString(cursor.getColumnIndex(COMERCIALES_KEY_NOMBRE));
+
+
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog", "0 rows");
+        }
+        //db.close();
+        cursor.close();
+        return comercial;
+    }
+
 
     public List<Albaran> leerPedido() {
         SQLiteDatabase db = this.getReadableDatabase();

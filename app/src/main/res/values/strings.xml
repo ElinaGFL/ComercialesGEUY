@@ -46,5 +46,8 @@
     <string name="CIF3">Prueba cif</string>
     <string name="textViewPedido">textViewPedido</string>
     <string name="GPedido">Gestion de PEDIDO</string>
+    <string name="eliminarPedido">Eliminar Pedido</string>
+    <string name="idPedido">Identificardor del pedido</string>
+    <string name="Eliminar">Eliminar</string>
 
 </resources>

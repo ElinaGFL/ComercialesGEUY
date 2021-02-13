@@ -9,7 +9,7 @@
     tools:context=".pedidos.gestion.PedidoGestionActivity">
 
     <TextView
-        android:id="@+id/txtRP"
+        android:id="@+id/txtPedido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txt1RP"
+        android:id="@+id/txtComercial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -29,17 +29,17 @@
         android:textSize="18sp"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRP" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPedido" />
 
     <TextView
-        android:id="@+id/txtComercialRP"
+        android:id="@+id/txtcomercialPedido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="@string/comercial"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/txt1RP"
-        app:layout_constraintTop_toTopOf="@+id/txt1RP" />
+        app:layout_constraintStart_toEndOf="@+id/txtComercial"
+        app:layout_constraintTop_toTopOf="@+id/txtComercial" />
 
     <TextView
         android:id="@+id/txt2RP"
@@ -50,10 +50,10 @@
         android:text="@string/partner"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt1RP" />
+        app:layout_constraintTop_toBottomOf="@+id/txtComercial" />
 
     <TextView
-        android:id="@+id/txtPartnerRP"
+        android:id="@+id/txtPartnerPedido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -136,31 +136,31 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnCancelarRP"
+        app:layout_constraintBottom_toTopOf="@+id/btnCancelarLP"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPagoRP" />
 
     <Button
-        android:id="@+id/btnCancelarRP"
+        android:id="@+id/btnCancelarLP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:text="@string/cancelar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnConfirmarRP"
+        app:layout_constraintEnd_toStartOf="@+id/btnEliminarPedido"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnConfirmarRP"
+        android:id="@+id/btnEliminarPedido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="36dp"
         android:text="@string/confirmar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnCancelarRP"
-        app:layout_constraintTop_toTopOf="@+id/btnCancelarRP" />
+        app:layout_constraintStart_toEndOf="@+id/btnCancelarLP"
+        app:layout_constraintTop_toTopOf="@+id/btnCancelarLP" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.comercialesgeuy.DBSQLite;
 import com.example.comercialesgeuy.R;
 import com.example.comercialesgeuy.pedidos.Albaran;
+import com.example.comercialesgeuy.pedidos.resumen.GestionLineasPedido;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -75,9 +76,9 @@ public class ListaPedidosActivity extends AppCompatActivity implements SearchVie
     }
 
     public void itemClick(Albaran item) {
-        //Intent intent = new Intent(this, PartnerInfoActivity.class);
-        //intent.putExtra("partner", partner);
-        //startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
+        Intent intent = new Intent(this, GestionLineasPedido.class);
+        intent.putExtra("albaran", item);
+        startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
     }
 
     //@Override

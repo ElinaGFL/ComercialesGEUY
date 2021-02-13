@@ -53,10 +53,10 @@ public class PedidoResumenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pedido_resumen);
 
         rcvProductosRP = findViewById(R.id.rcvProductosRP);
-        txtComercialRP = findViewById(R.id.txtComercialRP);
-        txtPartnerRP = findViewById(R.id.txtPartnerRP);
-        btnCancelar = findViewById(R.id.btnCancelarRP);
-        btnConfirmar = findViewById(R.id.btnConfirmarRP);
+        txtComercialRP = findViewById(R.id.txtcomercialPedido);
+        txtPartnerRP = findViewById(R.id.txtPartnerPedido);
+        btnCancelar = findViewById(R.id.btnCancelarLP);
+        btnConfirmar = findViewById(R.id.btnEliminarPedido);
         edtFechaPedido = findViewById(R.id.edtFechaPedido);
         edtFechaEnvio = findViewById(R.id.edtFechaEnvio);
         edtFechaPago = findViewById(R.id.edtFechaPago);
