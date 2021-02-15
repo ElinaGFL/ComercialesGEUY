@@ -39,7 +39,7 @@ public class PedidoResumenActivity extends AppCompatActivity {
     String sEdtFechaPedido, sEdtFechaEnvio, sEdtFechaPago;
     private String date_time;
     EditText clickedEditText;
-    Partner partner;
+    public Partner partner;
 
     DBSQLite dbSQLite;
     SQLiteDatabase database;
@@ -52,7 +52,7 @@ public class PedidoResumenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedido_resumen);
 
-        rcvProductosRP = findViewById(R.id.rcvProductosRP);
+        rcvProductosRP = findViewById(R.id.rcvProductosRB);
         txtComercialRP = findViewById(R.id.txtcomercialPedido);
         txtPartnerRP = findViewById(R.id.txtPartnerPedido);
         btnCancelar = findViewById(R.id.btnCancelarLP);
@@ -73,7 +73,7 @@ public class PedidoResumenActivity extends AppCompatActivity {
 
         listaProductosOn();
 
-        //
+
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {

@@ -10,6 +10,7 @@ import android.util.Log;
 import com.example.comercialesgeuy.cita.Cita;
 import com.example.comercialesgeuy.partners.Partner;
 import com.example.comercialesgeuy.pedidos.Albaran;
+import com.example.comercialesgeuy.pedidos.Linea;
 import com.example.comercialesgeuy.pedidos.Producto;
 import com.example.comercialesgeuy.pedidos.gestion.XMLParserProducto;
 
@@ -19,7 +20,7 @@ import java.util.List;
 public class DBSQLite extends SQLiteOpenHelper {
 
     private static Context context;
-    public static final int DATABASE_VERSION = 29;
+    public static final int DATABASE_VERSION = 30;
     public static final String DATABASE_NAME = "GEUYDB";
 
     public DBSQLite(Context context) {
@@ -212,6 +213,7 @@ public class DBSQLite extends SQLiteOpenHelper {
     public static final String LINEAS_KEY_CANTIDAD = "CANTIDAD";
     public static final String LINEAS_KEY_PRECIOLINEA = "PRECIOLINEA";
 
+
     private static final String CREAR_LINEAS =
             "CREATE TABLE " + TABLE_LINEAS + "(" +
                     LINEAS_KEY_ID + " INTEGER, " +
@@ -306,8 +308,8 @@ public class DBSQLite extends SQLiteOpenHelper {
     }
     public Partner leerPartner(int idpartner) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Partner partnerList  = new Partner();
-        Partner partner;
+        Partner partner  = new Partner();
+
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PARTNERS + " WHERE "+ PARTNERS_KEY_ID +"= " + idpartner, null);
 
@@ -315,7 +317,7 @@ public class DBSQLite extends SQLiteOpenHelper {
             do {
                 partner = new Partner();
 
-                partner.setId(cursor.getInt(cursor.getColumnIndex(PARTNERS_KEY_ID)));
+
                 partner.setNombre(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_NOMBRE)));
                 partner.setApellidos(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_APELLIDOS)));
                 partner.setCorreo(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_EMAIL)));
@@ -329,7 +331,7 @@ public class DBSQLite extends SQLiteOpenHelper {
         }
         //db.close();
         cursor.close();
-        return partnerList;
+        return partner;
     }
 
     public String leerComercial(int idcomercial) {
@@ -379,6 +381,35 @@ public class DBSQLite extends SQLiteOpenHelper {
         //db.close();
         cursor.close();
         return AlbaranList;
+    }
+    public List<Linea> leerLineas(int codLineas) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Linea> listLineas  = new ArrayList<>();
+        Linea linea;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_LINEAS + " INNER JOIN " + TABLE_PRODUCTOS + " ON " + TABLE_LINEAS + "." + LINEAS_KEY_FK_PRODUCTO + " = " + TABLE_PRODUCTOS + "." + PRODUCTOS_KEY_ID + " WHERE " +LINEAS_KEY_FK_ALBARAN+" = " + codLineas, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                linea = new Linea();
+
+                linea.setIdLinea(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_ID)));
+                linea.setCantidad(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_CANTIDAD)));
+                linea.setIdAlbaran(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_FK_ALBARAN)));
+                linea.setIdProducto(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_FK_PRODUCTO)));
+                linea.setPrecioLinea(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_PRECIOLINEA)));
+                linea.setNombre(cursor.getString(cursor.getColumnIndex(PRODUCTOS_KEY_DESCRIPCION)));
+
+
+                listLineas.add(linea);
+
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog", "0 rows");
+        }
+        //db.close();
+        cursor.close();
+        return listLineas;
     }
 
     public List<Cita> leerCitas(int id) {
@@ -508,6 +539,33 @@ public class DBSQLite extends SQLiteOpenHelper {
         //db.execSQL("PRAGMA foreign_keys = ON");
         Log.d("mLog", "partner id = " +  partner.getId());
         int deleteItem = db.delete(TABLE_PARTNERS, PARTNERS_KEY_ID + "=" + partner.getId(), null);
+        Log.d("mLog", "updates rows count = " + deleteItem);
+
+        //db.close();
+        return deleteItem;
+    }
+
+    public int deleteLineasOnCascade(int cod) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        //db.execSQL("PRAGMA foreign_keys = ON");
+        Log.d("mLog", "partner id = " + cod);
+        int deleteItem = db.delete(TABLE_LINEAS, LINEAS_KEY_FK_ALBARAN + "=" + cod, null);
+
+
+        Log.d("mLog", "updates rows count = " + deleteItem);
+
+        //db.close();
+        return deleteItem;
+    }
+
+    public int deletePedidosOnCascade(Albaran alba) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        //db.execSQL("PRAGMA foreign_keys = ON");
+        Log.d("mLog", "partner id = " +  alba.getId());
+
+        int deleteItem = db.delete(TABLE_ALBARANES, ALBARANES_KEY_ID + "=" + alba.getId(), null);
+
         Log.d("mLog", "updates rows count = " + deleteItem);
 
         //db.close();

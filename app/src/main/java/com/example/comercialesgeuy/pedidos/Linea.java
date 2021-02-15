@@ -3,15 +3,25 @@ package com.example.comercialesgeuy.pedidos;
 public class Linea {
 
     private int idLinea, idAlbaran, idProducto, cantidad, precioLinea;
+    private String nombre;
+
 
     public Linea() {}
 
-    public Linea(int idLinea, int idAlbaran, int idProducto, int cantidad, int precioLinea) {
+    public Linea(int idLinea, int idAlbaran, int idProducto, int cantidad, int precioLinea,String nombre) {
         this.idLinea = idLinea;
         this.idAlbaran = idAlbaran;
         this.idProducto = idProducto;
         this.cantidad = cantidad;
         this.precioLinea = precioLinea;
+        this.nombre = nombre;
+    }
+
+    public String getNombre() {return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public int getIdLinea() {
@@ -54,4 +64,15 @@ public class Linea {
         this.precioLinea = precioLinea;
     }
 
+    @Override
+    public String toString() {
+        return "Linea{" +
+                "idLinea=" + idLinea +
+                ", idAlbaran=" + idAlbaran +
+                ", idProducto=" + idProducto +
+                ", cantidad=" + cantidad +
+                ", precioLinea=" + precioLinea +
+                ", nombre='" + nombre + '\'' +
+                '}';
+    }
 }

@@ -129,7 +129,7 @@
         app:layout_constraintTop_toTopOf="@+id/txtPagoRP" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvProductosRP"
+        android:id="@+id/rcvProductosRB"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
