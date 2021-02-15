@@ -42,8 +42,8 @@ public class GestionLineasPedido extends AppCompatActivity {
 
 
 
-        comercial.setText(alba.getIdComerc());
-        txtPartner.setText(alba.getIdPartner());
+       // comercial.setText(alba.getIdComerc());
+      //  txtPartner.setText(alba.getIdPartner());
         fechapago.setText(alba.getFechaPago());
         fechapedido.setText(alba.getFechaPedido());
         fechaEnvio.setText(alba.getFechaEnvio());
