@@ -28,7 +28,7 @@ import java.util.List;
 public class CalendarioActivity extends AppCompatActivity {
 
     private CalendarView calendarView;
-    private FloatingActionButton fltNuevaVisita;
+    private FloatingActionButton fltNuevaVisita, fltAllCitas;
     private ListView lstCitas;
     private String date_time = "";
     DBSQLite dbSQLite;
@@ -43,6 +43,7 @@ public class CalendarioActivity extends AppCompatActivity {
 
         calendarView = findViewById(R.id.calendarView);
         fltNuevaVisita = findViewById(R.id.fltNuevaCita);
+        fltAllCitas = findViewById(R.id.fltAllCitas);
         lstCitas = findViewById(R.id.lstCitas);
 
         dbSQLite = new DBSQLite(this);
@@ -89,6 +90,24 @@ public class CalendarioActivity extends AppCompatActivity {
         fltNuevaVisita.setOnClickListener(v -> {
             recogerFecha(2, null);
         });
+
+        fltAllCitas.setOnClickListener(v -> {
+            bdCitasOn();
+        });
+
+        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            Toast.makeText(getApplicationContext(), "Citas para dia "+dayOfMonth, Toast.LENGTH_SHORT).show();
+            changeListaCitas(year, month, dayOfMonth);
+        });
+    }
+
+    private void changeListaCitas(int year, int month, int dayOfMonth) {
+        lstCitas.setAdapter(null);
+        int comercId = ((MyAppVariables) this.getApplication()).getComercialId();
+        String fechaElegida =  checkDigit(year) + "-" + checkDigit((month + 1)) + "-" + checkDigit(dayOfMonth);
+        List<Cita> listaCitas = dbSQLite.leerCitasPorFecha(comercId, fechaElegida);
+        ArrayAdapter<Cita> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaCitas);
+        lstCitas.setAdapter(adapter);
     }
 
     private void recogerFecha(int id, Cita cita) {
@@ -106,7 +125,8 @@ public class CalendarioActivity extends AppCompatActivity {
                     TimePickerDialog timePickerDialog = new TimePickerDialog(CalendarioActivity.this,
                             (view1, hourOfDay, minute) -> {
                                 //respetar el formato ISO 8601, éste estándar define el formato para almacenar la fecha y hora: YYYY-MM-DD HH:MM:SS
-                                date_time = checkDigit(dayOfMonth) + "-" + checkDigit((monthOfYear + 1)) + "-" + checkDigit(year) + " " + checkDigit(hourOfDay) + ":" + checkDigit(minute) + ":00";
+                                //date_time = checkDigit(dayOfMonth) + "-" + checkDigit((monthOfYear + 1)) + "-" + checkDigit(year) + " " + checkDigit(hourOfDay) + ":" + checkDigit(minute) + ":00";
+                                date_time = checkDigit(year) + "-" + checkDigit((monthOfYear + 1)) + "-" + checkDigit(dayOfMonth) + " " + checkDigit(hourOfDay) + ":" + checkDigit(minute) + ":00";
 
                                 if(id == 1){
                                     Toast.makeText(getApplicationContext(), "Elige nuevo titulo y texto", Toast.LENGTH_SHORT).show();
@@ -158,7 +178,6 @@ public class CalendarioActivity extends AppCompatActivity {
 
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
             if(resultCode == Activity.RESULT_OK){
-                Toast.makeText(this, "Se ha añadido la cita", Toast.LENGTH_SHORT).show();
                 bdCitasOn();
                 //finish();
                 //startActivity(getIntent());

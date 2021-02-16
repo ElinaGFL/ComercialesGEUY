@@ -42,13 +42,15 @@ public class CalendarioModificacionActivity extends AppCompatActivity {
         dbSQLite = new DBSQLite(this);
         database = dbSQLite.getWritableDatabase();
 
-        txtTituloVentana.setText("CAMBIAR CITA");
-        txtCabecera.setHint("Nuevo titulo de cita");
-        txtTexto.setHint("Nuevo información de cita");
-
         Bundle extras = getIntent().getExtras();
         fecha = extras.getString("fecha");
         cita = (Cita) getIntent().getSerializableExtra("cita");
+
+        txtTituloVentana.setText("CAMBIAR CITA");
+        txtCabecera.setHint("Nuevo titulo de cita");
+        txtTexto.setHint("Nuevo información de cita");
+        txtCabecera.setText(cita.getCabecera());
+        txtTexto.setText(cita.getTexto());
 
         crearVentana();
 

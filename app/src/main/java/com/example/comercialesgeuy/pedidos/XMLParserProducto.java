@@ -1,4 +1,4 @@
-package com.example.comercialesgeuy.pedidos.gestion;
+package com.example.comercialesgeuy.pedidos;
 
 import android.os.Environment;
 

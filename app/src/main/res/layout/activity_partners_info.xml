@@ -1,106 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pop_bg1"
-    tools:context=".partners.PartnerInfoActivity">
+    android:fillViewport="true">
 
-    <ImageButton
-        android:id="@+id/ibDelete"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@null"
-        android:foreground="@drawable/garbage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ibEdit"
-        app:layout_constraintTop_toTopOf="@+id/ibEdit"
-        tools:src="@android:drawable/ic_delete" />
-
-    <ImageButton
-        android:id="@+id/ibEdit"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="32dp"
-        android:background="@null"
-        android:foreground="@drawable/edit"
-        app:layout_constraintEnd_toStartOf="@+id/ibDelete"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ibLlamada"
-        tools:src="@android:drawable/ic_menu_edit" />
-
-    <TextView
-        android:id="@+id/cifPartner"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="92dp"
-        android:text="@string/CIF3"
-        android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="@id/nombrePartner"
-        app:layout_constraintTop_toTopOf="@id/nombrePartner" />
+        android:background="@drawable/pop_bg1"
+        tools:context=".partners.PartnerInfoActivity">
 
-    <TextView
-        android:id="@+id/PoblacionPartner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="84dp"
-        android:text="@string/Poblacion3"
-        android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageButton
+            android:id="@+id/ibDelete"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@null"
+            android:foreground="@drawable/garbage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ibEdit"
+            app:layout_constraintTop_toTopOf="@+id/ibEdit"
+            tools:src="@android:drawable/ic_delete" />
 
-    <TextView
-        android:id="@+id/nombrePartner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/Nombre3"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageButton
+            android:id="@+id/ibEdit"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="32dp"
+            android:background="@null"
+            android:foreground="@drawable/edit"
+            app:layout_constraintEnd_toStartOf="@+id/ibDelete"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ibLlamada"
+            tools:src="@android:drawable/ic_menu_edit" />
 
-    <TextView
-        android:id="@+id/apellidoPartner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/Apellido3"
-        android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="@id/nombrePartner"
-        app:layout_constraintTop_toTopOf="@id/nombrePartner" />
+        <TextView
+            android:id="@+id/cifPartner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="92dp"
+            android:text="@string/CIF3"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="@id/nombrePartner"
+            app:layout_constraintTop_toTopOf="@id/nombrePartner" />
 
-    <ImageButton
-        android:id="@+id/ibLlamada"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="32dp"
-        android:background="@null"
-        android:foreground="@drawable/call"
-        app:layout_constraintEnd_toStartOf="@+id/ibCorreo"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cifPartner"
-        tools:src="@android:drawable/stat_sys_phone_call" />
+        <TextView
+            android:id="@+id/PoblacionPartner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="84dp"
+            android:text="@string/Poblacion3"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/ibCorreo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@null"
-        android:foreground="@drawable/email1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ibLlamada"
-        app:layout_constraintTop_toTopOf="@+id/ibLlamada"
-        tools:src="@android:drawable/ic_dialog_email" />
+        <TextView
+            android:id="@+id/nombrePartner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/Nombre3"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/apellidoPartner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/Apellido3"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="@id/nombrePartner"
+            app:layout_constraintTop_toTopOf="@id/nombrePartner" />
+
+        <ImageButton
+            android:id="@+id/ibLlamada"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="32dp"
+            android:background="@null"
+            android:foreground="@drawable/call"
+            app:layout_constraintEnd_toStartOf="@+id/ibCorreo"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cifPartner"
+            tools:src="@android:drawable/stat_sys_phone_call" />
+
+        <ImageButton
+            android:id="@+id/ibCorreo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@null"
+            android:foreground="@drawable/email1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ibLlamada"
+            app:layout_constraintTop_toTopOf="@+id/ibLlamada"
+            tools:src="@android:drawable/ic_dialog_email" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

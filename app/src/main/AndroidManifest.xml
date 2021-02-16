@@ -21,7 +21,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ComercialesGEUY">
-        <activity android:name=".pedidos.resumen.GestionLineasPedido"></activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,21 +40,25 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".partners.PartnerNewActivity" />
+        <activity android:name=".cita.CalendarioActivity" />
         <activity
             android:name=".cita.CalendarioNewActivity"
             android:theme="@style/Theme.PopUp" />
         <activity
             android:name=".cita.CalendarioModificacionActivity"
             android:theme="@style/Theme.PopUp" />
+
         <activity android:name=".partners.PartnerInfoActivity" />
         <activity android:name=".partners.PartnerModificacionActivity" />
-        <activity android:name=".pedidos.resumen.PedidoResumenActivity" />
-        <activity android:name=".EnvioDelegacion" />
+        <activity android:name=".partners.PartnerNewActivity" />
         <activity android:name=".partners.PartnerActivity" />
-        <activity android:name=".cita.CalendarioActivity" />
-        <activity android:name=".pedidos.gestion.PedidoGestionActivity" />
-        <activity android:name=".pedidos.gestion.ListaPedidosActivity" />
+
+        <activity android:name=".pedidos.resumen.PedidoResumenActivity" />
+        <activity android:name=".pedidos.gestion.PedidosListaActivity"></activity>
+        <activity android:name=".pedidos.nuevo.PedidoNuevoActivity" />
+        <activity android:name=".pedidos.gestion.PedidoLineasActivity" />
+
+        <activity android:name=".EnvioDelegacion" />
         <activity android:name=".MainActivity" />
     </application>
 

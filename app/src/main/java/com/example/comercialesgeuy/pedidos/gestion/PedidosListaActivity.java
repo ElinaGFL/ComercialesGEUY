@@ -10,18 +10,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comercialesgeuy.DBSQLite;
+import com.example.comercialesgeuy.MyAppVariables;
 import com.example.comercialesgeuy.R;
 import com.example.comercialesgeuy.pedidos.Albaran;
-import com.example.comercialesgeuy.pedidos.resumen.GestionLineasPedido;
+import com.example.comercialesgeuy.pedidos.Linea;
+import com.example.comercialesgeuy.pedidos.nuevo.PedidoNuevoActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class ListaPedidosActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, RecyclerAdapterPedidoLista.RecyclerItemClick {
+public class PedidosListaActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, RecyclerAdapterListaPedidos.RecyclerItemClick {
 
     private RecyclerView rcvPedido;
-    private RecyclerAdapterPedidoLista adapter;
+    private RecyclerAdapterListaPedidos adapter;
     private List<Albaran> pedidoList;
     private FloatingActionButton btnAddPedido;
 
@@ -34,7 +37,7 @@ public class ListaPedidosActivity extends AppCompatActivity implements SearchVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_pedidos);
+        setContentView(R.layout.activity_pedidos_lista);
 
         btnAddPedido = findViewById(R.id.btnAddPedido);
         rcvPedido = findViewById(R.id.rvPedido);
@@ -48,7 +51,7 @@ public class ListaPedidosActivity extends AppCompatActivity implements SearchVie
     }
 
     private void nuevoPedido() {
-        Intent intent = new Intent(this, PedidoGestionActivity.class);
+        Intent intent = new Intent(this, PedidoNuevoActivity.class);
         startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
     }
 
@@ -58,37 +61,44 @@ public class ListaPedidosActivity extends AppCompatActivity implements SearchVie
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rcvPedido.setLayoutManager(manager);
 
-        pedidoList = leerPedido();
+        pedidoList = leerPedidos();
 
-        for(Albaran alb : pedidoList){
-            System.out.println("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
-            System.out.println(alb.toString());
+        System.out.println("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+        for(Albaran lin : pedidoList) {
+            System.out.println(lin.toString());
         }
 
-        adapter = new RecyclerAdapterPedidoLista(pedidoList, this);
+        adapter = new RecyclerAdapterListaPedidos(pedidoList, this);
         rcvPedido.setAdapter(adapter);
     }
 
-    private List<Albaran> leerPedido() {
+    private List<Albaran> leerPedidos() {
         lstPedido = new ArrayList<>();
-        lstPedido = dbSQLite.leerPedido();
+        int comercId = ((MyAppVariables) this.getApplication()).getComercialId();
+
+        lstPedido = dbSQLite.leerPedidos(comercId);
         return lstPedido;
     }
 
     public void itemClick(Albaran item) {
-        Intent intent = new Intent(this, GestionLineasPedido.class);
+        Intent intent = new Intent(this, PedidoLineasActivity.class);
         intent.putExtra("albaran", item);
         startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
     }
 
-    //@Override
-    //protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
 
-        //if (requestCode == LAUNCH_SECOND_ACTIVITY) {
-        //    initValues();
-        //}
-    //}
+        if (requestCode == LAUNCH_SECOND_ACTIVITY && resultCode == RESULT_OK){
+            boolean res = Objects.requireNonNull(intent.getExtras()).getBoolean("Atras");
+            if (res){
+                initValues();
+            } else{
+                initValues();
+            }
+        }
+    }
 
     @Override
     public boolean onQueryTextSubmit(String query) {

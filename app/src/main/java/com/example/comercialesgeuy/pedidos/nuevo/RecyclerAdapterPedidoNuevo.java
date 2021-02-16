@@ -1,4 +1,4 @@
-package com.example.comercialesgeuy.pedidos.gestion;
+package com.example.comercialesgeuy.pedidos.nuevo;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,16 +16,16 @@ import com.example.comercialesgeuy.pedidos.Producto;
 
 import java.util.List;
 
-public class RecyclerAdapterPedidoGestion extends RecyclerView.Adapter<RecyclerAdapterPedidoGestion.ProductViewHolder> {
+public class RecyclerAdapterPedidoNuevo extends RecyclerView.Adapter<RecyclerAdapterPedidoNuevo.ProductViewHolder> {
     List<Producto> productoList;
 
-    RecyclerAdapterPedidoGestion(List<Producto> productoList){
+    RecyclerAdapterPedidoNuevo(List<Producto> productoList){
         this.productoList = productoList;
     }
 
     @Override
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_pedido_gestion_linea, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pedido_gestion, parent, false);
         ProductViewHolder pvh = new ProductViewHolder(v);
         return pvh;
     }
@@ -96,7 +95,6 @@ public class RecyclerAdapterPedidoGestion extends RecyclerView.Adapter<RecyclerA
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-        ImageView imgProduct;
         TextView txtProductName, txtPrice;
         EditText edtCantidad;
         ImageButton imbAdd, imbRemove;
@@ -104,7 +102,6 @@ public class RecyclerAdapterPedidoGestion extends RecyclerView.Adapter<RecyclerA
         ProductViewHolder(View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardView);
-            imgProduct = itemView.findViewById(R.id.imgProduct);
             txtProductName = itemView.findViewById(R.id.txtProductName);
             txtPrice = itemView.findViewById(R.id.txtPrice);
             edtCantidad = itemView.findViewById(R.id.edtCantidad);

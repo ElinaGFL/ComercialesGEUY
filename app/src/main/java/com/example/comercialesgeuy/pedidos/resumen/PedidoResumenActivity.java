@@ -1,5 +1,6 @@
 package com.example.comercialesgeuy.pedidos.resumen;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -47,6 +48,7 @@ public class PedidoResumenActivity extends AppCompatActivity {
     final Calendar myCalendar = Calendar.getInstance();
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +58,7 @@ public class PedidoResumenActivity extends AppCompatActivity {
         txtComercialRP = findViewById(R.id.txtcomercialPedido);
         txtPartnerRP = findViewById(R.id.txtPartnerPedido);
         btnCancelar = findViewById(R.id.btnCancelarLP);
-        btnConfirmar = findViewById(R.id.btnEliminarPedido);
+        btnConfirmar = findViewById(R.id.btnConfirmarLP);
         edtFechaPedido = findViewById(R.id.edtFechaPedido);
         edtFechaEnvio = findViewById(R.id.edtFechaEnvio);
         edtFechaPago = findViewById(R.id.edtFechaPago);
@@ -66,6 +68,7 @@ public class PedidoResumenActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         partner = (Partner) getIntent().getSerializableExtra("partner");
+
         productList = (ArrayList<Producto>) extras.getSerializable("arrayProductosPedido");
 
         txtComercialRP.setText(((MyAppVariables) this.getApplication()).getComercialNombre());
@@ -122,7 +125,7 @@ public class PedidoResumenActivity extends AppCompatActivity {
     }
 
     private void update() {
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //clickedEditText.setText(sdf.format(myCalendar.getTime()));
 
         try {
@@ -133,7 +136,7 @@ public class PedidoResumenActivity extends AppCompatActivity {
             if(retVal >= 0){
                 clickedEditText.setText(sdf.format(myCalendar.getTime()));
             } else {
-                Toast.makeText(this, "Fecha no puede ser retrasada", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Fecha no puede ser atrasada", Toast.LENGTH_SHORT).show();
                 clickedEditText.requestFocus();
             }
 

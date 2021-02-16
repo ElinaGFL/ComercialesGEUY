@@ -5,7 +5,6 @@ public class Linea {
     private int idLinea, idAlbaran, idProducto, cantidad, precioLinea;
     private String nombre;
 
-
     public Linea() {}
 
     public Linea(int idLinea, int idAlbaran, int idProducto, int cantidad, int precioLinea,String nombre) {

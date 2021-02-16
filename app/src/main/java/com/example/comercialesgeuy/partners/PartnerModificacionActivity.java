@@ -53,6 +53,8 @@ public class PartnerModificacionActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         partner = (Partner) getIntent().getSerializableExtra("partner");
 
+        rellenarDatos();
+
         //XMLfile = new File (Environment.getExternalStorageDirectory() + "/GEUY/partners.xml");
 
         btnNuevoPartner.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +63,15 @@ public class PartnerModificacionActivity extends AppCompatActivity {
                 guardarNuevoPartner1();
             }
         });
+    }
+
+    private void rellenarDatos() {
+        txtNuevoNombre.setText(partner.getNombre());
+        txtNuevoApellidos.setText(partner.getApellidos());
+        txtNuevoTelefono.setText(partner.getTelefono());
+        txtNuevoCorreo.setText(partner.getCorreo());
+        txtNuevoPoblacion.setText(partner.getPoblacion());
+        txtNuevoCif.setText(partner.getCif());
     }
 
     private void guardarNuevoPartner1() {

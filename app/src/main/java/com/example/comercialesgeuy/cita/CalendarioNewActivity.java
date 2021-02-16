@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -52,6 +53,7 @@ public class CalendarioNewActivity extends AppCompatActivity {
 
         if(comercId > 0) {
             dbSQLite.insertarCita(fecha, titulo, texto, comercId);
+            Toast.makeText(this, "Se ha añadido la cita", Toast.LENGTH_SHORT).show();
         }
 
         finalizar();

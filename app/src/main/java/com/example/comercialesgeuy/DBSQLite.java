@@ -12,22 +12,53 @@ import com.example.comercialesgeuy.partners.Partner;
 import com.example.comercialesgeuy.pedidos.Albaran;
 import com.example.comercialesgeuy.pedidos.Linea;
 import com.example.comercialesgeuy.pedidos.Producto;
-import com.example.comercialesgeuy.pedidos.gestion.XMLParserProducto;
+import com.example.comercialesgeuy.pedidos.XMLParserProducto;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+Clase heredada de SQLiteOpenHelper abstracto, con la que puede crear, abrir y actualizar bases de datos
+Aquí debe implementar 2 métodos abstractos requeridos: onCreate () y onUpgrade ()
+// onCreate () se llama cuando la base de datos se crea por primera vez y onUpgrade () se llama cuando la base de datos cambia, es decir, si se especifica en
+// aplicación, el número de versión de la base de datos es mayor que en la propia base de datos (se usa, por ejemplo, cuando se actualiza la aplicación, cuando se necesita actualizar la base de datos)
+Aquí necesita implementar un constructor, en él llamamos al constructor de la superclase y le pasamos 4 parámetros: contexto, nombre de la base de datos,
+un objeto de la clase CursorFactory, que extiende el cursor estándar (en este ejemplo, no se usa -> nulo) y la versión de la base de datos
+
+// también tiene métodos opcionales:
+onDowngrade() - llamado en una situación opuesta a onUpgrade ()
+onOpen() - llamado cuando se abre la base de datos
+getReadableDatabase(): devuelve una base de datos para lectura // dependiendo de la situación crea, elimina y crea una base de datos (si la versión ha cambiado) o simplemente devuelve datos de la base de datos
+getWritableDatabase(): devuelve una base de datos para leer y escribir // dependiendo de la situación, crea, elimina y crea una base de datos (si la versión ha cambiado) o simplemente devuelve datos de la base de datos
+*/
+
 public class DBSQLite extends SQLiteOpenHelper {
 
+    // constantes para la versión de la base de datos, el nombre de la base de datos y el nombre de la tabla
+
+     /* comience a contar desde uno, al cambiar el número de versión, DBHelper comprenderá que la estructura de la base de datos debe actualizarse
+        La verificación de la versión de la base de datos se implementa en el método onUpgrade ()
+        * * *
+        en esta clase se acostumbra declarar constantes de cadena públicas para los nombres de campos y tablas para que se puedan usar
+        en otras clases para definir los nombres de tablas y columnas al realizar consultas a la base de datos, privado -> público
+     */
     private static Context context;
-    public static final int DATABASE_VERSION = 30;
+    public static final int DATABASE_VERSION = 31;
     public static final String DATABASE_NAME = "GEUYDB";
 
+    // CursorFactory no se usa en este caso, por lo que fue anulado
+    // y reemplazó los parámetros estándar con constantes
     public DBSQLite(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
 
+    /*
+    este método implementa la lógica de crear tablas y llenarlas con datos iniciales usando comandos SQL especiales
+    el método onCreate () se llama solo si la base de datos no existe y debe crearse
+    para crear la base de datos, se usa el método execSQL () del objeto SQLiteDatabase para ejecutar la consulta SQL que crea la tabla
+    debe tener en cuenta los espacios y signos entre los comandos y las teclas para obtener el comando correcto
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREAR_COMERCIALES);
@@ -40,14 +71,30 @@ public class DBSQLite extends SQLiteOpenHelper {
         db.execSQL(INSERT_COMERCIALES);
         insertXMLProductos(db);
     }
+
+    /*
+    en este método, que se activará cuando cambie el número de versión, puede implementar una consulta en la base de datos para destruir la tabla DROP TABLE
+    luego llame al método onCreate () nuevamente para crear una nueva versión de la tabla con la estructura actualizada
+     */
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LINEAS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALBARANES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CITAS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTOS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PARTNERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMERCIALES);
+
+        onCreate(db);
+    }
+
     /*
     @Override
     public void onOpen(SQLiteDatabase db){
         super.onOpen(db);
         db.execSQL("PRAGMA foreign_keys=ON");
     }
-
-     */
+    */
 
     private void insertXMLProductos(SQLiteDatabase db) {
         List<Producto> productoList;
@@ -71,17 +118,8 @@ public class DBSQLite extends SQLiteOpenHelper {
         }
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LINEAS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALBARANES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CITAS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTOS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PARTNERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMERCIALES);
-
-        onCreate(db);
-    }
+    // constantes para encabezados de columna de tabla
+    // el identificador debe tener un valor con el guión bajo y el id, este nombre se usa en Android para trabajar con cursores, esta es una característica de la plataforma
 
     // TABLA COMERCIALES
 
@@ -227,6 +265,7 @@ public class DBSQLite extends SQLiteOpenHelper {
 
     //queries
 
+    // login
     public Comercial queryUsuario(String usuario, String contrasenna) {
         SQLiteDatabase db = this.getReadableDatabase();
         Comercial comercial = null;
@@ -252,6 +291,26 @@ public class DBSQLite extends SQLiteOpenHelper {
         return comercial;
     }
 
+    //recoger el nombre del comercial segun su id
+    public String leerNombreComercial(int idComercial) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String comercial=null;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_COMERCIALES + " WHERE "+ COMERCIALES_KEY_ID +"= " + idComercial, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                comercial=cursor.getString(cursor.getColumnIndex(COMERCIALES_KEY_NOMBRE));
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog", "0 rows");
+        }
+        //db.close();
+        cursor.close();
+        return comercial;
+    }
+
+    // recoger todos productos de BD
     public List<Producto> leerProductos() {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Producto> productos = new ArrayList<>();
@@ -279,6 +338,7 @@ public class DBSQLite extends SQLiteOpenHelper {
         return productos;
     }
 
+    // recoger todos partners
     public List<Partner> leerPartners(int comercId) {
         SQLiteDatabase db = this.getReadableDatabase();
         List<Partner> partnerList  = new ArrayList<>();
@@ -306,10 +366,11 @@ public class DBSQLite extends SQLiteOpenHelper {
         cursor.close();
         return partnerList;
     }
+
+    //recoger los datos del partner según su id
     public Partner leerPartner(int idpartner) {
         SQLiteDatabase db = this.getReadableDatabase();
         Partner partner  = new Partner();
-
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PARTNERS + " WHERE "+ PARTNERS_KEY_ID +"= " + idpartner, null);
 
@@ -317,14 +378,12 @@ public class DBSQLite extends SQLiteOpenHelper {
             do {
                 partner = new Partner();
 
-
                 partner.setNombre(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_NOMBRE)));
                 partner.setApellidos(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_APELLIDOS)));
                 partner.setCorreo(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_EMAIL)));
                 partner.setTelefono(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_TLFN)));
                 partner.setCif(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_CIF)));
                 partner.setPoblacion(cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_POBLACION)));
-
             } while (cursor.moveToNext());
         } else {
             Log.d("mLog", "0 rows");
@@ -334,128 +393,7 @@ public class DBSQLite extends SQLiteOpenHelper {
         return partner;
     }
 
-    public String leerComercial(int idcomercial) {
-        SQLiteDatabase db = this.getReadableDatabase();
-       String comercial=null;
-
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_COMERCIALES + " WHERE "+ COMERCIALES_KEY_ID +"= " + idcomercial, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-
-                comercial=cursor.getString(cursor.getColumnIndex(COMERCIALES_KEY_NOMBRE));
-
-
-            } while (cursor.moveToNext());
-        } else {
-            Log.d("mLog", "0 rows");
-        }
-        //db.close();
-        cursor.close();
-        return comercial;
-    }
-
-
-    public List<Albaran> leerPedido() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        List<Albaran> AlbaranList  = new ArrayList<>();
-        Albaran albaran;
-
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_ALBARANES, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                albaran = new Albaran();
-
-                albaran.setId(cursor.getInt(cursor.getColumnIndex(ALBARANES_KEY_ID)));
-                albaran.setIdComerc(cursor.getInt(cursor.getColumnIndex(ALBARANES_KEY_FK_COMERC)));
-                albaran.setIdPartner(cursor.getInt(cursor.getColumnIndex(ALBARANES_KEY_FK_PARTNER)));
-                albaran.setFechaPedido(cursor.getString(cursor.getColumnIndex(ALBARANES_KEY_FECHAALBARAN)));
-                albaran.setFechaEnvio(cursor.getString(cursor.getColumnIndex(ALBARANES_KEY_FECHAENVIO)));
-                albaran.setFechaPago(cursor.getString(cursor.getColumnIndex(ALBARANES_KEY_FECHAPAGO)));
-                AlbaranList.add(albaran);
-            } while (cursor.moveToNext());
-        } else {
-            Log.d("mLog", "0 rows");
-        }
-        //db.close();
-        cursor.close();
-        return AlbaranList;
-    }
-    public List<Linea> leerLineas(int codLineas) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        List<Linea> listLineas  = new ArrayList<>();
-        Linea linea;
-
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_LINEAS + " INNER JOIN " + TABLE_PRODUCTOS + " ON " + TABLE_LINEAS + "." + LINEAS_KEY_FK_PRODUCTO + " = " + TABLE_PRODUCTOS + "." + PRODUCTOS_KEY_ID + " WHERE " +LINEAS_KEY_FK_ALBARAN+" = " + codLineas, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                linea = new Linea();
-
-                linea.setIdLinea(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_ID)));
-                linea.setCantidad(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_CANTIDAD)));
-                linea.setIdAlbaran(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_FK_ALBARAN)));
-                linea.setIdProducto(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_FK_PRODUCTO)));
-                linea.setPrecioLinea(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_PRECIOLINEA)));
-                linea.setNombre(cursor.getString(cursor.getColumnIndex(PRODUCTOS_KEY_DESCRIPCION)));
-
-
-                listLineas.add(linea);
-
-            } while (cursor.moveToNext());
-        } else {
-            Log.d("mLog", "0 rows");
-        }
-        //db.close();
-        cursor.close();
-        return listLineas;
-    }
-
-    public List<Cita> leerCitas(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        List<Cita> listaCitas = new ArrayList<>();
-        Cita cita;
-
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CITAS + " WHERE FK_COMERC_ID = " + id, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                cita = new Cita();
-
-                cita.setId(cursor.getInt(cursor.getColumnIndex(CITAS_KEY_ID)));
-                cita.setFechaHora(cursor.getString(cursor.getColumnIndex(CITAS_KEY_FECHAHORA)));
-                cita.setCabecera(cursor.getString(cursor.getColumnIndex(CITAS_KEY_CABECERA)));
-                cita.setTexto(cursor.getString(cursor.getColumnIndex(CITAS_KEY_TEXTO)));
-                listaCitas.add(cita);
-            } while (cursor.moveToNext());
-        } else {
-            Log.d("mLog", "0 rows");
-        }
-        //db.close();
-        cursor.close();
-        return listaCitas;
-    }
-
-    public void insertarCita(String fecha, String titulo, String texto, int comercId) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(CITAS_KEY_FECHAHORA, fecha);
-        contentValues.put(CITAS_KEY_CABECERA, titulo);
-        contentValues.put(CITAS_KEY_TEXTO, texto);
-        contentValues.put(CITAS_KEY_FK_COMERC, comercId);
-
-        //Log.d("mLog", "cita id = " +  cita.getId());
-        Log.d("mLog", "cita FechaHora = " +  fecha);
-        Log.d("mLog", "cita Cabecera = " +  titulo);
-        Log.d("mLog", "cita texto = " +  texto);
-        Log.d("mLog", "cita FK = " +  comercId);
-
-        db.insert(TABLE_CITAS, null, contentValues);
-        //db.close();
-    }
-
+    //añadir un partner nuevo
     public void insertarPartner(String nombre, String apellidos, String correo, String telefono, String poblacion, String cif, int comercId) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -472,72 +410,11 @@ public class DBSQLite extends SQLiteOpenHelper {
         //db.close();
     }
 
-    public void insertarPedido(ArrayList<Producto> productOrder, int comercId, Partner partner, String sEdtFechaPedido, String sEdtFechaEnvio, String sEdtFechaPago) {
+    //borar solo un partner
+    public int deletePartner(Partner partner) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(ALBARANES_KEY_FK_COMERC, comercId);
-        contentValues.put(ALBARANES_KEY_FK_PARTNER, partner.getId());
-        contentValues.put(ALBARANES_KEY_FECHAALBARAN, sEdtFechaPedido);
-        contentValues.put(ALBARANES_KEY_FECHAENVIO, sEdtFechaEnvio);
-        contentValues.put(ALBARANES_KEY_FECHAPAGO, sEdtFechaPago);
-
-        //db.insert(DBSQLite.TABLE_ALBARANES, null, contentValues);
-
-        long inserted = db.insert(TABLE_ALBARANES, null, contentValues);
-
-        for(Producto prod : productOrder) {
-            prod.setExistenciasDespuesCompra(prod.getCantidadPedida());
-            String sql = "UPDATE PRODUCTOS SET EXISTENCIAS = " + prod.getExistencias() + " WHERE _id = '" + prod.getId() + "'";
-            db.execSQL(sql);
-
-            float precioLinea = prod.getPrvent() * prod.getCantidadPedida();
-
-            String sql1 = "INSERT INTO LINEAS (FK_ALBARAN_ID, FK_PRODUCTO_ID, CANTIDAD, PRECIOLINEA) values ( " +
-                     inserted + ", '" + prod.getId() + "', " + prod.getCantidadPedida() + ", " + precioLinea + ")";
-            db.execSQL(sql1);
-        }
-        //db.close();
-    }
-
-    public int deleteCita(Cita cita) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Log.d("mLog", "cita id = " +  cita.getId());
-        int deleteItem = db.delete(TABLE_CITAS, CITAS_KEY_ID + "=" + cita.getId(), null);
-        Log.d("mLog", "updates rows count = " + deleteItem);
-
-        //db.close();
-        return deleteItem;
-    }
-
-
-    public int modificarCita(Cita cita) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        ContentValues cv = new ContentValues();
-        //These Fields should be your String values of actual column names
-        cv.put(CITAS_KEY_FECHAHORA, cita.getFechaHora());
-        cv.put(CITAS_KEY_CABECERA, cita.getCabecera());
-        cv.put(CITAS_KEY_TEXTO, cita.getTexto());
-
-        String id = String.valueOf(cita.getId());
-        Log.d("mLog", "cita id = " +  cita.getId());
-        Log.d("mLog", "cita FechaHora = " +  cita.getFechaHora());
-        Log.d("mLog", "cita Cabecera = " +  cita.getCabecera());
-        Log.d("mLog", "cita texto = " +  cita.getTexto());
-
-        int modificarItem = db.update(TABLE_CITAS, cv, CITAS_KEY_ID + "= ?", new String[]{id});
-        Log.d("mLog", "updates rows count = " + modificarItem);
-
-        //db.close();
-        return modificarItem;
-    }
-
-    public int deletePartnerOnCascade(Partner partner) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        //db.execSQL("PRAGMA foreign_keys = ON");
-        Log.d("mLog", "partner id = " +  partner.getId());
+        //Log.d("mLog", "partner id = " +  partner.getId());
         int deleteItem = db.delete(TABLE_PARTNERS, PARTNERS_KEY_ID + "=" + partner.getId(), null);
         Log.d("mLog", "updates rows count = " + deleteItem);
 
@@ -545,27 +422,11 @@ public class DBSQLite extends SQLiteOpenHelper {
         return deleteItem;
     }
 
-    public int deleteLineasOnCascade(int cod) {
-
+    public int deletePartnerOnCascade(Partner partner) {
         SQLiteDatabase db = this.getReadableDatabase();
         //db.execSQL("PRAGMA foreign_keys = ON");
-        Log.d("mLog", "partner id = " + cod);
-        int deleteItem = db.delete(TABLE_LINEAS, LINEAS_KEY_FK_ALBARAN + "=" + cod, null);
-
-
-        Log.d("mLog", "updates rows count = " + deleteItem);
-
-        //db.close();
-        return deleteItem;
-    }
-
-    public int deletePedidosOnCascade(Albaran alba) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        //db.execSQL("PRAGMA foreign_keys = ON");
-        Log.d("mLog", "partner id = " +  alba.getId());
-
-        int deleteItem = db.delete(TABLE_ALBARANES, ALBARANES_KEY_ID + "=" + alba.getId(), null);
-
+        Log.d("mLog", "partner id = " +  partner.getId());
+        int deleteItem = db.delete(TABLE_PARTNERS, PARTNERS_KEY_ID + "=" + partner.getId(), null);
         Log.d("mLog", "updates rows count = " + deleteItem);
 
         //db.close();
@@ -594,5 +455,237 @@ public class DBSQLite extends SQLiteOpenHelper {
 
         //db.close();
         return modificarItem;
+    }
+
+    // recoger todos los pedidos según el comercial entrado
+    public List<Albaran> leerPedidos(int comercId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Albaran> albaranList  = new ArrayList<>();
+        Albaran albaran;
+
+        Cursor cursor = db.rawQuery("SELECT " + TABLE_ALBARANES + ".*, " + TABLE_PARTNERS + "." +
+                PARTNERS_KEY_NOMBRE + ", " + TABLE_PARTNERS + "." + PARTNERS_KEY_APELLIDOS +
+                " FROM " + TABLE_ALBARANES + " LEFT JOIN " + TABLE_PARTNERS + " ON " +
+                TABLE_ALBARANES + "." + ALBARANES_KEY_FK_PARTNER + " = " + TABLE_PARTNERS + "." + PARTNERS_KEY_ID +
+                " WHERE " + TABLE_ALBARANES + "." + ALBARANES_KEY_FK_COMERC +"= " + comercId, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                albaran = new Albaran();
+
+                albaran.setId(cursor.getInt(cursor.getColumnIndex(ALBARANES_KEY_ID)));
+                albaran.setIdComerc(cursor.getInt(cursor.getColumnIndex(ALBARANES_KEY_FK_COMERC)));
+                albaran.setIdPartner(cursor.getInt(cursor.getColumnIndex(ALBARANES_KEY_FK_PARTNER)));
+                albaran.setFechaPedido(cursor.getString(cursor.getColumnIndex(ALBARANES_KEY_FECHAALBARAN)));
+                albaran.setFechaEnvio(cursor.getString(cursor.getColumnIndex(ALBARANES_KEY_FECHAENVIO)));
+                albaran.setFechaPago(cursor.getString(cursor.getColumnIndex(ALBARANES_KEY_FECHAPAGO)));
+                String nombrePartner = cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_NOMBRE)) + " " + cursor.getString(cursor.getColumnIndex(PARTNERS_KEY_APELLIDOS));
+                albaran.setNombrePartner(nombrePartner);
+
+                albaranList.add(albaran);
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog", "0 rows");
+        }
+        //db.close();
+        cursor.close();
+        return albaranList;
+    }
+
+    //añadir un pedido nuevo y quitar la cantidad comprada desde su existencias
+    public void insertarPedido(ArrayList<Producto> productOrder, int comercId, Partner partner, String sEdtFechaPedido, String sEdtFechaEnvio, String sEdtFechaPago) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ALBARANES_KEY_FK_COMERC, comercId);
+        contentValues.put(ALBARANES_KEY_FK_PARTNER, partner.getId());
+        contentValues.put(ALBARANES_KEY_FECHAALBARAN, sEdtFechaPedido);
+        contentValues.put(ALBARANES_KEY_FECHAENVIO, sEdtFechaEnvio);
+        contentValues.put(ALBARANES_KEY_FECHAPAGO, sEdtFechaPago);
+
+        //db.insert(DBSQLite.TABLE_ALBARANES, null, contentValues);
+
+        long inserted = db.insert(TABLE_ALBARANES, null, contentValues);
+
+        int count = 0;
+        for(Producto prod : productOrder) {
+            count++;
+            prod.setExistenciasDespuesCompra(prod.getCantidadPedida());
+            String sql = "UPDATE PRODUCTOS SET EXISTENCIAS = " + prod.getExistencias() + " WHERE _id = '" + prod.getId() + "'";
+            db.execSQL(sql);
+
+            float precioLinea = prod.getPrvent() * prod.getCantidadPedida();
+
+            String sql1 = "INSERT INTO LINEAS (_id, FK_ALBARAN_ID, FK_PRODUCTO_ID, CANTIDAD, PRECIOLINEA) values ( " + count +
+                    "," + inserted + ", '" + prod.getId() + "', " + prod.getCantidadPedida() + ", " + precioLinea + ")";
+            db.execSQL(sql1);
+        }
+        //db.close();
+    }
+
+    //recoger todas lineas del pedido/albaran segun su id
+    public List<Linea> leerLineas(int idAlbaran) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Linea> listLineas  = new ArrayList<>();
+        Linea linea;
+
+        Cursor cursor = db.rawQuery("SELECT " + TABLE_LINEAS + ".*, " + TABLE_PRODUCTOS + "." +
+                PRODUCTOS_KEY_DESCRIPCION + " FROM " + TABLE_LINEAS + " INNER JOIN " + TABLE_PRODUCTOS + " ON " +
+                TABLE_LINEAS + "." + LINEAS_KEY_FK_PRODUCTO + " = " + TABLE_PRODUCTOS + "." + PRODUCTOS_KEY_ID +
+                " WHERE " + TABLE_LINEAS + "." + LINEAS_KEY_FK_ALBARAN +"= " + idAlbaran, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                linea = new Linea();
+
+                linea.setIdLinea(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_ID)));
+                linea.setCantidad(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_CANTIDAD)));
+                linea.setIdAlbaran(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_FK_ALBARAN)));
+                linea.setIdProducto(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_FK_PRODUCTO)));
+                linea.setPrecioLinea(cursor.getInt(cursor.getColumnIndex(LINEAS_KEY_PRECIOLINEA)));
+                linea.setNombre(cursor.getString(cursor.getColumnIndex(PRODUCTOS_KEY_DESCRIPCION)));
+
+                listLineas.add(linea);
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog", "0 rows");
+        }
+        //db.close();
+        cursor.close();
+        return listLineas;
+    }
+
+    //borrar la cita
+    public int deleteCita(Cita cita) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Log.d("mLog", "cita id = " +  cita.getId());
+        int deleteItem = db.delete(TABLE_CITAS, CITAS_KEY_ID + "=" + cita.getId(), null);
+        Log.d("mLog", "updates rows count = " + deleteItem);
+
+        //db.close();
+        return deleteItem;
+    }
+
+    //modificar la cita
+    public int modificarCita(Cita cita) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ContentValues cv = new ContentValues();
+        //These Fields should be your String values of actual column names
+        cv.put(CITAS_KEY_FECHAHORA, cita.getFechaHora());
+        cv.put(CITAS_KEY_CABECERA, cita.getCabecera());
+        cv.put(CITAS_KEY_TEXTO, cita.getTexto());
+
+        String id = String.valueOf(cita.getId());
+        Log.d("mLog", "cita id = " +  cita.getId());
+        Log.d("mLog", "cita FechaHora = " +  cita.getFechaHora());
+        Log.d("mLog", "cita Cabecera = " +  cita.getCabecera());
+        Log.d("mLog", "cita texto = " +  cita.getTexto());
+
+        int modificarItem = db.update(TABLE_CITAS, cv, CITAS_KEY_ID + "= ?", new String[]{id});
+        Log.d("mLog", "updates rows count = " + modificarItem);
+
+        //db.close();
+        return modificarItem;
+    }
+
+    // recoger la lista de citas según el comercial entrado
+    public List<Cita> leerCitas(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Cita> listaCitas = new ArrayList<>();
+        Cita cita;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CITAS + " WHERE FK_COMERC_ID = " + id +
+                " ORDER BY " + CITAS_KEY_FECHAHORA, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                cita = new Cita();
+
+                cita.setId(cursor.getInt(cursor.getColumnIndex(CITAS_KEY_ID)));
+                cita.setFechaHora(cursor.getString(cursor.getColumnIndex(CITAS_KEY_FECHAHORA)));
+                cita.setCabecera(cursor.getString(cursor.getColumnIndex(CITAS_KEY_CABECERA)));
+                cita.setTexto(cursor.getString(cursor.getColumnIndex(CITAS_KEY_TEXTO)));
+                listaCitas.add(cita);
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog", "0 rows");
+        }
+        //db.close();
+        cursor.close();
+        return listaCitas;
+    }
+
+    public List<Cita> leerCitasPorFecha(int comercId, String fechaElegida) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Cita> listaCitas = new ArrayList<>();
+        Cita cita;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CITAS + " WHERE FK_COMERC_ID = " + comercId +
+                " AND date(" + CITAS_KEY_FECHAHORA + ") = date('" + fechaElegida + "') " +
+                " ORDER BY " + CITAS_KEY_FECHAHORA, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                cita = new Cita();
+
+                cita.setId(cursor.getInt(cursor.getColumnIndex(CITAS_KEY_ID)));
+                cita.setFechaHora(cursor.getString(cursor.getColumnIndex(CITAS_KEY_FECHAHORA)));
+                cita.setCabecera(cursor.getString(cursor.getColumnIndex(CITAS_KEY_CABECERA)));
+                cita.setTexto(cursor.getString(cursor.getColumnIndex(CITAS_KEY_TEXTO)));
+                listaCitas.add(cita);
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog", "0 rows");
+        }
+        //db.close();
+        cursor.close();
+        return listaCitas;
+    }
+
+    //añadir una nueva cita
+    public void insertarCita(String fecha, String titulo, String texto, int comercId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(CITAS_KEY_FECHAHORA, fecha);
+        contentValues.put(CITAS_KEY_CABECERA, titulo);
+        contentValues.put(CITAS_KEY_TEXTO, texto);
+        contentValues.put(CITAS_KEY_FK_COMERC, comercId);
+
+        //Log.d("mLog", "cita id = " +  cita.getId());
+        Log.d("mLog", "cita FechaHora = " +  fecha);
+        Log.d("mLog", "cita Cabecera = " +  titulo);
+        Log.d("mLog", "cita texto = " +  texto);
+        Log.d("mLog", "cita FK = " +  comercId);
+
+        db.insert(TABLE_CITAS, null, contentValues);
+        //db.close();
+    }
+
+    public int deleteLineasPorIdAlbaran(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        int deleteItem = db.delete(TABLE_LINEAS, LINEAS_KEY_FK_ALBARAN + " = " + id, null);
+
+        Log.d("mLog", "updates rows count = " + deleteItem);
+
+        //db.close();
+        return deleteItem;
+    }
+
+    public int deletePedidosPorAlbaran(Albaran alba) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Log.d("mLog", "partner id = " +  alba.getId());
+
+        int deleteItem = db.delete(TABLE_ALBARANES, ALBARANES_KEY_ID + " = " + alba.getId(), null);
+
+        Log.d("mLog", "updates rows count = " + deleteItem);
+
+        //db.close();
+        return deleteItem;
     }
 }

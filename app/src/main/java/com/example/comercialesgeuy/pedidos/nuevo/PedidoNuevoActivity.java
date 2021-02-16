@@ -1,4 +1,4 @@
-package com.example.comercialesgeuy.pedidos.gestion;
+package com.example.comercialesgeuy.pedidos.nuevo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PedidoGestionActivity extends AppCompatActivity {
+public class PedidoNuevoActivity extends AppCompatActivity {
 
     TextView txtComercialGP;
     Spinner spinnerPartner;
@@ -44,7 +44,7 @@ public class PedidoGestionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pedido_gestion);
+        setContentView(R.layout.activity_pedido_nuevo);
 
         spinnerPartner = findViewById(R.id.spinnerPartner);
         txtComercialGP = findViewById(R.id.txtComercialGP);
@@ -92,7 +92,7 @@ public class PedidoGestionActivity extends AppCompatActivity {
         rcvProductos.setLayoutManager(manager);
 
         List<Producto> productList = dbSQLite.leerProductos();
-        RecyclerAdapterPedidoGestion adapter = new RecyclerAdapterPedidoGestion(productList);
+        RecyclerAdapterPedidoNuevo adapter = new RecyclerAdapterPedidoNuevo(productList);
         rcvProductos.setAdapter(adapter);
     }
 
@@ -113,12 +113,10 @@ public class PedidoGestionActivity extends AppCompatActivity {
         List<Partner> partnerList = dbSQLite.leerPartners(comercId);
         if(partnerList.size() > 0) {
             ArrayAdapter<Partner> adapter = new ArrayAdapter<>(this, R.layout.spinner_item_partner, partnerList);
-
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerPartner.setAdapter(adapter);
         }else {
             Toast.makeText(this, "No hay partners", Toast.LENGTH_LONG).show();
-
         }
 
     }
@@ -126,11 +124,11 @@ public class PedidoGestionActivity extends AppCompatActivity {
     private ArrayList<Producto> hacerPedido() {
         ArrayList<Producto> productOrders = new ArrayList<>();
         //productOrders.clear();
-        int size = ((RecyclerAdapterPedidoGestion) Objects.requireNonNull(rcvProductos.getAdapter())).getItemCount();
+        int size = ((RecyclerAdapterPedidoNuevo) Objects.requireNonNull(rcvProductos.getAdapter())).getItemCount();
 
         for (int i = 0; i < size; i++) {
-            if (((RecyclerAdapterPedidoGestion) rcvProductos.getAdapter()).getItem(i).getCantidadPedida() > 0) {
-                Producto producto = ((RecyclerAdapterPedidoGestion) rcvProductos.getAdapter()).getItem(i);
+            if (((RecyclerAdapterPedidoNuevo) rcvProductos.getAdapter()).getItem(i).getCantidadPedida() > 0) {
+                Producto producto = ((RecyclerAdapterPedidoNuevo) rcvProductos.getAdapter()).getItem(i);
                 productOrders.add(producto);
             }
         }
@@ -151,6 +149,9 @@ public class PedidoGestionActivity extends AppCompatActivity {
         if (requestCode == LAUNCH_SECOND_ACTIVITY && resultCode == RESULT_OK){
             boolean res = Objects.requireNonNull(intent.getExtras()).getBoolean("Atras");
             if (res){
+                Intent intent1 = new Intent();
+                intent1.putExtra("Atras", true);
+                setResult(RESULT_OK, intent1);
                 finish();
             }
         }

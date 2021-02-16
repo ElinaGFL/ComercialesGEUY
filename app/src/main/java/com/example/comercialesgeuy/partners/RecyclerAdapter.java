@@ -25,7 +25,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     @NonNull
     @Override
     public RecyclerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_partners_linea,parent,false);
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_partners_linea,parent,false);
         return new RecyclerHolder(v);
     }
 

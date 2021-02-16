@@ -1,52 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pop_bg1"
-    tools:context=".EnvioDelegacion">
+    android:fillViewport="true">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="246dp"
-        android:layout_height="130dp"
-        android:layout_marginStart="151dp"
-        android:layout_marginTop="316dp"
-        android:layout_marginEnd="167dp"
-        android:layout_marginBottom="285dp"
-        android:text="Enviar los datos"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txt1"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="263dp"
-        android:text="Envios a delegaciones"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@drawable/pop_bg1"
+        tools:context=".EnvioDelegacion">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="247dp"
-        android:layout_height="114dp"
-        android:layout_marginStart="73dp"
-        android:layout_marginTop="73dp"
-        android:layout_marginEnd="91dp"
-        android:layout_marginBottom="38dp"
-        android:text="Seleccionar archivo"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt1" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/button"
+            android:layout_width="246dp"
+            android:layout_height="130dp"
+            android:layout_marginStart="151dp"
+            android:layout_marginTop="316dp"
+            android:layout_marginEnd="167dp"
+            android:layout_marginBottom="285dp"
+            android:text="Enviar los datos"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="52dp"
+            android:layout_marginEnd="263dp"
+            android:text="Envios a delegaciones"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="247dp"
+            android:layout_height="114dp"
+            android:layout_marginStart="73dp"
+            android:layout_marginTop="73dp"
+            android:layout_marginEnd="91dp"
+            android:layout_marginBottom="38dp"
+            android:text="Seleccionar archivo"
+            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

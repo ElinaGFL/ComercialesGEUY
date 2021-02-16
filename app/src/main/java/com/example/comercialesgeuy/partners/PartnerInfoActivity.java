@@ -52,35 +52,19 @@ public class PartnerInfoActivity extends AppCompatActivity {
         pob.setText("Población: " + partner.getPoblacion());
         cif.setText("CIF: " + partner.getCif());
 
-        llamada.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent llamar = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + partner.getTelefono()));
-                startActivity(llamar);
-            }
+        llamada.setOnClickListener(v -> {
+            Intent llamar = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + partner.getTelefono()));
+            startActivity(llamar);
         });
 
-        correo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent email = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", partner.getCorreo(), null));
-                startActivity(email);
-            }
+        correo.setOnClickListener(v -> {
+            Intent email = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", partner.getCorreo(), null));
+            startActivity(email);
         });
 
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cambiarPartner();
-            }
-        });
+        edit.setOnClickListener(v -> cambiarPartner());
 
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                borrarPartner();
-            }
-        });
+        delete.setOnClickListener(v -> borrarPartner());
     }
 
     private void borrarPartner() {
@@ -92,39 +76,16 @@ public class PartnerInfoActivity extends AppCompatActivity {
         builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int ii) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(PartnerInfoActivity.this);
-                builder.setTitle("Atención!");
-                builder.setMessage("Van a ser borrados todos los pedidos con el y no se puede recuperar");
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                int resp = dbSQLite.deletePartner(partner);
 
-                builder.setPositiveButton("Acepto", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int ii) {
-                        int resp = dbSQLite.deletePartnerOnCascade(partner);
-
-                        if(resp > 0) {
-                            Toast.makeText(getApplicationContext(), "Ha borrado el partner y todos sus datos", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }else {
-                            Toast.makeText(getApplicationContext(), "No se ha podido borrar el partner", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-                builder.setNegativeButton("Rechazo", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int ii) {
-                        //
-                    }
-                });
-                builder.show();
+                if(resp > 0) {
+                    Toast.makeText(getApplicationContext(), "Ha borrado el partner con exito", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No se ha podido borrar el partner", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int ii) {
-                //
-            }
-        });
-
         builder.show();
     }
 

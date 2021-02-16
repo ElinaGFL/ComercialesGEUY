@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,7 +24,7 @@ public class RecyclerAdapterPedidoResumen extends RecyclerView.Adapter<RecyclerA
 
     @Override
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_pedido_resumen_linea, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pedido_resumen, parent, false);
         ProductViewHolder pvh = new ProductViewHolder(v);
         return pvh;
     }
@@ -53,14 +52,12 @@ public class RecyclerAdapterPedidoResumen extends RecyclerView.Adapter<RecyclerA
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-        ImageView imgProduct;
         TextView txtProductName, txtPrice;
         EditText edtCantidad;
 
         ProductViewHolder(View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardView);
-            imgProduct = itemView.findViewById(R.id.imgProduct);
             txtProductName = itemView.findViewById(R.id.txtProductName);
             txtPrice = itemView.findViewById(R.id.txtPrice);
             edtCantidad = itemView.findViewById(R.id.edtCantidad);

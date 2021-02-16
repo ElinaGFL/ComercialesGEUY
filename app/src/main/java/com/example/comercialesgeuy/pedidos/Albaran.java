@@ -6,18 +6,18 @@ import java.util.ArrayList;
 public class Albaran implements Serializable {
 
     private int id, idComerc, idPartner;
-    private String fechaPedido, fechaEnvio, fechaPago;
-    private ArrayList<Linea> lineas;
+    private String fechaPedido, fechaEnvio, fechaPago, nombrePartner;
 
     public Albaran() {}
 
-    public Albaran(int id, int idComerc, int idPartner, String fechaPedido, String fechaEnvio, String fechaPago) {
+    public Albaran(int id, int idComerc, int idPartner, String fechaPedido, String fechaEnvio, String fechaPago, String nombrePartner) {
         this.id = id;
         this.idComerc = idComerc;
         this.idPartner = idPartner;
         this.fechaPedido = fechaPedido;
         this.fechaEnvio = fechaEnvio;
         this.fechaPago = fechaPago;
+        this.nombrePartner = nombrePartner;
     }
 
     public int getId() {
@@ -68,12 +68,12 @@ public class Albaran implements Serializable {
         this.fechaPago = fechaPago;
     }
 
-    public ArrayList<Linea> getLineas() {
-        return lineas;
+    public String getNombrePartner() {
+        return nombrePartner;
     }
 
-    public void setLineas(ArrayList<Linea> lineas) {
-        this.lineas = lineas;
+    public void setNombrePartner(String nombrePartner) {
+        this.nombrePartner = nombrePartner;
     }
 
     @Override
