@@ -24,8 +24,8 @@ public class CalendarioNewActivity extends AppCompatActivity {
     private Button btnGuardar;
     private String fecha, titulo, texto;
 
-    DBSQLite dbSQLite;
-    SQLiteDatabase database;
+    private DBSQLite dbSQLite;
+    private SQLiteDatabase database;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -15,9 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.comercialesgeuy.DBSQLite;
-import com.example.comercialesgeuy.MyAppVariables;
 import com.example.comercialesgeuy.R;
-import com.example.comercialesgeuy.partners.Partner;
 
 public class CalendarioModificacionActivity extends AppCompatActivity {
 
@@ -25,10 +23,10 @@ public class CalendarioModificacionActivity extends AppCompatActivity {
     private TextView txtTituloVentana;
     private Button btnGuardar;
     private String fecha;
-    Cita cita;
+    private Cita cita;
 
-    DBSQLite dbSQLite;
-    SQLiteDatabase database;
+    private DBSQLite dbSQLite;
+    private SQLiteDatabase database;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

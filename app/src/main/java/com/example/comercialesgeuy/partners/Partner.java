@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Partner implements Serializable {
 
         private String nombre, apellidos, correo, telefono, poblacion, cif;
-        int id;
+        private int id;
 
         public Partner(){}
 

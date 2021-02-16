@@ -17,17 +17,12 @@ import com.example.comercialesgeuy.R;
 
 public class PartnerNewActivity extends AppCompatActivity {
 
-    EditText txtNuevoNombre;
-    EditText txtNuevoApellidos;
-    EditText txtNuevoTelefono;
-    EditText txtNuevoCorreo;
-    EditText txtNuevoPoblacion;
-    EditText txtNuevoCif;
-    Button btnNuevoPartner;
+    private EditText txtNuevoNombre, txtNuevoApellidos, txtNuevoTelefono, txtNuevoCorreo, txtNuevoPoblacion, txtNuevoCif;
+    private Button btnNuevoPartner;
     private String nombre, apellidos, telefono, correo, poblacion, cif;
 
-    DBSQLite dbSQLite;
-    SQLiteDatabase database;
+    private DBSQLite dbSQLite;
+    private SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

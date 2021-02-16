@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Comercial implements Serializable {
 
     private String USR, PWD, nombre, apellidos, empresa, email, telefono, delegacion;
-    int id;
+    private int id;
 
     public Comercial(){}
 

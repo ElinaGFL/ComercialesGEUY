@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -17,9 +16,9 @@ import com.example.comercialesgeuy.pedidos.Producto;
 import java.util.List;
 
 public class RecyclerAdapterPedidoNuevo extends RecyclerView.Adapter<RecyclerAdapterPedidoNuevo.ProductViewHolder> {
-    List<Producto> productoList;
+    private List<Producto> productoList;
 
-    RecyclerAdapterPedidoNuevo(List<Producto> productoList){
+    public RecyclerAdapterPedidoNuevo(List<Producto> productoList){
         this.productoList = productoList;
     }
 

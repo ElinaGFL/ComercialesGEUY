@@ -3,26 +3,18 @@ package com.example.comercialesgeuy;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
-
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.File;
-
 
 public class EnvioDelegacion extends AppCompatActivity {
 
-    String correo;
-    String asunto;
-    String mensaje;
-    Button enviar;
-    Button archivo;
+    private String correo, asunto, mensaje;
+    private Button enviar, archivo;
 
     Uri URI = null;
     private static final int PICK_FROM_GALLERY = 101;

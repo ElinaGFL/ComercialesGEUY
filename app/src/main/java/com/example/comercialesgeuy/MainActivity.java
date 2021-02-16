@@ -25,11 +25,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
-    Button btnCalendario, btnpartners, btnPed, btnEnvio, btnLogOut;
+    private Button btnCalendario, btnpartners, btnPed, btnEnvio, btnLogOut;
     private GoogleMap mMap;
     static final int REQUEST_CODE = 123;
 
-    DBSQLite dbsqLite;
+    private DBSQLite dbsqLite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +76,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void llamar(View v){
-        Intent llamar = new Intent(Intent.ACTION_DIAL, Uri.parse(((MyAppVariables) this.getApplication()).getComercial().getTelefono()));
-
+        Intent llamar = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + ((MyAppVariables) this.getApplication()).getComercial().getTelefono()));
         startActivity(llamar);
     }
     public void correo(View v){

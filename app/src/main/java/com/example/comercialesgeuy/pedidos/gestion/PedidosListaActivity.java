@@ -13,7 +13,6 @@ import com.example.comercialesgeuy.DBSQLite;
 import com.example.comercialesgeuy.MyAppVariables;
 import com.example.comercialesgeuy.R;
 import com.example.comercialesgeuy.pedidos.Albaran;
-import com.example.comercialesgeuy.pedidos.Linea;
 import com.example.comercialesgeuy.pedidos.nuevo.PedidoNuevoActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -28,11 +27,11 @@ public class PedidosListaActivity extends AppCompatActivity implements SearchVie
     private List<Albaran> pedidoList;
     private FloatingActionButton btnAddPedido;
 
-    List<Albaran> lstPedido;
-    DBSQLite dbSQLite;
-    SQLiteDatabase database;
+    private List<Albaran> lstPedido;
+    private DBSQLite dbSQLite;
+    private SQLiteDatabase database;
 
-    int LAUNCH_SECOND_ACTIVITY = 1;
+    private final int LAUNCH_SECOND_ACTIVITY = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +61,6 @@ public class PedidosListaActivity extends AppCompatActivity implements SearchVie
         rcvPedido.setLayoutManager(manager);
 
         pedidoList = leerPedidos();
-
-        System.out.println("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
-        for(Albaran lin : pedidoList) {
-            System.out.println(lin.toString());
-        }
 
         adapter = new RecyclerAdapterListaPedidos(pedidoList, this);
         rcvPedido.setAdapter(adapter);

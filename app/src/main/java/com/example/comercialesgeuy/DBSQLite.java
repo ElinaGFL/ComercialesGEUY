@@ -43,8 +43,8 @@ public class DBSQLite extends SQLiteOpenHelper {
         en otras clases para definir los nombres de tablas y columnas al realizar consultas a la base de datos, privado -> público
      */
     private static Context context;
-    public static final int DATABASE_VERSION = 31;
-    public static final String DATABASE_NAME = "GEUYDB";
+    private static final int DATABASE_VERSION = 31;
+    private static final String DATABASE_NAME = "GEUYDB";
 
     // CursorFactory no se usa en este caso, por lo que fue anulado
     // y reemplazó los parámetros estándar con constantes

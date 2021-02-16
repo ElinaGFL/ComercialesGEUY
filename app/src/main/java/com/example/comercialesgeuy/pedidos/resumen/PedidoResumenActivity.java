@@ -31,22 +31,19 @@ import java.util.Objects;
 
 public class PedidoResumenActivity extends AppCompatActivity {
 
-    TextView txtComercialRP, txtPartnerRP;
+    private TextView txtComercialRP, txtPartnerRP;
+    private RecyclerView rcvProductosRP;
+    private List<Producto> productList;
+    private Button btnCancelar, btnConfirmar;
+    private EditText edtFechaPedido, edtFechaEnvio, edtFechaPago;
+    private String sEdtFechaPedido, sEdtFechaEnvio, sEdtFechaPago;
+    private EditText clickedEditText;
+    private Partner partner;
 
-    RecyclerView rcvProductosRP;
-    List<Producto> productList;
-    Button btnCancelar, btnConfirmar;
-    EditText edtFechaPedido, edtFechaEnvio, edtFechaPago;
-    String sEdtFechaPedido, sEdtFechaEnvio, sEdtFechaPago;
-    private String date_time;
-    EditText clickedEditText;
-    public Partner partner;
+    private DBSQLite dbSQLite;
+    private SQLiteDatabase database;
 
-    DBSQLite dbSQLite;
-    SQLiteDatabase database;
-
-    final Calendar myCalendar = Calendar.getInstance();
-
+    private final Calendar myCalendar = Calendar.getInstance();
 
     @SuppressLint("SetTextI18n")
     @Override

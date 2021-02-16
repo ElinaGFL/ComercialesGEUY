@@ -1,15 +1,16 @@
 package com.example.comercialesgeuy;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.text.TextUtils;
 import android.widget.Toast;
-import com.example.comercialesgeuy.MyAppVariables;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
@@ -18,8 +19,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edtUsuario;
     private EditText edtContrasenna;
 
-    DBSQLite dbSQLite;
-    SQLiteDatabase database;
+    private DBSQLite dbSQLite;
+    private SQLiteDatabase database;
 
     private final int LAUNCH_SECOND_ACTIVITY = 1;
 

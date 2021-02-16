@@ -1,40 +1,38 @@
 package com.example.comercialesgeuy.pedidos.gestion;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.comercialesgeuy.DBSQLite;
 import com.example.comercialesgeuy.R;
 import com.example.comercialesgeuy.partners.Partner;
-import com.example.comercialesgeuy.partners.PartnerInfoActivity;
 import com.example.comercialesgeuy.pedidos.Albaran;
 import com.example.comercialesgeuy.pedidos.Linea;
 
 import java.util.List;
 
 public class PedidoLineasActivity extends AppCompatActivity{
-    Button btnEliminar, btnAtras;
-    TextView comercial,txtPartner, txtPedido;
-    EditText fechaPedido, fechaEnvio, fechaPago;
-    Partner partner;
-    Albaran albaran;
-    DBSQLite dbSQLite;
-    SQLiteDatabase database;
-    RecyclerView rvPed;
-    List<Linea> lista;
+    private Button btnEliminar, btnAtras;
+    private TextView comercial,txtPartner, txtPedido;
+    private EditText fechaPedido, fechaEnvio, fechaPago;
+    private Partner partner;
+    private Albaran albaran;
+    private DBSQLite dbSQLite;
+    private SQLiteDatabase database;
+    private RecyclerView rvPed;
+    private List<Linea> lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,11 +110,6 @@ public class PedidoLineasActivity extends AppCompatActivity{
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvPed.setLayoutManager(manager);
         lista = dbSQLite.leerLineas(albaran.getId());
-
-        System.out.println("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
-        for(Linea lin : lista) {
-            System.out.println(lin.toString());
-        }
 
         RecyclerAdapterPedidoLineas adapter = new RecyclerAdapterPedidoLineas(lista);
         rvPed.setAdapter(adapter);

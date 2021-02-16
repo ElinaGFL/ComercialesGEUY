@@ -1,12 +1,13 @@
 package com.example.comercialesgeuy.pedidos.resumen;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,19 +17,20 @@ import com.example.comercialesgeuy.pedidos.Producto;
 import java.util.List;
 
 public class RecyclerAdapterPedidoResumen extends RecyclerView.Adapter<RecyclerAdapterPedidoResumen.ProductViewHolder> {
-    List<Producto> productoList;
+    private final List<Producto> productoList;
 
-    RecyclerAdapterPedidoResumen(List<Producto> productoList){
+    public RecyclerAdapterPedidoResumen(List<Producto> productoList){
         this.productoList = productoList;
     }
 
+    @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pedido_resumen, parent, false);
-        ProductViewHolder pvh = new ProductViewHolder(v);
-        return pvh;
+        return new ProductViewHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         holder.txtProductName.setText(productoList.get(position).getCodigo());
@@ -46,7 +48,7 @@ public class RecyclerAdapterPedidoResumen extends RecyclerView.Adapter<RecyclerA
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
 

@@ -1,14 +1,8 @@
 package com.example.comercialesgeuy.pedidos;
 
-import android.os.Environment;
-
-import com.example.comercialesgeuy.pedidos.Producto;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;

@@ -24,11 +24,11 @@ public class PartnerActivity extends AppCompatActivity implements RecyclerAdapte
     private List<Partner> partnerList;
     private FloatingActionButton btnAddPartner;
 
-    List<Partner> lstPartners;
-    DBSQLite dbSQLite;
-    SQLiteDatabase database;
+    private List<Partner> lstPartners;
+    private DBSQLite dbSQLite;
+    private SQLiteDatabase database;
 
-    int LAUNCH_SECOND_ACTIVITY = 1;
+    private final int LAUNCH_SECOND_ACTIVITY = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

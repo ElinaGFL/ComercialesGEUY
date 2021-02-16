@@ -28,16 +28,16 @@ import java.util.Objects;
 
 public class PedidoNuevoActivity extends AppCompatActivity {
 
-    TextView txtComercialGP;
-    Spinner spinnerPartner;
-    RecyclerView rcvProductos;
-    Button btnCancelar, btnConfirmar;
-    String partnerData;
-    Partner partner;
-    ArrayList<Producto> productOrder;
+    private TextView txtComercialGP;
+    private Spinner spinnerPartner;
+    private RecyclerView rcvProductos;
+    private Button btnCancelar, btnConfirmar;
+    private String partnerData;
+    private Partner partner;
+    private ArrayList<Producto> productOrder;
 
-    DBSQLite dbSQLite;
-    SQLiteDatabase database;
+    private DBSQLite dbSQLite;
+    private SQLiteDatabase database;
 
     private final int LAUNCH_SECOND_ACTIVITY = 1;
 

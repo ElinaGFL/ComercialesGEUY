@@ -1,7 +1,5 @@
 package com.example.comercialesgeuy.partners;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,20 +8,20 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.comercialesgeuy.DBSQLite;
 import com.example.comercialesgeuy.R;
-import com.example.comercialesgeuy.cita.CalendarioNewActivity;
 
 public class PartnerInfoActivity extends AppCompatActivity {
 
-    Partner partner;
-    DBSQLite dbSQLite;
-    SQLiteDatabase database;
+    private Partner partner;
+    private DBSQLite dbSQLite;
+    private SQLiteDatabase database;
     final private int LAUNCH_SECOND_ACTIVITY = 1;
 
     @SuppressLint("SetTextI18n")

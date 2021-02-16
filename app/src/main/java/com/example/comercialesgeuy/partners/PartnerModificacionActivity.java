@@ -16,18 +16,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.comercialesgeuy.DBSQLite;
 import com.example.comercialesgeuy.MyAppVariables;
 import com.example.comercialesgeuy.R;
-import com.example.comercialesgeuy.cita.Cita;
 
 public class PartnerModificacionActivity extends AppCompatActivity {
 
-    EditText txtNuevoNombre, txtNuevoApellidos, txtNuevoTelefono, txtNuevoCorreo, txtNuevoPoblacion, txtNuevoCif;
+    private EditText txtNuevoNombre, txtNuevoApellidos, txtNuevoTelefono, txtNuevoCorreo, txtNuevoPoblacion, txtNuevoCif;
     private String nombre, apellidos, telefono, correo, poblacion, cif;
-    TextView txtCabeceraPartner;
-    Button btnNuevoPartner;
-    Partner partner;
+    private TextView txtCabeceraPartner;
+    private Button btnNuevoPartner;
+    private Partner partner;
 
-    DBSQLite dbSQLite;
-    SQLiteDatabase database;
+    private DBSQLite dbSQLite;
+    private SQLiteDatabase database;
 
     @SuppressLint("SetTextI18n")
     @Override

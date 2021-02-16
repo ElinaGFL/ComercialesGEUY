@@ -31,10 +31,10 @@ public class CalendarioActivity extends AppCompatActivity {
     private FloatingActionButton fltNuevaVisita, fltAllCitas;
     private ListView lstCitas;
     private String date_time = "";
-    DBSQLite dbSQLite;
-    SQLiteDatabase database;
+    private DBSQLite dbSQLite;
+    private SQLiteDatabase database;
     //request code para intent
-    final private int LAUNCH_SECOND_ACTIVITY = 1;
+    private final int LAUNCH_SECOND_ACTIVITY = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

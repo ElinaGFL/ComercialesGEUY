@@ -1,7 +1,6 @@
 package com.example.comercialesgeuy.pedidos;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Albaran implements Serializable {
 
